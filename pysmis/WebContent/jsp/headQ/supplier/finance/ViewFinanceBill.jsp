@@ -73,7 +73,7 @@ function cancelBill(){
 	                  <s:iterator value="uiBean.order.financeBillItemList" status="st" id="billItem" >
 	                    <tr class="InnerTableContent" <s:if test="#st.even">style="<%=Common_util.EVEN_ROW_BG_STYLE %>"</s:if>>
 	                      <td height="25"><s:property value="#st.index + 1"/></td>
-	                      <td><s:property value="#billItem.financeCategory.itemName"/></td>
+	                      <td><s:property value="#billItem.financeCategorySupplier.itemName"/></td>
 	                      <td><s:property value="#billItem.total"/></td>
 	                      <td><s:property value="#billItem.comment"/></td>
 	                    </tr>

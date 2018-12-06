@@ -153,7 +153,7 @@ function getCurrFinanceBackProcess(data){
 		alert(response.message);
 	} else {
 		var dataMap = response.returnValue
-		$("#currentFinance").html("当前欠款 : " + dataMap.cf);
+		$("#currentFinance").html("当前待付款 : " + dataMap.cf);
 	}
 		
 }

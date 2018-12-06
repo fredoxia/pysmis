@@ -132,7 +132,7 @@ $(document).ready(function(){
 			      <td colspan="7">
 			         <!-- table to display the draft order information -->
 			         <div id="billsDiv" style="display: none">
-						<table width="70%"  align="left" class="OuterTable" id="org_table">
+						<table width="90%"  align="left" class="OuterTable" id="org_table">
 						    <tr class="PBAInnerTableTitale">
 						      <th width="40" height="32">编号</th>
 						      <th width="90">供应商名字</th>

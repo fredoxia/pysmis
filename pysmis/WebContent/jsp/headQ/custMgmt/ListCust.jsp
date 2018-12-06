@@ -146,7 +146,7 @@ function refresh(){
 </script>
 </head>
 <body>
-	<div class="easyui-layout" border="false" style="width:1000px;height:500px">
+	<div class="easyui-layout"  data-options="fit : true,border : false">
 		<div data-options="region:'north',border:false" style="height: 35px; overflow: hidden;">
 			<form id="searchForm" name="searchForm" method="post">
 				<table border="0" class="table table-hover table-condensed" style="display: block;">

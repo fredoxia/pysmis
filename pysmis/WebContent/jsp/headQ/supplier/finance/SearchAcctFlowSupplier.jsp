@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%@ page import="com.onlineMIS.common.Common_util,com.onlineMIS.ORM.entity.headQ.finance.ChainAcctFlowReportItem" %>
+<%@ page import="com.onlineMIS.common.Common_util,com.onlineMIS.ORM.entity.headQ.supplier.finance.SupplierAcctFlowReportItem" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>朴与素连锁店管理信息系统</title>
 <%@ include file="../../../common/Style.jsp"%>
 <script>
-var ITEM_TYPE_P = "<%=ChainAcctFlowReportItem.ITEM_TYPE_PURCHASE%>";
-var ITEM_TYPE_F = "<%=ChainAcctFlowReportItem.ITEM_TYPE_FINANCE%>";
+var ITEM_TYPE_P = "<%=SupplierAcctFlowReportItem.ITEM_TYPE_PURCHASE%>";
+var ITEM_TYPE_F = "<%=SupplierAcctFlowReportItem.ITEM_TYPE_FINANCE%>";
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 

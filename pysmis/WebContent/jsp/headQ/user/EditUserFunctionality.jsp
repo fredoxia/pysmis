@@ -218,7 +218,7 @@ function changeFunction14(){
       <td height="19"><strong>供应商管理</strong></td>
       <td>供应商信息管理:<input type="checkbox" name="functionalities" id="function40" value="40"/></td>
       <td>供应商财务管理:<input type="checkbox" name="functionalities" id="function41" value="41"/></td>
-      <td></td>
+      <td>供应商采购管理:<input type="checkbox" name="functionalities" id="function42" value="42"/></td>
       <td></td>
       <td></td>
     </tr>      

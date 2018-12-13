@@ -36,7 +36,7 @@ function selectBarcodes(){
     	for (var i = 0; i < barcodeArray.length; i++){
     		barcode = barcodeArray[i];
     		index = parseInt(index_trigger) +  i;
-    		window.opener.retrieveProductByBarcode(index, "", barcode,1);  
+    		window.opener.retrieveProductByBarcode(index, "", barcode,$("#fromSrc").val());  
   //  		alert(i + "," + barcodeArray.length);
     	}
     	window.close();		
@@ -47,7 +47,7 @@ function selectProductValue(barcode){
     
 	var exist = window.opener.validateRowInputFromChild("", "",barcode);
 	if (exist){
-       window.opener.retrieveProductByBarcode(index_trigger, "", barcode,1);  
+       window.opener.retrieveProductByBarcode(index_trigger, "", barcode,$("#fromSrc").val());  
 	}
     window.close();
 }
@@ -91,6 +91,7 @@ function clickEsc(){
    <%@ include file="../../common/pageForm.jsp"%>
 
    <s:hidden id="index" name="formBean.indexPage"/>
+   <s:hidden id="fromSrc" name="formBean.fromSrc"/>
    <s:hidden id="productCode" name="formBean.productBarcode.product.productCode"/>
    <table width="100%"  align="left" class="OuterTable">
 		  <tr class="PBAInnerTableTitale" align='left'>

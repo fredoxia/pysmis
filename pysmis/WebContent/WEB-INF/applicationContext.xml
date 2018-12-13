@@ -64,7 +64,7 @@
 	             <value>com/onlineMIS/ORM/headQ/HeadqCustMgmt.hbm.xml</value>
 	             <value>com/onlineMIS/ORM/headQ/SupplierMgmt.hbm.xml</value>
 	             <value>com/onlineMIS/ORM/headQ/SupplierFinance.hbm.xml</value>
-
+				 <value>com/onlineMIS/ORM/headQ/SupplierPurchase.hbm.xml</value>
 	     </list>
         </property>
 	    <property name="hibernateProperties">

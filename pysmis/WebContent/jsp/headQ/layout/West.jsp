@@ -8,10 +8,10 @@ $(function() {
 				if (node.attributes && node.attributes.url) {
 					var url;
 					url = node.attributes.url;
-					parent.$.messager.progress({
+					/*parent.$.messager.progress({
 								title : '提示',
 								text : '数据处理中，请稍后....'
-							});
+							});*/
 
      				addTab4({
 						url : url,
@@ -86,6 +86,16 @@ $(function() {
 			    		<li data-options="iconCls:'icon-status_online',attributes:{url:'headQCustMgmtJSPAction!preCust'}">客户信息管理 </li>
 			    	</ul>
 			    </li>
+			    <s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase') || #session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchaseReturn') || #session.LOGIN_USER.containFunction('supplierPurchaseJSP!preSearchPurchase')">
+			  	<li  data-options="iconCls:'icon-images',state:'open',border:false">
+			  	    <span>采购单据管理</span>
+			  		<ul style="width: 150%">
+			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchase'}">采购单据录入 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchaseReturn')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchaseReturn'}">采购退货单据录入 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preSearchPurchase')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preSearchPurchase'}">搜索采购单据 </li></s:if>
+			    	</ul>
+			    </li>
+			    </s:if>
 			    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preCreate') || #session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchFiance')">
 			  	<li  data-options="iconCls:'icon-money_yen',state:'open',border:false">
 			  	    <span>供应商财务管理</span>
@@ -100,19 +110,19 @@ $(function() {
 			  	<li  data-options="iconCls:'icon-images',state:'open',border:false">
 			  	    <span>批发销售管理</span>
 			  		<ul style="width: 150%">
-			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!create')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!create'}">销售单据录入 </li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!createReturnOrder')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!createReturnOrder'}">退货单据录入 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!create')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!create'}">批发销售单据录入 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!createReturnOrder')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!createReturnOrder'}">批发退货单据录入 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!preSearch')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!preSearch?formBean.order.order_Status=<%=InventoryOrder.STATUS_PDA_COMPLETE%>'}">PDA完成单据</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!preSearch')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!preSearch?formBean.order.order_Status=<%=InventoryOrder.STATUS_DRAFT%>'}">仓库草稿单据</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!preSearch')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!preSearch?formBean.order.order_Status=<%=InventoryOrder.STATUS_ACCOUNT_PROCESS%>'}">等待审核单据</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!preSearch')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!preSearch'}">搜索单据 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!preSearch')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!preSearch'}">搜索批发单据 </li></s:if>
 			    	</ul>
 			    </li>
 			    </s:if>
 			   
 			    <s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preCreateFHQ') || #session.LOGIN_USER.containFunction('financeHQJSP!preSearchFHQ')">
 			  	<li  data-options="iconCls:'icon-money_yen',state:'open',border:false">
-			  	    <span>批发业务管理</span>
+			  	    <span>批发财务管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preCreateFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preCreateFHQ'}">创建财务单据</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchFHQ'}">查询财务单据 </li></s:if>

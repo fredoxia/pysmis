@@ -104,7 +104,7 @@ $(document).ready(function(){
 				var str = '';
 				if (row.isAuthorizedToEdit == true){
 					var url = "<%=request.getContextPath()%>/action/inventoryOrder!loadOrder?formBean.order.order_ID=" + row.id;
-					str += $.formatString('<a href="#" onclick="addTab6(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="修改"/></a>', url, '单据 ' + row.id,'<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
+					str += $.formatString('<a href="#" onclick="addTab6(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="修改"/></a>', url, '批发单据 ' + row.id,'<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
 				}
 				
 				return str;

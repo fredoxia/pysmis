@@ -1,9 +1,0 @@
-diff a/pysmis/WebContent/conf_files/js/inventory-order.js b/pysmis/WebContent/conf_files/js/inventory-order.js	(rejected hunks)
-@@ -52,7 +52,6 @@
- 	var productCode = $("#productCode" +index_trigger).val();
- 
- 	if (validateProductCodeInput(productCode)){
--	    var params= "formBean.productBarcode.product.productCode=" + productCode + "&formBean.indexPage=" + index_trigger ; 
- 	    var params= "formBean.productBarcode.product.productCode=" + productCode + "&formBean.indexPage=" + index_trigger+ "&formBean.fromSrc=1" ; 
- 	    
- 	    var url = encodeURI(encodeURI("productJSPAction!scanByProductCode?" +params));

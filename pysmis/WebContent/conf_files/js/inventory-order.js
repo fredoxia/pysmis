@@ -52,7 +52,7 @@ function searchProductsProductCode(index_trigger){
 	var productCode = $("#productCode" +index_trigger).val();
 
 	if (validateProductCodeInput(productCode)){
-	    var params= "formBean.productBarcode.product.productCode=" + productCode + "&formBean.indexPage=" + index_trigger+ "&formBean.fromSrc=1" ; 
+	    var params= "formBean.productBarcode.product.productCode=" + productCode + "&formBean.indexPage=" + index_trigger ; 
 	    
 	    var url = encodeURI(encodeURI("productJSPAction!scanByProductCode?" +params));
 		

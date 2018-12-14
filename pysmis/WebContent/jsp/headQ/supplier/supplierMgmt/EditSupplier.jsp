@@ -22,7 +22,7 @@ function saveSupplier(){
 function updateSupplierBKProcess(data){
 	var returnCode = data.returnCode;
 	if (returnCode != SUCCESS)
-		alert(response.message);
+		alert(data.message);
 	else {
 		$.modalDialog.handler.dialog('close');
 		$("#dataGrid").datagrid('reload');

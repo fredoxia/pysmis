@@ -34,7 +34,7 @@ function cancelBill(){
 		      		    <div class="errorAndmes"><s:actionerror cssStyle="color:red"/><s:actionmessage cssStyle="color:blue"/></div>
 						<table width="100%"  align="left" border="0" id="org_table">
 							<tr class="PBAOuterTableTitale">
-	                            <td height="50" colspan="3"> 财务单据  
+	                            <td height="50" colspan="3"> 供应商财务单据  
 	                            </td>
 		    				</tr>
 						   <tr class="InnerTableContent">

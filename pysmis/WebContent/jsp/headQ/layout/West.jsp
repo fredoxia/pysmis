@@ -88,7 +88,7 @@ $(function() {
 			    </li>
 			    <s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase') || #session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchaseReturn') || #session.LOGIN_USER.containFunction('supplierPurchaseJSP!preSearchPurchase')">
 			  	<li  data-options="iconCls:'icon-images',state:'open',border:false">
-			  	    <span>采购单据管理</span>
+			  	    <span>供应商单据管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchase'}">采购单据录入 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchaseReturn')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchaseReturn'}">采购退货单据录入 </li></s:if>
@@ -101,7 +101,7 @@ $(function() {
 			  	    <span>供应商财务管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preCreate')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preCreate'}">创建供应商财务单据</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchFH')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preSearchFH'}">查询供应商财务单据 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchFH')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preSearchFH'}">搜索供应商财务单据 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchAcctFlow')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preSearchAcctFlow'}">查询供应商往来账户</li></s:if>
 			    	</ul>
 			    </li>
@@ -125,7 +125,7 @@ $(function() {
 			  	    <span>批发财务管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preCreateFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preCreateFHQ'}">创建财务单据</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchFHQ'}">查询财务单据 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchFHQ'}">搜索财务单据 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchAcctFlow')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchAcctFlow'}">查询客户往来账户</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preFinanceRpt'}">连锁店财务报表</li></s:if>
 			    	</ul>

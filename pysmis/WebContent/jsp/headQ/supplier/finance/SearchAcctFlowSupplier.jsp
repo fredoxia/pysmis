@@ -56,7 +56,7 @@ $(document).ready(function(){
 							var url = "";
 							var id = row.id;
 							if (row.itemType == ITEM_TYPE_P)
-								  url = "inventoryOrder!loadOrder?formBean.order.order_ID=" + id ;
+								  url = "supplierPurchaseJSP!getPurchaseOrder?formBean.order.id=" + id ;
 							else if (row.itemType == ITEM_TYPE_F)
 								  url = "financeSupplierJSP!getFHQ?formBean.order.id="+id;
 							

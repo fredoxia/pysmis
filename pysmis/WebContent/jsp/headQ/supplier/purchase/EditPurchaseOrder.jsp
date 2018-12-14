@@ -171,6 +171,9 @@ function addNewRow(barcode){
 
     str += "<td align='center'>" + (indexB+1) +"</td>";
     str += "<td>"+barcode.barcode +"<input type='hidden' name='formBean.order.productList["+indexB+"].pb.id' id='productId"+indexB+"' value='"+ barcode.id+"'/></td>";		 					 		
+    str += "<td>"+barcode.product.year.year+"</td>";	
+    str += "<td>"+barcode.product.quarter.quarter_Name+"</td>";	
+    str += "<td>"+barcode.product.brand.brand_Name+"</td>";		
     str += "<td>"+barcode.product.productCode+"</td>";
        
 	var color = barcode.color;
@@ -178,15 +181,12 @@ function addNewRow(barcode){
 	if (color != null && color != undefined && color.name!=undefined)
 		colorName = color.name; 
     str += "<td>" + colorName+"</td>";	
-    str += "<td>"+barcode.product.brand.brand_Name+"</td>";			 					 		
-    str += "<td>"+barcode.product.year.year+"</td>";	
-    str += "<td>"+barcode.product.quarter.quarter_Name+"</td>";	
+    str += "<td>"+barcode.product.unit+"</td>"; 					 		
     str += "<td><input type='text' name='formBean.order.productList["+indexB+"].quantity' id='quantity"+indexB+"' value='"+barcode.product.numPerHand+"' size='2'  onchange='onQuantityChange();'  onfocus='this.select();'/>  </td>";
-    str += "<td>"+barcode.product.unit+"</td>";
     str += "<td><input type='text' name='formBean.order.productList["+indexB+"].recCost' id='recCost"+indexB+"' value='"+barcode.product.recCost+"' size='4'  readonly/>  </td>";
     str += "<td>"+barcode.product.wholeSalePrice+"</td>";
-   str += "<td></td>";
-    str += "<td> <img src='"+baseurl+"/conf_files/web-image/delete.png' border='0' onclick='deleteRow(\"row"+indexB +"\","+indexB+")' style='cursor:pointer;'/></td>";			 		
+    str += "<td><img src='"+baseurl+"/conf_files/web-image/delete.png' border='0' onclick='deleteRow(\"row"+indexB +"\","+indexB+")' style='cursor:pointer;'/></td>";
+    str += "<td></td>";			 		
     str += "</tr>";
     
     $("#inventoryTable").append(str);
@@ -201,78 +201,73 @@ function addNewRow(barcode){
 }
 
 function validateForm(){
-
-    if (confirm("你确认提交采购订单?")){
-    	for (var i =0; i < index; i++)
-    		$("#row" + i).css('background-color', '');
-    	
-		var error = "";
-		if ($("#supplierName").val() == "" || $("#supplierId").val() == 0){
-			error += "供应商名字 - 必须填!\n";
-			$("#supplierName").focus();
-		}
+   	for (var i =0; i < index; i++)
+   		$("#row" + i).css('background-color', '');
+   	
+	var error = "";
+	if ($("#supplierName").val() == "" || $("#supplierId").val() == 0){
+		error += "供应商名字 - 必须填!\n";
+		$("#supplierName").focus();
+	}
 
 
-		if ($("#counterId").val() == 0){
-			error += "点数人员 - 必须选!\n";
-			$("#counterId").focus();
-		}
+	if ($("#counterId").val() == 0){
+		error += "点数人员 - 必须选!\n";
+		$("#counterId").focus();
+	}
 
-		if ($("#totalQuantity").val() <= 0){
-			error += "必须录入数据后才能提交\n";
-		}
-		var totalDiscount = $("#totalDiscount").val();
-		if (isNaN(totalDiscount) || totalDiscount < 0){
-			error += "优惠 - 必须是大于或者等于0的数字!\n";
-		}
+	if ($("#totalQuantity").val() <= 0){
+		error += "必须录入数据后才能提交\n";
+	}
+	var totalDiscount = $("#totalDiscount").val();
+	if (isNaN(totalDiscount) || totalDiscount < 0){
+		error += "优惠 - 必须是大于或者等于0的数字!\n";
+	}
 
-		var hasChar = false;
-		var hasChar_r = false;
-		var invalid_barcode = false;
-		for (var i =0; i < index; i++){
+	var hasChar = false;
+	var hasChar_r = false;
+	var invalid_barcode = false;
+	for (var i =0; i < index; i++){
 
-			var q = $("#quantity" + i).val();
-			var r = $("#recCost" + i).val();
-			var pbId = $("#productId" + i).val();
+		var q = $("#quantity" + i).val();
+		var r = $("#recCost" + i).val();
+		var pbId = $("#productId" + i).val();
 
-			if (q != undefined){
-				if (isNaN(q) || q<=0){
-					$("#row" + i).css('background-color', '#EE8553');
-					hasChar = true;
-				}
-			}
-			if (r != undefined){
-				if (isNaN(r) || r<=0 || r=='Infinity'){
-					$("#row" + i).css('background-color', '#EE8553');
-					hasChar_r = true;
-				}
-			}
-
-			if (pbId != undefined){
-				if (isEmpty(pbId) || pbId == 0){
-					$("#row" + i).css('background-color', '#EE8553');
-					invalid_barcode = true;
-				}
+		if (q != undefined){
+			if (isNaN(q) || q<=0){
+				$("#row" + i).css('background-color', '#EE8553');
+				hasChar = true;
 			}
 		}
+		if (r != undefined){
+			if (isNaN(r) || r<=0 || r=='Infinity'){
+				$("#row" + i).css('background-color', '#EE8553');
+				hasChar_r = true;
+			}
+		}
+
+		if (pbId != undefined){
+			if (isEmpty(pbId) || pbId == 0){
+				$("#row" + i).css('background-color', '#EE8553');
+				invalid_barcode = true;
+			}
+		}
+	}
+
+	if (hasChar)
+		error += "数量 - 必须为大于0数字!\n";
+	if (hasChar_r)
+		error += "采购进价 - 必须为大于0数字!\n";	
+
+	if (invalid_barcode)
+		error += "条码错误 - 货品条码无法找到,请删除再从新扫描!\n";	
 	
-		if (hasChar)
-			error += "数量 - 必须为大于0数字!\n";
-		if (hasChar_r)
-			error += "采购进价 - 必须为大于0数字!\n";	
-
-		if (invalid_barcode)
-			error += "条码错误 - 货品条码无法找到,请删除再从新扫描!\n";	
-		
-		if (error != ""){
-			alert(error);
-			return false;
-		}else{
-			return true;
-		}
-    } else {
-    	return false;
-    }
+	if (error != ""){
+		alert(error);
+		return false;
+	}else{
+		return true;
+	}
 }
 
 /**
@@ -338,11 +333,23 @@ function submitOrder(){
 			title : '提示',
 			text : '数据处理中，请稍后....'
 		});
-		   document.inventoryOrderForm.action = "<%=request.getContextPath()%>/action/inventoryOrder!save";
-		   document.inventoryOrderForm.submit();
+		var params = $("#purchaseOrderForm").serialize();  
+		$.post("<%=request.getContextPath()%>/action/supplierPurchaseJSON!saveToComplete",params, submitOrderBKProcess,"json");
 	}
 }
+function submitOrderBKProcess(data){
+	var response = data;
 
+	var returnCode = response.returnCode;
+	var returnMsg = response.message;
+	if (returnCode == SUCCESS){		   
+		alert("单据成功过账");
+		window.location.href = "supplierPurchaseJSP!preEditPurchase";
+	} else {
+		$.messager.progress('close'); 
+        alert(returnMsg);
+    }
+}
 
 $(document).ready(function(){
 	$("#supplierName").focus();
@@ -402,16 +409,16 @@ $(document).ready(function(){
 				</tr>							 	
 			 	<tr class="PBAOuterTableTitale" height="22">
 		 		    <th style="width: 6%">&nbsp;</th>
-			 		<th style="width: 9%">条型码</th>			 					 				 		
-			 		<th style="width: 8%">产品货号</th>
-			 		<th style="width: 4%">颜色</th>
-			 		<th style="width: 10%">产品品牌</th>	
+			 		<th style="width: 9%">条型码</th>	
 			 		<th style="width: 4%">年份</th>	
 			 		<th style="width: 4%">季度</th>	
-			 		<th style="width: 4%">数量</th>
-			 		<th style="width: 5%">单位</th>		
-			 		<th style="width: 5%">进价</th>
-			 		<th style="width: 8%">批发价</th>
+			 		<th style="width: 10%">产品品牌</th>				 				 					 				 		
+			 		<th style="width: 8%">产品货号</th>
+			 		<th style="width: 4%">颜色</th>
+			 		<th style="width: 5%">单位</th>	
+			 		<th style="width: 4%">数量</th>	
+			 		<th style="width: 5%">进价(单价)</th>
+			 		<th style="width: 8%">批发价(单价)</th>
 			 		<th style="width: 6%">&nbsp;</th>	
 			 		<th style="width: 6%"></th> 		 		
                 </tr>
@@ -421,17 +428,17 @@ $(document).ready(function(){
 					 		<td align="center"><s:property value="#st.index +1"/></td>
 					 		<td><s:property value="#orderProduct.pb.barcode"/>
 					 		    <input type="hidden" name="formBean.order.productList[<s:property value="#st.index"/>].pb.id" id="productId<s:property value="#st.index"/>" readonly="readonly" value="<s:property value="#orderProduct.pb.id"/>"/></td>			 					 		
-					 		<td><s:property value="#orderProduct.pb.product.productCode"/> <s:property value="#orderProduct.pb.product.numPerHand"/></td>
-					 		<td><s:property value="#orderProduct.pb.color.name"/></td>
-					 		<td><s:property value="#orderProduct.pb.product.brand.brand_Name"/></td>			 					 		
 					 		<td><s:property value="#orderProduct.pb.product.year.year"/></td>
-					 		<td><s:property value="#orderProduct.pb.product.quarter.quarter_Name"/></td>
-					 		<td><input type="text" name="formBean.order.productList[<s:property value="#st.index"/>].quantity" id="quantity<s:property value="#st.index"/>" size='2' onchange="onQuantityChange();" onfocus="this.select();" value="<s:property value="#orderProduct.quantity"/>"/></td>
+					 		<td><s:property value="#orderProduct.pb.product.quarter.quarter_Name"/></td>			
+					 		<td><s:property value="#orderProduct.pb.product.brand.brand_Name"/></td>			 		
+					 		<td><s:property value="#orderProduct.pb.product.productCode"/> <s:property value="#orderProduct.pb.product.numPerHand"/></td>
+					 		<td><s:property value="#orderProduct.pb.color.name"/></td>			 		
 					 		<td><s:property value="#orderProduct.pb.product.unit"/></td>	
+					 		<td><input type="text" name="formBean.order.productList[<s:property value="#st.index"/>].quantity" id="quantity<s:property value="#st.index"/>" size='2' onchange="onQuantityChange();" onfocus="this.select();" value="<s:property value="#orderProduct.quantity"/>"/></td>
 					 		<td><input type="text" name="formBean.order.productList[<s:property value="#st.index"/>].recCost" id="recCost<s:property value="#st.index"/>" size='2' readonly onfocus="this.select();" value="<s:property value="#orderProduct.recCost"/>"/></td>		 					 		
 					 		<td><s:property value="#orderProduct.wholeSalePrice"/></td>			 							 		
-					 		<td></td>
-					 		<td><div id="delIcon0" style="display:block"><img src="<%=request.getContextPath()%>/conf_files/web-image/delete.png" border="0" onclick="deleteRow('row<s:property value="#st.index"/>',<s:property value="#st.index"/>);"  style="cursor:pointer;"/></div></td>				
+					 		<td><div id="delIcon0" style="display:block"><img src="<%=request.getContextPath()%>/conf_files/web-image/delete.png" border="0" onclick="deleteRow('row<s:property value="#st.index"/>',<s:property value="#st.index"/>);"  style="cursor:pointer;"/></div></td>
+					 		<td></td>				
 		                </tr>
 	                </s:iterator>
                 </tbody>
@@ -443,8 +450,8 @@ $(document).ready(function(){
 			 		<td></td>	
 			 		<td></td>	
 			 		<td></td>		 					 		
-			 		<td><s:textfield name="formBean.order.totalQuantity" id="totalQuantity" readonly="true" size='2'/></td>			 					 		
-			 		<td></td>
+			 		<td></td>			 					 		
+			 		<td><s:textfield name="formBean.order.totalQuantity" id="totalQuantity" readonly="true" size='2'/></td>
 			 		<td><s:textfield name="formBean.order.totalRecCost" id="totalRecCost" size='8' readonly="true"/></td>
 			 		<td>&nbsp;</td>	
 			 		<td>&nbsp;</td>	

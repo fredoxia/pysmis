@@ -213,10 +213,19 @@ $(document).ready(function(){
 	  	     <td colspan="7"></td>
 	  </tr>
 	  <tr height="10" class="InnerTableContent" >
-	  	     <td align="center">备注</td>
-			 <td colspan="4"><textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
+	  	     <td align="center"></td>
+			 <td colspan="4">备注 : <textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
 			 <td><input type="button" value="修改备注" onclick="updateOrderComment();"/></td>
 			 <td>&nbsp;</td>	
+	  </tr>
+	  <tr height="10" class="InnerTableContent" >
+	  	     <td align="center"></td>
+			 <td colspan="6">
+			      现金 : <s:property value="formBean.order.cash"/>&nbsp;
+			      银行 : <s:property value="formBean.order.card"/>&nbsp;
+			      支付宝 : <s:property value="formBean.order.alipay"/>&nbsp;
+			      微信 : <s:property value="formBean.order.wechat"/>
+			 </td>	
 	  </tr>
 	  <tr height="10">
 	  	     <td colspan="7"></td>

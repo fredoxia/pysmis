@@ -38,7 +38,7 @@ function cancelBill(){
 	                            </td>
 		    				</tr>
 						   <tr class="InnerTableContent">
-						     <td width="180" height="35">单据种类 ： <s:property value="uiBean.order.typeHQS"/></td>
+						     <td width="180" height="35">单据种类 ： <s:property value="uiBean.order.typeHQS"/>  <s:property value="uiBean.order.id"/></td>
 						     <td width="220">供应商 ： <s:property value="uiBean.order.supplier.name"/> </td>
 						     <td width="220">过账日期:<s:date name="uiBean.order.createDate" format="yyyy-MM-dd" /></td>
 					       </tr>

@@ -113,24 +113,33 @@
                 <tr height="10">
 			         <td colspan="15" align="left"></td>			 					 		
 	            </tr>
-				<tr height="10" class="InnerTableContent" >
-				  	 <td align ="center">备注</td>
-					 <td colspan="14"><textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
-				</tr>
-                <tr class="InnerTableContent">
-                  <td height="27" align="center">优惠</td>
-                  <td colspan="2"><s:textfield name="formBean.order.totalDiscount" id="totalDiscount"/></td>
-                  <td colspan="3"></td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                </tr>
+	            <tr>
+	            	<td colspan="15">
+			            <table cellpadding="0" cellspacing="0" style="width: 100%" border="0" id="org_table2">
+							<tr height="10" class="InnerTableContent" >
+							     <td>&nbsp;</td>
+							  	 <td>备注</td>
+								 <td colspan="11"><textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
+							</tr>
+			                <tr class="InnerTableContent">
+			                  <td style="width: 6%" height="27">&nbsp;</td>
+			                  <td style="width: 4%">优惠</td>
+			                  <td style="width: 8%"><s:textfield name="formBean.order.totalDiscount" id="totalDiscount" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 4%">现金</td>
+			                  <td style="width: 8%"><s:textfield name="formBean.order.cash" id="cash" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 4%">刷卡</td>
+			                  <td style="width: 8%"><s:textfield name="formBean.order.card" id="card" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 4%">支付宝</td>
+			                  <td style="width: 8%"><s:textfield name="formBean.order.alipay" id="alipay" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 4%">微信</td>
+			                  <td style="width: 25%"><s:textfield name="formBean.order.wechat" id="wechat" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 25%">&nbsp;</td>
+			                  <td>&nbsp;</td>
+			                </tr>
+		                </table>
+	            	</td>
+	            </tr>
+
 		 </table>
 	     </td>
 	  </tr>

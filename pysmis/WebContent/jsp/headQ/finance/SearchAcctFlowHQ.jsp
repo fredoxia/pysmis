@@ -33,6 +33,7 @@ $(document).ready(function(){
 							return row.cust.name;
 						}},
 					{field:'itemTypeName', width:50,title:'单据种类'},
+					{field:'id', width:30,title:'单据号'},
 					{field:'quantity', width:50,title:'单据数量',
 						formatter: function (value, row, index){
 							return parseQuantity(row.quantity);
@@ -62,7 +63,7 @@ $(document).ready(function(){
 							
 							var str = '';
 							if (row.id != 0)
-							    str += $.formatString('<a href="#" onclick="addTab3(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="查看"/></a>', url, row.itemTypeName, '<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png' );
+							    str += $.formatString('<a href="#" onclick="addTab3(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="查看"/></a>', url, row.itemTypeName + id, '<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png' );
 							return str;
 						}}
 			     ]]

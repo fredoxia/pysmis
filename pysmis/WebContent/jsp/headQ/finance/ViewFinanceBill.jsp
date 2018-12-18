@@ -34,13 +34,18 @@ function cancelBill(){
 		      		    <div class="errorAndmes"><s:actionerror cssStyle="color:red"/><s:actionmessage cssStyle="color:blue"/></div>
 						<table width="100%"  align="left" border="0" id="org_table">
 							<tr class="PBAOuterTableTitale">
-	                            <td height="50" colspan="3"> 批发财务单据  
+	                            <td height="50" colspan="4"> 批发财务单据  
 	                            </td>
 		    				</tr>
 						   <tr class="InnerTableContent">
-						     <td width="180" height="35">单据种类 ： <s:property value="uiBean.order.typeHQS"/></td>
-						     <td width="220">连锁店 ： <s:property value="uiBean.order.cust.name"/> </td>
-						     <td width="220">过账日期:<s:date name="uiBean.order.createDate" format="yyyy-MM-dd" /></td>
+						     <td width="180" height="35">单据种类 ： <s:property value="uiBean.order.typeHQS"/> <s:property value="uiBean.order.id"/></td>
+						     <td width="180">连锁店 ： <s:property value="uiBean.order.cust.name"/> </td>
+						     <td width="180">过账日期:<s:date name="uiBean.order.createDate" format="yyyy-MM-dd" /></td>
+						     <td width="100">
+						          <s:if test="uiBean.order.inventoryOrderId != 0">
+					                   <a href='#' onclick='addTab3("inventoryOrder!loadOrder?formBean.order.order_ID=<s:property value="uiBean.order.inventoryOrderId"/>","批发销售单据<s:property value="uiBean.order.inventoryOrderId"/>")'> 批发销售单据<s:property value="uiBean.order.inventoryOrderId"/></a>
+					              </s:if>	
+						     </td>
 					       </tr>
 						   <tr class="InnerTableContent">	      
 							 <td height="25">经手人:<s:property value="uiBean.order.creatorHq.user_name"/></td>
@@ -49,11 +54,13 @@ function cancelBill(){
 							 		   </s:else>
 							 </td>
 							 <td>备注 ： <s:property value="uiBean.order.comment"/></td>
+							 <td></td>
 					       </tr>
 					       <tr class="InnerTableContent">	
 					         <td height="25">折扣:<s:property value="uiBean.order.invoiceDiscount"/></td>      
 							 <td>上欠:<s:property value="uiBean.order.preAcctAmt"/></td>
 							 <td>下欠 ： <s:property value="uiBean.order.postAcctAmt"/></td>
+							 <td></td>
 					       </tr>
 				       </table>
 			      </td>

@@ -127,7 +127,10 @@ $(document).ready(function(){
 	 		      <td width="20%">仓库录入人员&nbsp; :&nbsp; <s:property value="formBean.order.order_Keeper.name"/></td>	
 			 		<td width="31%">仓库点数人员&nbsp; :&nbsp; <s:property value="formBean.order.order_Counter.name"/></td>		 					 				 		 							
 			 		<td>仓库完成时间&nbsp; :&nbsp;<s:date name ="formBean.order.order_ComplTime" format="yyyy-MM-dd hh:mm:ss" /> </td>
-					<td>&nbsp;</td>
+					<td><s:if test="formBean.order.financeBillId != 0">
+					         <a href='#' onclick='addTab3("financeHQJSP!getFHQ?formBean.order.id=<s:property value="formBean.order.financeBillId"/>","财务收款单<s:property value="formBean.order.financeBillId"/>")'> 财务收款单<s:property value="formBean.order.financeBillId"/></a>
+					    </s:if>					
+					</td>
 			 	</tr>
 				<tr height="4">
 					<td colspan="5"></td>
@@ -150,7 +153,7 @@ $(document).ready(function(){
 					<td></td>
 			 	</tr>
 		 </table>
-		 <table class="easyui-datagrid"  style="width:900px;height:400px" data-options="singleSelect:true,border : false">			 	
+		 <table class="easyui-datagrid" style="height:400px"  data-options="singleSelect:true,border : false">			 	
 			   <thead>
 				 	<tr align="center" class="PBAOuterTableTitale" height="22">
 				 		<th data-options="field:'1',width:40">序号</th>
@@ -158,12 +161,12 @@ $(document).ready(function(){
 				 		<th data-options="field:'3',width:100">产品品牌</th>			 					 		
 				 		<th data-options="field:'4',width:90">产品货号</th>	
 				 		<th data-options="field:'5',width:60">颜色</th>	
-				 		<th data-options="field:'6',width:50">年份</th>
-				 		<th data-options="field:'7',width:40">季度</th>	 				 		
+				 		<th data-options="field:'6',width:60">年份</th>
+				 		<th data-options="field:'7',width:60">季度</th>	 				 		
 				 		<th data-options="field:'8',width:60">单位</th>	
-				 		<th data-options="field:'9',width:50">数量</th>		 		
+				 		<th data-options="field:'9',width:60">数量</th>		 		
 	                    <th data-options="field:'10',width:60">原批发价</th>
-	                    <th data-options="field:'11',width:50">折扣</th>
+	                    <th data-options="field:'11',width:60">折扣</th>
 	                    <th data-options="field:'12',width:80">折后批发价</th>		
 				 		<th data-options="field:'13',width:80">连锁零售</th>		 		
 	                </tr>

@@ -79,7 +79,7 @@ $(function() {
 			 	</li>
 			 	</s:if>-->
 			 	
-			 	<li  data-options="iconCls:'icon-status_online',state:'open',border:false">
+			 	<li  data-options="iconCls:'icon-status_online',state:'closed',border:false">
 			  	    <span>供应商&客户管理</span>
 			  		<ul style="width: 150%">
 			  		    <s:if test="#session.LOGIN_USER.containFunction('headQSupplierMgmtJSPAction!preSupplier')"><li data-options="iconCls:'icon-status_online',attributes:{url:'headQSupplierMgmtJSPAction!preSupplier'}">供应商信息管理 </li></s:if>
@@ -87,7 +87,7 @@ $(function() {
 			    	</ul>
 			    </li>
 			    <s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase') || #session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchaseReturn') || #session.LOGIN_USER.containFunction('supplierPurchaseJSP!preSearchPurchase')">
-			  	<li  data-options="iconCls:'icon-images',state:'open',border:false">
+			  	<li  data-options="iconCls:'icon-images',state:'closed',border:false">
 			  	    <span>供应商单据管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchase'}">采购单据录入 </li></s:if>
@@ -97,12 +97,13 @@ $(function() {
 			    </li>
 			    </s:if>
 			    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preCreate') || #session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchFiance')">
-			  	<li  data-options="iconCls:'icon-money_yen',state:'open',border:false">
+			  	<li  data-options="iconCls:'icon-money_yen',state:'closed',border:false">
 			  	    <span>供应商财务管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preCreate')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preCreate'}">创建供应商财务单据</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchFH')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preSearchFH'}">搜索供应商财务单据 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchAcctFlow')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preSearchAcctFlow'}">查询供应商往来账户</li></s:if>
+			    	    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preFinanceRpt'}">供应商财务报表</li></s:if>
 			    	</ul>
 			    </li>
 			    </s:if>			 	
@@ -124,10 +125,10 @@ $(function() {
 			  	<li  data-options="iconCls:'icon-money_yen',state:'open',border:false">
 			  	    <span>批发财务管理</span>
 			  		<ul style="width: 150%">
-			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preCreateFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preCreateFHQ'}">创建财务单据</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchFHQ'}">搜索财务单据 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preCreateFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preCreateFHQ'}">创建批发财务单据</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchFHQ'}">搜索批发财务单据 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchAcctFlow')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchAcctFlow'}">查询客户往来账户</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preFinanceRpt'}">连锁店财务报表</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preFinanceRpt'}">批发财务报表</li></s:if>
 			    	</ul>
 			    </li>
 			    </s:if>

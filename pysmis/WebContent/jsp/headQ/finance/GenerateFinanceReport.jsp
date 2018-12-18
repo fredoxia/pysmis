@@ -33,7 +33,7 @@ function generateReportBackProcess(data){
 
 	if (report != undefined){
 		showFinanceReport(report);
-	}
+	}     
 
 	$("#report").show();
 	$.messager.progress('close'); 
@@ -43,14 +43,14 @@ function generateReportBackProcess(data){
 function showFinanceReport(report){
 	$("<tr class='PBAInnerTableTitale'>"+
        "<td height='20' width='200'>账目名称</td>"+
-	   "<td>净付</td>"+
+	   "<td>净入(+收/-付)</td>"+
 	   "</tr>").appendTo("#reportTable");
 	
 	var items = report.reportItems;
 	
 	for (var i = 0; i < items.length; i++){
       $("<tr class='InnerTableContent'><td>"+
-    		items[i].category.itemName +"</td><td>"+
+    		items[i].category +"</td><td>"+
 	          (items[i].amount).toFixed(2) +"</td></tr>").appendTo("#reportTable");
 	}
 }
@@ -77,7 +77,7 @@ function showFinanceReport(report){
 					    </tr>
 						<tr class="InnerTableContent">
 					      <td height="35">&nbsp;</td>
-					      <td><strong>连锁店</strong></td>
+					      <td><strong>客户</strong></td>
 					      <td><%@ include file="../include/ClientInput.jsp"%>
 					           <input type="hidden" id="isAll" name="formBean.isAll" value="1"/>
 	 							<input type="hidden" id="indicator" name="formBean.indicator" value="0"/>

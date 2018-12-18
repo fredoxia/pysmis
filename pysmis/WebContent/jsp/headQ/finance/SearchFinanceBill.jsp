@@ -33,7 +33,7 @@ function searchBillsBackProcess(data){
 	    	if (bills[i].status == 3)
 		    	color =  "<%=Common_util.CANCEL_ROW_FONT_COLOR%>";
 	        var urlLink = "financeHQJSP!getFHQ?formBean.order.id=" + bills[i].id;
-	        var nodeTitle = "财务单据";
+	        var nodeTitle = "财务单据" + bills[i].id;
 	        if (bills[i] != "")  
 		          $("<tr class='InnerTableContent' style='" + bg + color +"' align='center'><td height='25'>"+
 				          bills[i].id+"</td><td>"+

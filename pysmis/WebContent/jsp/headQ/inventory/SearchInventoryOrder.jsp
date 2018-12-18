@@ -71,15 +71,15 @@ $(document).ready(function(){
 		}, {
 			field : 'PDAUserName',
 			title : 'PDA录入',
-			width : 60
+			width : 80
 		}, {
 			field : 'keeperName',
 			title : '仓库录入',
-			width : 60
+			width : 80
 		}, {
 			field : 'totalQ',
 			title : '总数',
-			width : 60
+			width : 80
 		}, {
 			field : 'totalWholeSales',
 			title : '批发总额',
@@ -87,15 +87,15 @@ $(document).ready(function(){
 		}, {
 			field : 'comment',
 			title : '备注',
-			width : 100
+			width : 150
 		}, {
 			field : 'process',
 			title : '单据进程',
-			width : 70
+			width : 90
 		}, {
 			field : 'orderType',
 			title : '单据类型',
-			width : 70
+			width : 90
 		}, {					
 			field : 'action',
 			title : '查看/修改',
@@ -104,7 +104,7 @@ $(document).ready(function(){
 				var str = '';
 				if (row.isAuthorizedToEdit == true){
 					var url = "<%=request.getContextPath()%>/action/inventoryOrder!loadOrder?formBean.order.order_ID=" + row.id;
-					str += $.formatString('<a href="#" onclick="addTab6(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="修改"/></a>', url, '批发单据 ' + row.id,'<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
+					str += $.formatString('<a href="#" onclick="addTab6(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="修改"/></a>', url, '批发销售单据 ' + row.id,'<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
 				}
 				
 				return str;

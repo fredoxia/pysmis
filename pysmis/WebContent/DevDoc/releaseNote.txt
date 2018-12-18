@@ -1,10 +1,8 @@
-Note when do the deployment to other server:
-1. Check the URL of the SQLServer and MySQL, especially the sqlserver database name
-2. check whether the profile "program" exists in the sqlserver
-3. Check whether the server's Tomcat port number is open (control panel -> fire wall -> exception)
-
-
-Release Date: 2018-10-12
+Release Date: 2018-12-12
 Release Summary: 1. add tables purchase_order, purchase_order_product, headq_purchase_history, 
                  2. Update the headq_purchase_history, remove the supplier_id
+                 
+Release Date: 
+Release Summary: 1。add finance_bill_id,cash,card,alipay,wechat to inventory_order
+                 2.add inventory_order_id to finance_bill
 

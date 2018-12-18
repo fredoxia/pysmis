@@ -8,7 +8,7 @@
 <title>朴与素连锁店管理信息系统</title>
 <%@ include file="../../common/Style.jsp"%>
 
-<SCRIPT src="<%=request.getContextPath()%>/conf_files/js/ChainReport.js" type=text/javascript></SCRIPT>
+<SCRIPT src="<%=request.getContextPath()%>/conf_files/js/ChainReport.js?v=5.15" type=text/javascript></SCRIPT>
 <script src="<%=request.getContextPath()%>/conf_files/js/highChart/highcharts.js"></script>
 <script src="<%=request.getContextPath()%>/conf_files/js/highChart/modules/exporting.js"></script>
 

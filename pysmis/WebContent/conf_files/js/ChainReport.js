@@ -1,4 +1,11 @@
 function generateReport(){
+
+	
+	var chainId = $("#chainId").val();
+	if (chainId == 0){
+		alert("请选择一个连锁店再继续操作");
+		return ;
+	}
 	$.messager.progress({
 		title : '提示',
 		text : '数据处理中，请稍后....'
@@ -66,7 +73,7 @@ function showFinanceReport(report){
 	
 	for (var i = 0; i < items.length; i++){
       $("<tr class='InnerTableContent'><td>"+
-    		items[i].category.itemName +"</td><td>"+
+    		items[i].category +"</td><td>"+
 	          (items[i].amount).toFixed(2) +"</td></tr>").appendTo("#reportTable");
 	}
 }

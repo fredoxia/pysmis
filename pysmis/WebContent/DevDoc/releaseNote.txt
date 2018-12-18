@@ -5,4 +5,5 @@ Release Summary: 1. add tables purchase_order, purchase_order_product, headq_pur
 Release Date: 
 Release Summary: 1。add finance_bill_id,cash,card,alipay,wechat to inventory_order
                  2.add inventory_order_id to finance_bill
+                 3.添加 alipay, wechat 到finance_category
 

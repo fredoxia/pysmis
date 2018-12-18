@@ -93,7 +93,7 @@ function changeChainStore(chainId){
 						      <td width="78"><strong>单据日期</strong></td>
 						      <td width="267">开始日期 ：
 						      	<s:textfield id="startDate" name="formBean.searchStartTime" cssClass="easyui-datebox" data-options="width:100,editable:false"/>
-						      <td width="72"><strong>连锁店</strong></td>
+						      <td width="72"><strong>客户</strong></td>
 						      <td width="393">
 						      		<%@ include file="../include/ClientInput.jsp"%>
 
@@ -141,7 +141,7 @@ function changeChainStore(chainId){
 						<table width="70%"  align="left" class="OuterTable" id="org_table">
 						    <tr class="PBAInnerTableTitale">
 						      <th width="40" height="32">编号</th>
-						      <th width="90">连锁店</th>
+						      <th width="90">客户</th>
 						      <th width="102">单据种类</th>
 						 	  <th width="150">过账日期</th>
 						      <th width="60">金额</th>

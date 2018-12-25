@@ -17,7 +17,7 @@ $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 	
 	var params= $.serializeObject($('#preGenReportForm'));
-	
+
 	$('#dataGrid').datagrid({
 		url : 'chainReportJSON!generateSalesReportByHQ',
 		queryParams: params,

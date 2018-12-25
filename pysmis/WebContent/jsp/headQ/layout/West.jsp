@@ -106,7 +106,13 @@ $(function() {
 			    	    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preFinanceRpt'}">供应商财务报表</li></s:if>
 			    	</ul>
 			    </li>
-			    </s:if>			 	
+			    </s:if>	
+			    <li  data-options="iconCls:'icon-database',state:'closed',border:false">
+			  	    <span>库存管理</span>
+			  		<ul style="width: 150%">
+			    		<s:if test="#session.LOGIN_USER.containFunction('headqInventoryFlowJSPAction!preInventoryRpt')"><li data-options="iconCls:'icon-database',attributes:{url:'headqInventoryFlowJSPAction!preInventoryRpt'}">当前库存统计</li></s:if>
+			    	</ul>
+			    </li>		 	
 			 	<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!create') || #session.LOGIN_USER.containFunction('inventoryOrder!createReturnOrder') || #session.LOGIN_USER.containFunction('inventoryOrder!search') || #session.LOGIN_USER.containFunction('inventoryOrder!preSearch')">
 			  	<li  data-options="iconCls:'icon-images',state:'open',border:false">
 			  	    <span>批发销售管理</span>

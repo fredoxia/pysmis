@@ -31,6 +31,7 @@ $(document).ready(function(){
 		columns : [ [
 					{field:'date', width:120,title:'单据日期'},
 					{field:'itemTypeName', width:90,title:'单据种类'},
+					{field:'id', width:40,title:'单据号'},
 					{field:'comment', width:240,title:'单据摘要'},
 					{field:'quantity', width:60,title:'单据数量',
 						formatter: function (value, row, index){

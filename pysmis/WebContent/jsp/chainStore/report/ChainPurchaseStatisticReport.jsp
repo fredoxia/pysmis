@@ -10,8 +10,7 @@
 <script>
 var baseurl = "<%=request.getContextPath()%>";
 $(document).ready(function(){
-	parent.$.messager.progress('close'); 
-	
+
 	var params= $.serializeObject($('#preGenReportForm'));
 	
 	$('#dataGrid').treegrid({
@@ -52,6 +51,9 @@ $(document).ready(function(){
 			     ]],
 		toolbar : '#toolbar',
 	});
+	
+	parent.$.messager.progress('close'); 
+	
 });
 
 function refresh(){

@@ -8,13 +8,9 @@
 <title>朴与素连锁店管理信息系统</title>
 <%@ include file="../../common/Style.jsp"%>
 
-<SCRIPT src="<%=request.getContextPath()%>/conf_files/js/ChainReport.js" type=text/javascript></SCRIPT>
 <script>
 $(document).ready(function(){
-	var yearId = $("#year").val();
-	if (yearId <= 0)
-	   $("#quarter").attr("disabled","true");
-	$("#checkBrandBt").attr("disabled","true");
+
 	parent.$.messager.progress('close'); 
 	});
 	
@@ -51,7 +47,7 @@ function validateReportForm(){
 </head>
 <body>
    <s:form id="preGenReportForm" name="preGenReportForm" action="/actionChain/chainReportJSPAction!generateSalesStatisticReport" theme="simple" method="POST"> 
-     <s:hidden name="formBean.reportType" id="reportType"/>
+
      <table width="60%" align="center"  class="OuterTable">
 	    <tr><td>
 			 <table width="100%" border="0">

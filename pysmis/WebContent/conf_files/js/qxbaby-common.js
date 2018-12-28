@@ -66,13 +66,13 @@ var SALES_ORDER_TITLE = "新建零售单";
 function validateLoginForm(){
     var error = "";
 	if (document.getElementById("userName").value == ""){
-		error += "用户名 - 必须输入!\n";
+		error += "用户名 - 必须输入!<br>";
 	}
 	if (document.getElementById("password").value == ""){
 		error += "密码 - 必须输入!\n";
 	}
 	if (error != ""){
-		alert(error);
+		$.messager.alert('错误提示',error,'warning');
 		return false;
 	} else
 		return true;

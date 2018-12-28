@@ -22,6 +22,12 @@ $(document).ready(function(){
 		lines : true,
 		queryParams: params,
 		treeField : 'name',
+		rowStyler: function(row){
+            var style = "";
+            if (row.isChain == true)
+            	style = "color:blue;";
+			return style;
+		},
 		onBeforeExpand : function(node) {
 			$("#parentId").attr("value", node.parentId);
 			$("#chainId").attr("value", node.chainId);
@@ -144,7 +150,7 @@ function deleteInventory(){
         </s:form>
         </div>
 		<div data-options="region:'center',border:false">
-			    <table id="dataGrid" style="width:780px;height:650px">			       
+			    <table id="dataGrid" style="width:780px;height:800px">			       
 		        </table>
 		        <div id="toolbar" style="display: none;">
 		             <a onclick="back();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-back'">退回上页</a>

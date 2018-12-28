@@ -48,7 +48,7 @@ $(function() {
 </script>
 <div id="menuAccordian" class="easyui-accordion" style="fit:true,border:false">  
     <div title="系统菜单" data-options="selected:true" style="padding:10px;">
-        <ul id="treeMenu" class="easyui-tree" lines="true">  
+        <ul id="treeMenu" class="easyui-tree" data-options="lines:true,animate:true">  
            <s:if test="#session.LOGIN_CHAIN_USER.containFunction('chainSalesJSPAction!preNewSalesOrder') ||#session.LOGIN_CHAIN_USER.containFunction('chainSalesJSPAction!preSearchDraftSalesOrder') ||#session.LOGIN_CHAIN_USER.containFunction('chainSalesJSPAction!preSearchSalesOrder')">
         	  	 <li data-options="iconCls:'icon-money_yen',state:'open',border:false">  
 		            <span>销售管理</span>  
@@ -110,9 +110,6 @@ $(function() {
 						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('inventoryFlowJSPAction!preCreateflowLossOrder')">
 							<li data-options="iconCls:'icon-database',attributes:{url:'inventoryFlowJSPAction!preCreateflowLossOrder'}">报损单</li>
 						</s:if>
-						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('inventoryFlowJSPAction!preCreateInventoryTransferOrder')">
-							<li data-options="iconCls:'icon-database',attributes:{url:'inventoryFlowJSPAction!preCreateInventoryTransferOrder'}">老调货单</li>
-						</s:if>		
 							<li data-options="iconCls:'icon-database',attributes:{url:'inventoryFlowJSPAction!checkInvenTrace'}">商品库存跟踪</li>
 							<li data-options="iconCls:'icon-database',attributes:{url:'inventoryFlowJSPAction!preCheckChainInven'}">连锁店商品库存查询</li>
 						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('inventoryFlowJSPAction!preCreateInventoryOrder')">
@@ -214,7 +211,7 @@ $(function() {
 
 	</div>  
     <div title="报表和连锁店菜单" style="padding:10px;">  
-        <ul id="treeMenu2" class="easyui-tree" lines="true">  
+        <ul id="treeMenu2" class="easyui-tree"  data-options="lines:true,animate:true">  
            		<li data-options="iconCls:'icon-money_yen',state:'open',border:false">  
 		            <span>销售比较</span>  
 	        		<ul>

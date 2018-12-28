@@ -14,9 +14,9 @@
 	<div id="sessionInfoDiv" style="position: absolute; right: 3px; top: 3px;" class="alert alert-info">
 	    欢迎 <s:property value="#session.LOGIN_CHAIN_USER.name"/>, <s:property value="#session.LOGIN_CHAIN_USER.myChainStore.chain_name"/>
     </div>
-    <div style="position: absolute; right: 0px; bottom: 4px;">
+    <div style="position: absolute; right: 0px; bottom: 0px;">
         <!--  
 	    <a href="javascript:void(0);" class="easyui-menubutton" data-options="menu:'#layout_north_pfMenu',iconCls:'cog'">更换皮肤</a> 
 	    <a href="javascript:void(0);" class="easyui-menubutton" data-options="menu:'#layout_north_kzmbMenu',iconCls:'cog'">控制面板</a>-->
-	    <a href="chainUserJSP!logoff" class="easyui-linkbutton">退出系统</a>
+	    <a href="chainUserJSP!logoff" class="easyui-linkbutton" >退出系统</a>
     </div>

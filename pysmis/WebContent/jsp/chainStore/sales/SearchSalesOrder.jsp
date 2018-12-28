@@ -164,7 +164,7 @@ function backProcessChangeChainStore(data){
 					      <td><strong>包含货品</strong></td>
 					      <td><%@ include file="../include/SearchProduct.jsp"%></td>
 					      <td><strong>单据号</strong></td>
-					      <td><s:textfield id="orderId" name="formBean.chainSalesOrder.id" cssClass="easyui-numberbox" value="0" data-options="min:0,precision:0" size="15"/></td>
+					      <td><s:textfield id="orderId" name="formBean.chainSalesOrder.id" cssClass="easyui-numberbox" value="0" data-options="min:0,precision:0"/></td>
 						  <td></td>
 					      <td></td>	    
 					    </tr>					    

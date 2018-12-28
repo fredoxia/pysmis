@@ -12,6 +12,10 @@
 var baseurl = "<%=request.getContextPath()%>";
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
+	$.messager.progress({
+		title : '提示',
+		text : '数据处理中，请稍后....'
+	});
 	
 	var params= $.serializeObject($('#preGenReportForm'));
 	

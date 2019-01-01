@@ -75,7 +75,7 @@ function back(){
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit : true,border : false">
-	    <div data-options="region:'north',border:false" style="height: fit">
+	    <div data-options="region:'north',border:false" style="height:0px">
 	                  
         <s:form id="preGenReportForm" name="preGenReportForm" action="" theme="simple" method="POST"> 
       		   

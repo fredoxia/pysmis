@@ -7,7 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>朴与素连锁店管理信息系统</title>
 <%@ include file="../../common/Style.jsp"%>
-<SCRIPT src="<%=request.getContextPath()%>/conf_files/js/datetimepicker_css.js" type=text/javascript></SCRIPT>
 <script>
 var itemSize = <s:property value="formBean.order.financeBillItemList.size"/>;
 var paidBillType = <%=FinanceBill.FINANCE_PAID_HQ%>;
@@ -20,6 +19,13 @@ var decreaseBillType = <%=FinanceBill.FINANCE_DECREASE_HQ%>;
 
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
+	for (var i = 0; i < itemSize; i++){
+        $("#financeBillItem" + i).numberbox({
+           onChange: function (newValue,oldValue) {
+        	   recalcualteTotal();
+          }
+        });
+	}
 
 });
 function saveToDraft(){
@@ -60,7 +66,8 @@ function recalcualteTotal(){
 	var invoiceTotalInput = $("#invoiceTotal");
 	var total =0;
 	for (var i = 0; i < itemSize; i++){
-	    var itemTotalS = $("#financeBillItem" + i).val();
+	    var itemTotalS = $("#financeBillItem" + i).numberbox('getValue');
+
 	    var itemTotal ;
 	    if (itemTotalS == "")
 		    itemTotal = 0;
@@ -76,7 +83,7 @@ function validateForm(){
 	var error = "";
 	
 	for (var i = 0; i < itemSize; i++){
-	    var itemTotalS = $("#financeBillItem" + i).val();
+	    var itemTotalS = $("#financeBillItem" + i).numberbox('getValue');
 
 	    if (itemTotalS == "")
 		    itemTotal = 0;
@@ -111,7 +118,7 @@ function validateForm(){
 	if (billType == prepayBillType){
 		for (var i = 0; i < itemSize; i++){
 		    var acctType = $("#acctType" + i).val();
-		    var acctAmt = $("#financeBillItem"+i).val();
+		    var acctAmt = $("#financeBillItem"+i).numberbox('getValue');
 
 		    if (acctType == prepayAcctType &&  acctAmt !=0){
 		    	error += "预收款单  - 不能选择'预收款'账户\n";
@@ -126,7 +133,7 @@ function validateForm(){
 		for (var i = 0; i < itemSize; i++){
 		    var acctType = $("#acctType" + i).val();
 
-		    if (acctType != increaseDecreaseAcctType && $("#financeBillItem"+i).val() !=0){
+		    if (acctType != increaseDecreaseAcctType && $("#financeBillItem"+i).numberbox('getValue') !=0){
 		    	error += "应收增加/减少单据  - 只能选择'应收增加/减少'账户\n";
 			}  
 		}
@@ -137,7 +144,7 @@ function validateForm(){
 		for (var i = 0; i < itemSize; i++){
 		    var acctType = $("#acctType" + i).val();
 
-		    if (acctType == increaseDecreaseAcctType && $("#financeBillItem"+i).val() !=0){
+		    if (acctType == increaseDecreaseAcctType && $("#financeBillItem"+i).numberbox('getValue')!=0){
 		    	error += "付款单/收款单  - 不能选择'应收增加/减少'账户\n";
 			}  
 		}
@@ -148,7 +155,7 @@ function validateForm(){
 		for (var i = 0; i < itemSize; i++){
 		    var acctType = $("#acctType" + i).val();
 
-		    if (acctType == prepayAcctType && $("#financeBillItem"+i).val() !=0){
+		    if (acctType == prepayAcctType && $("#financeBillItem"+i).numberbox('getValue') !=0){
 		    	error += "付款单  - 不能选择'预收款'账户\n";
 			}  
 		}

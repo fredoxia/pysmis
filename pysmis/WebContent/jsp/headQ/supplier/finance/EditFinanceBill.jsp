@@ -19,7 +19,13 @@ var decreaseBillType = <%=FinanceBillSupplier.FINANCE_DECREASE_HQ%>;
 
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
-
+	for (var i = 0; i < itemSize; i++){
+        $("#financeBillItem" + i).numberbox({
+           onChange: function (newValue,oldValue) {
+        	   recalcualteTotal();
+          }
+        });
+	}
 });
 function saveToDraft(){
 	if (validateForm()){
@@ -59,7 +65,7 @@ function recalcualteTotal(){
 	var invoiceTotalInput = $("#invoiceTotal");
 	var total =0;
 	for (var i = 0; i < itemSize; i++){
-	    var itemTotalS = $("#financeBillItem" + i).val();
+	    var itemTotalS = $("#financeBillItem" + i).numberbox('getValue');
 	    var itemTotal ;
 	    if (itemTotalS == "")
 		    itemTotal = 0;
@@ -75,7 +81,7 @@ function validateForm(){
 	var error = "";
 //alert(itemSize);
 	for (var i = 0; i < itemSize; i++){
-	    var itemTotalS = $("#financeBillItem" + i).val();
+	    var itemTotalS = $("#financeBillItem" + i).numberbox('getValue');
 
 	    if (itemTotalS == "")
 		    itemTotal = 0;

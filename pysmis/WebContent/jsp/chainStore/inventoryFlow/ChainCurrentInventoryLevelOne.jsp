@@ -13,6 +13,10 @@ var baseurl = "<%=request.getContextPath()%>";
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 	
+	$.messager.progress({
+		title : '提示',
+		text : '数据处理中，请稍后....'
+	});
 	var params= $.serializeObject($('#preGenReportForm'));
 	
 	$('#dataGrid').treegrid({
@@ -22,10 +26,13 @@ $(document).ready(function(){
 		lines : true,
 		queryParams: params,
 		treeField : 'name',
+		onLoadSuccess : function(row, param){
+			$.messager.progress('close'); 
+		},
 		rowStyler: function(row){
             var style = "";
             if (row.isChain == true)
-            	style = "color:blue;";
+            	style = "background-color:#EBEDEF;color:blue;";
 			return style;
 		},
 		onBeforeExpand : function(node) {
@@ -37,16 +44,17 @@ $(document).ready(function(){
 			var params = $('#preGenReportForm').serialize();
 			$('#dataGrid').treegrid('options').url = 'inventoryFlowJSONAction!getInventoryFlowEles?' + params;
 		},
-		columns : [ [
+		frozenColumns :[[					
 					{field:'name', width:250,title:'库存列表',
 						formatter: function (value, row, index){
-							if (row.state == 'open') {
+							if (row.state == 'open' && row.chainId != -1) {
 								var str = '';
 							    str += $.formatString('<a href="#" onclick="traceInventory(\'{0}\',\'\');">{1}</a>', row.barcode, row.name);
 							    return str;
 							} else 
 								return row.name;
-						}},
+						}}]],			
+		columns : [ [
 					{field:'inventory', width:160,title:'库存数量'},
 					{field:'wholeSales', width:160,title:'库存成本金额',
 						formatter: function (value, row, index){
@@ -84,7 +92,7 @@ function downloadInventory(){
 	if (node == null){
 		$.messager.alert('错误', '请先选中一行再继续操作', 'error');
 	} else {
-		$("#parentId").attr("value", node.parentId);
+		
 		$("#chainId").attr("value", node.chainId);
 	    $("#yearId").attr("value", node.yearId);
 		$("#quarterId").attr("value", node.quarterId);
@@ -130,7 +138,7 @@ function deleteInventory(){
 				} else {
 					$.messager.alert('错误', '密码错误', 'error');
 				}
-			}
+			}   
 		});
 
 	}
@@ -150,7 +158,7 @@ function deleteInventory(){
         </s:form>
         </div>
 		<div data-options="region:'center',border:false">
-			    <table id="dataGrid" style="width:780px;height:800px">			       
+			    <table id="dataGrid">			       
 		        </table>
 		        <div id="toolbar" style="display: none;">
 		             <a onclick="back();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-back'">退回上页</a>

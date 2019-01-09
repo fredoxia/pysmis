@@ -139,7 +139,7 @@ function searchOrder(){
 		      <td width="95" height="32"><strong>单据种类：</strong></td>
 		      <td width="100"><s:select name="formBean.order.order_type" id="order_type"  list="uiBean.orderTypeMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" /></td>
 		      <td width="65"><strong>状态：</strong></td>
-		      <td width="95"><s:select name="formBean.order.order_Status" id="order_Status"  list="uiBean.orderStatusMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" />      </td>
+		      <td width="100"><s:select name="formBean.order.order_Status" id="order_Status"  list="uiBean.orderStatusMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" />      </td>
 		      <td width="90"><strong>录入会计：</strong></td>
 		      <td><s:select name="formBean.order.order_Auditor.user_id" id="accountant"  list="uiBean.users" listKey="user_id" listValue="user_name" headerKey="-1" headerValue="---全部---" />      </td>
 		    </tr>

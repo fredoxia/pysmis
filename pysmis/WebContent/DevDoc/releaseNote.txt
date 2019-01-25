@@ -2,8 +2,10 @@ Release Date: 2018-12-12
 Release Summary: 1. add tables purchase_order, purchase_order_product, headq_purchase_history, 
                  2. Update the headq_purchase_history, remove the supplier_id
                  
-Release Date: 
+Release Date: 2018-1-5
 Release Summary: 1。add finance_bill_id,cash,card,alipay,wechat to inventory_order
                  2.add inventory_order_id to finance_bill
                  3.添加 alipay, wechat 到finance_category
 
+Release Date: 
+Release Summary: 1。add gender, size_range, size_min, size_max to the product

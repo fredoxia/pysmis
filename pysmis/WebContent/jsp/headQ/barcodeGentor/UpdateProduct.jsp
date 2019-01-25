@@ -107,6 +107,21 @@ function update(){
         $("#discount").attr("value","");
 	} 
 	
+	var sizeMin = $("#sizeMin").val();
+	var sizeMax = $("#sizeMax").val();
+	
+	if (sizeMin != ""){
+		if (sizeMax == ""){
+			error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
+		} else if (parseInt(sizeMin) > parseInt(sizeMax)){
+			error += "最小码段 应该小于 最大码段 \n";
+		}
+	} else {
+		if (sizeMax != ""){
+			error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
+		}
+	}
+	
 	if (error != "")
 		alert(error);
 	else {
@@ -166,10 +181,10 @@ function update(){
 	          <td height="18"><strong>类别</strong>       :</td>
 	          <td><s:select name="formBean.productBarcode.product.category.category_ID"  cssClass="easyui-combobox" size="1" id="category" list="uiBean.basicData.categoryList"  listKey="category_ID" listValue="category_Name"/></td>
 	       </tr>
-	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
-	          <td height="18"><strong>产品货号</strong>:</td><td><s:textfield name="formBean.productBarcode.product.productCode" id="productCode"/>*</td>
-	       </tr>
 
+	      <tr class="InnerTableContent">
+	          <td height="18"><strong>产品货号</strong>:</td><td><s:textfield name="formBean.productBarcode.product.productCode" id="productCode"/>*</td>
+	       </tr>	
 	       <tr class="InnerTableContent">
 	          <td height="18"><strong>齐码数量 </strong>   :</td>
 	          <td><s:select name="formBean.productBarcode.product.numPerHand" size="1" id="numPerHand" list="uiBean.basicData.numPerHandList" listKey="numPerHand" listValue="numPerHand"/></td>
@@ -204,7 +219,20 @@ function update(){
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td height="18"><strong>折扣 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.discount" id="discount" value="<s:if test="uiBean.product.product.discount!=0"><s:property value="uiBean.product.product.discount"/></s:if>" size="10"/></td>
-	       </tr>	    
+	       </tr>	
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	          <td height="18"><strong>段位</strong>:</td><td><s:select name="formBean.productBarcode.product.sizeRange" size="1" id="sizeRange"   list="#{'S':'小','M':'中','L':'大'}" listKey="key" listValue="value" headerKey="" headerValue=""/></td>
+	       </tr>	       
+	       <tr class="InnerTableContent">
+	          <td height="18"><strong>性别</strong>       :</td>
+	          <td><s:select name="formBean.productBarcode.product.gender" size="1" id="gender"   list="#{'M':'男','F':'女','N':'中性'}" listKey="key" listValue="value"  headerKey="" headerValue=""/></td>
+	       </tr>  
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	          <td height="18"><strong>最小码</strong>:</td><td><s:select name="formBean.productBarcode.product.sizeMin" id="sizeMin" list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td>
+	       </tr>	       
+	       <tr class="InnerTableContent">
+	          <td height="18"><strong>最大码</strong>:</td><td><s:select name="formBean.productBarcode.product.sizeMax" id="sizeMax"   list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td>
+	       </tr>		                
 	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td colspan="2"> <input type="button" value="更新" onclick="update();"/>&nbsp;&nbsp;<input type="button" value="删除" onclick="del();"/>&nbsp;&nbsp;<input type="button" value="取消" onclick="window.close();"/></td>
 	       </tr>

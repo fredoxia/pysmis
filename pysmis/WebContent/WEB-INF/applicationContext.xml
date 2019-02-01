@@ -34,7 +34,7 @@
         <property name="validationInterval" value="30000"/>  
         <property name="validationQuery" value="SELECT 1"/>   
         <property name="timeBetweenEvictionRunsMillis" value="5000"/>   
-        <property name="maxActive" value="40"/>   
+        <property name="maxActive" value="60"/>   
         <property name="initialSize" value="5"/>    
         <property name="minIdle" value="10"/>     
         <property name="logAbandoned" value="false"/>   
@@ -65,6 +65,7 @@
 	             <value>com/onlineMIS/ORM/headQ/SupplierMgmt.hbm.xml</value>
 	             <value>com/onlineMIS/ORM/headQ/SupplierFinance.hbm.xml</value>
 				 <value>com/onlineMIS/ORM/headQ/SupplierPurchase.hbm.xml</value>
+				 <value>com/onlineMIS/ORM/shared/Expense.hbm.xml</value>
 	     </list>
         </property>
 	    <property name="hibernateProperties">

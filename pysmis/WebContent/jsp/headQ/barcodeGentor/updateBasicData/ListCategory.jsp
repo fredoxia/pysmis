@@ -30,6 +30,14 @@ $(document).ready(function(){
 				title : '货品类别	',
 				width : 120
 			    }, {
+				field : 'material',
+				title : '面料	',
+				width : 120
+			    }, {
+				field : 'filler',
+				title : '填充物	',
+				width : 120
+			    }, {				    	
 				field : 'typeS',
 				title : '所属',
 				width : 90
@@ -69,7 +77,7 @@ function refresh(){
 </script>
 </head>
 <body>
-	<div class="easyui-layout" border="false" style="width:500px;height:650px">
+	<div class="easyui-layout" border="false" style="width:600px;height:650px">
 		<div data-options="region:'north',border:false" style="height: 60px;">
 			<%@ include file="ChooseBasicData.jsp"%>
 		</div>

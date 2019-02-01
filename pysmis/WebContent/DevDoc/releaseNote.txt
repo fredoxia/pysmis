@@ -9,3 +9,4 @@ Release Summary: 1。add finance_bill_id,cash,card,alipay,wechat to inventory_or
 
 Release Date: 
 Release Summary: 1。add gender, size_range, size_min, size_max to the product
+                 2.add expense, expense_type tables

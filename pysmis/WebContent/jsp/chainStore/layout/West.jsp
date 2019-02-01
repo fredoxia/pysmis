@@ -123,7 +123,7 @@ $(function() {
 
 				
 			     <s:if test="#session.LOGIN_CHAIN_USER.containFunction('chainReportJSPAction!preSalesReport') || #session.LOGIN_CHAIN_USER.containFunction('chainReportJSPAction!prePurchaseReport') || #session.LOGIN_CHAIN_USER.containFunction('chainReportJSPAction!preFinanceReport')|| #session.LOGIN_CHAIN_USER.containFunction('inventoryFlowJSPAction!preGetCurrentInventory') || #session.LOGIN_CHAIN_USER.containFunction('chainReportJSPAction!preSalesStatisticReport') || #session.LOGIN_CHAIN_USER.containFunction('chainReportJSPAction!prePurchaseStatisticReport')">
-				  <li data-options="iconCls:'icon-chart_bar',state:'open'">
+				  <li data-options="iconCls:'icon-chart_bar',state:'closed'">
 					<span>报表功能</span>
 					<ul>
 						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('chainReportJSPAction!preSalesReport')">
@@ -172,11 +172,32 @@ $(function() {
 						</s:if>
 					</ul>
 				 </li>
-
+				 <s:if test="#session.LOGIN_CHAIN_USER.containFunction('expenseChainJSP!preCreateExpenseChain') ||#session.LOGIN_CHAIN_USER.containFunction('expenseChainJSP!preSearchExpenseChain')">
+				<li data-options="iconCls:'icon-money_yen',state:'closed'">
+					<span>连锁店费用管理</span>
+					<ul>
+						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('expenseChainJSP!preCreateExpenseChain')">
+							<li data-options="iconCls:'icon-money_yen',attributes:{url:'expenseChainJSP!preCreateExpenseChain'}">创建连锁店费用</li>
+						</s:if>
+						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('expenseChainJSP!preSearchExpenseChain')">
+							<li data-options="iconCls:'icon-money_yen',attributes:{url:'expenseChainJSP!preSearchExpenseChain'}">查找连锁店费用</li>
+						</s:if>		
+						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('expenseChainJSP!preExpenseReportChain')">
+							<li data-options="iconCls:'icon-money_yen',attributes:{url:'expenseChainJSP!preExpenseReportChain'}">连锁店费用报表</li>
+						</s:if>																
+					</ul>
+				</li>
+				 </s:if>
 				<li data-options="iconCls:'icon-connect',state:'closed'">
 					<span>连锁店管理</span>
 					<ul>
 						<li data-options="iconCls:'icon-connect',attributes:{url:'chainUserJSP!preEditMyAcct'}">我的账户</li>
+						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('expenseChainJSP!preCreateExpenseChain')">
+							<li data-options="iconCls:'icon-connect',attributes:{url:'expenseChainJSP!preCreateExpenseChain'}">创建连锁店费用</li>
+						</s:if>
+						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('expenseChainJSP!preSearchExpenseChain')">
+							<li data-options="iconCls:'icon-connect',attributes:{url:'expenseChainJSP!preSearchExpenseChain'}">查找连锁店费用</li>
+						</s:if>						
 						<s:if test="#session.LOGIN_CHAIN_USER.containFunction('chainMgmtJSP!preEditChainInfor')">
 							<li data-options="iconCls:'icon-connect',attributes:{url:'chainMgmtJSP!preEditChainInfor'}">连锁店管理</li>
 						</s:if>

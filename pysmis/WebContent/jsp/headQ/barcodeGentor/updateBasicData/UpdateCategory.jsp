@@ -40,6 +40,14 @@ function updateCategoryBKProcess(data){
 	          <s:textfield id="categoryName" name="formBean.category.category_Name" maxLength="15" required="required" /></td>
 	       </tr>
 	       <tr class="InnerTableContent">
+	          <td>面料:</td><td>
+	          <s:textfield id="material" name="formBean.category.material" maxLength="12"/></td>
+	       </tr>	
+	       <tr class="InnerTableContent">
+	          <td>填充物:</td><td>
+	          <s:textfield id="filler" name="formBean.category.filler" maxLength="12"/></td>
+	       </tr>		              
+	       <tr class="InnerTableContent">
 	          <td>所属         :</td><td><s:select id="type" name="formBean.category.chainId" list="#{-1:'总部类别',1:'连锁店类别'}" listKey="key" listValue="value"/></td>
 	       </tr>	       
 	       <tr class="InnerTableContent" >

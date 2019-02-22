@@ -53,7 +53,7 @@ function searchClient(){
 		
 		$.post('<%=request.getContextPath()%>/action/ipadJSON!searchClientByPY', params, 
 		function(result) {
-			
+
 			if (result.returnCode == 2) {
 			    $('#custBody tr').each(function () {                
 			        $(this).remove();
@@ -67,9 +67,9 @@ function searchClient(){
 				        if (cops[i] != "")  {
 					          $("<tr id='pRow"+cops[i].client_id+"'><td style='vertical-align:middle;'>"+
 					        		  cops[i].name +" "+
-					        		  cops[i].region.name+" "+
+					        		  cops[i].area+" "+
 										"<div name='btnGroup' data-role='controlgroup' data-type='horizontal'>"+
-											"<input name='addBtn' type='button' value='选中' data-mini='true'  data-inline='true' onclick='chooseCust("+cops[i].client_id+");'/>"+
+											"<input name='addBtn' type='button' value='选中' data-mini='true'  data-inline='true' onclick='chooseCust("+cops[i].id+");'/>"+
 										"</div>"+
 							          "</td></tr>").appendTo("#custBody");
 				        }

@@ -25,7 +25,7 @@
 						id="id"  placeholder="你的员ID登录账号" />
 				</div>
 				<div data-role="fieldcontainer">
-					<label for="password">密码 : </label> <s:password name="user.password"
+					<label for="password">密码 : </label> <s:textfield name="user.password"
 						id="password" placeholder="系统数字密码" />
 				</div>
 				<div data-role="fieldcontainer">

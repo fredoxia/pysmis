@@ -53,9 +53,9 @@ function searchClient(){
 		
 		$.post('<%=request.getContextPath()%>/action/ipadJSON!searchClientByPY', params, 
 		function(result) {
-			
+
 			if (result.returnCode == 2) {
-			    $('#clients tr').each(function () {                
+			    $('#custBody tr').each(function () {                
 			        $(this).remove();
 			    });
 			    
@@ -66,10 +66,10 @@ function searchClient(){
 				    	var j = i +1;
 				        if (cops[i] != "")  {
 					          $("<tr id='pRow"+cops[i].client_id+"'><td style='vertical-align:middle;'>"+
-					        		  cops[i].name +"</td><td style='vertical-align:middle;'>"+
-					        		  cops[i].region.name+"</td><td>"+
+					        		  cops[i].name +" "+
+					        		  cops[i].area+" "+
 										"<div name='btnGroup' data-role='controlgroup' data-type='horizontal'>"+
-											"<input name='addBtn' type='button' value='选中' data-mini='true'  data-inline='true' onclick='chooseCust("+cops[i].client_id+");'/>"+
+											"<input name='addBtn' type='button' value='选中' data-mini='true'  data-inline='true' onclick='chooseCust("+cops[i].id+");'/>"+
 										"</div>"+
 							          "</td></tr>").appendTo("#custBody");
 				        }
@@ -90,6 +90,7 @@ function searchClient(){
 		}, 'JSON');
     }
 }
+
 
 </script>
 </head>

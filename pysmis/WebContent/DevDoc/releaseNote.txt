@@ -7,6 +7,7 @@ Release Summary: 1。add finance_bill_id,cash,card,alipay,wechat to inventory_or
                  2.add inventory_order_id to finance_bill
                  3.添加 alipay, wechat 到finance_category
 
-Release Date: 
+Release Date: 2019-2-24
 Release Summary: 1。add gender, size_range, size_min, size_max to the product
                  2.add expense, expense_type tables
+                 3.add hide, material, filler  to category

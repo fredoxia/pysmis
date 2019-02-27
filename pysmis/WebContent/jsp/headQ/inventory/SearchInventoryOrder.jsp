@@ -71,12 +71,16 @@ $(document).ready(function(){
 		}, {
 			field : 'PDAUserName',
 			title : 'PDA录入',
-			width : 80
+			width : 70
 		}, {
 			field : 'keeperName',
 			title : '仓库录入',
-			width : 80
+			width : 70
 		}, {
+			field : 'auditorName',
+			title : '审核人员',
+			width : 70
+		}, {			
 			field : 'totalQ',
 			title : '总数',
 			width : 80
@@ -107,12 +111,45 @@ $(document).ready(function(){
 					str += $.formatString('<a href="#" onclick="addTab6(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="修改"/></a>', url, '批发销售单据 ' + row.id,'<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
 				}
 				
-				return str;
-			}
-		}]]
+				return str;}
+		}, {					
+			field : 'action2',
+			title : '权限转移',
+			width : 150,
+			formatter : function(value, row, index) {
+				var str = '';
+				if (row.isAuthorizedToTransfer == true){
+					var dropDown = "<select id='transferTo"+row.id+"'>";
+					<s:iterator value="uiBean.users" status = "st" id="user" >
+					   dropDown +="<option value='<s:property value="#user.user_id"/>'><s:property value="#user.user_name"/></option>";
+					</s:iterator>
+					dropDown +="</select>";
+					
+					str += $.formatString(dropDown + ' <input type="button" value="转移单据" onclick="transferOrderToOther(\'{0}\',\'{1}\');"/>', row.id);
+				}
+				
+				return str;}
+		}
+		]]
 	});
 });
+function transferOrderToOther(orderId){
+	var transferToUserId = $("#transferTo"+orderId).val();
+	var params = "formBean.order.order_ID=" + orderId + "&formBean.user.user_id="+ transferToUserId;
+	var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!transferOrderToOther";
 
+	$.post(url,params, transferBk,"json");
+	
+}
+function transferBk(data){
+	var returnCode = data.returnCode;
+	if (returnCode == SUCCESS){
+		$.messager.alert('操作成功', "成功转移单据,即刻刷新单据", 'info');
+		searchOrder();
+	} else {
+		$.messager.alert('操作失败', data.message, 'error');
+	}
+}
 function searchOrder(){
 	var params = $.serializeObject($('#inventorySearchForm')); 
 	$('#dataGrid').datagrid('load',params); 

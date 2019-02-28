@@ -11,3 +11,4 @@ Release Date: 2019-2-24
 Release Summary: 1。add gender, size_range, size_min, size_max to the product
                  2.add expense, expense_type tables
                  3.add hide, material, filler  to category
+                 4.udate the rank in the chain_daily_sales to rank_

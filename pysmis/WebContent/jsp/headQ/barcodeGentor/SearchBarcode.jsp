@@ -176,10 +176,11 @@ function showCreateDate(){
 		$("#createDateDiv").hide();
 }
 function selectAll(){
-	if ($("#selectAllCheck").attr("checked") == 'checked')
-		$("input[name='selectedBarcodes']").attr("checked",true); 
+
+	if ($("#selectAllCheck").prop("checked") == true)
+		$("input[name='selectedBarcodes']").prop("checked",true); 
 	else
-		$("input[name='selectedBarcodes']").attr("checked",false); 
+		$("input[name='selectedBarcodes']").prop("checked",false); 
 	
 }
 function validateCheckbox(){

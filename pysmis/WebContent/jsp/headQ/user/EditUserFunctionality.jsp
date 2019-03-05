@@ -68,7 +68,7 @@ function getUserBackProcess(data){
 	    if (functions.length != 0)
 		    for (var i = 0; i < functions.length; i++){
 		        var fun = functions[i].function_id;
-		        $("#"+functionPrefix+fun).attr("checked",true);
+		        $("#"+functionPrefix+fun).prop("checked",true);
 		    }
     }else {
     	alert("获取信息发生错误!");
@@ -82,7 +82,7 @@ function clearAllData(){
 }
 
 function clearAllFunctionData(){
-	$("input[name='functionalities']").attr("checked",false);
+	$("input[name='functionalities']").prop("checked",false);
 }
 
 
@@ -92,7 +92,7 @@ function changeFunction13(){
 	var value = $("#function13").is(':checked');
 	
 	if (value){
-		$("#function14").attr("checked",true);
+		$("#function14").prop("checked",true);
 	}	
 }
 
@@ -101,7 +101,7 @@ function changeFunction14(){
 	var value = $("#function14").is(':checked');
 	
 	if (!value){
-		$("#function13").attr("checked",false);
+		$("#function13").prop("checked",false);
 	}	
 }
 </script>

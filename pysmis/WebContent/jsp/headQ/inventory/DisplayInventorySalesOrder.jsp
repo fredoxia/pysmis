@@ -87,6 +87,22 @@ function deleteOrder(){
 		} ]
 		});
 }
+function printOrder(){
+	 var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!printOrder";
+	    var params=$("#inventoryOrderForm").serialize();  
+	    $.post(url,params, printOrderBackProcess,"json");	
+}	
+function printOrderBackProcess(data){
+    var response = data;
+	var returnCode = response.returnCode;
+
+	if (returnCode != SUCCESS)
+		alert("获取单据失败 ： " + response.message);
+	else {
+        alert(response.returnValue);
+	}
+ }
+		
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 	$("#org_table tr").mouseover(function(){      
@@ -250,6 +266,8 @@ $(document).ready(function(){
 				 <s:if test="(#session.LOGIN_USER.containFunction('inventoryOrder!cancelOrder') && formBean.order.order_Status==3) ">
 				     <input type="button" value="红冲单据" onclick="cancelOrder();"/>
 				 </s:if>
+				 
+				 <input type="button" value="打印单据" onclick="printOrder();"/>
 			 </td>			 					 		
 			 <td>
 				 <s:if test="formBean.order.order_Status== 1 || formBean.order.order_Status==2 || formBean.order.order_Status==6  || formBean.order.order_Status==9">

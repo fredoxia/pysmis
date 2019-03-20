@@ -35,15 +35,15 @@ function backProcessSearchClient(data){
     }  
     $("#ClientDiv").dialog("open");
 }
-function selectClient(clientId, clientName){
-	$("#clientID").attr("value", clientId);
-	$("#clientName").attr("value", clientName);
+function selectClient(clientId, clientName1){
+	$("#clientID").val(clientId);
+	$("#clientName").val(clientName1);
 	$("#ClientDiv").dialog("close");
 	chooseClient(clientId);
 }
 function clearCustomer(){
-	$("#clientID").attr("value", 0);
-	$("#clientName").attr("value", "");
+	$("#clientID").val(0);
+	$("#clientName").val("");
 }
 
 </script>

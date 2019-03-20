@@ -129,28 +129,28 @@ function backProcess(data){
 	
     if (barcodes.length != 0){
    	
-    	barcodeInput.attr("value",barcodes[0].barcode);
-    	productIdInput.attr("value",barcodes[0].id);
-		unitInput.attr("value",barcodes[0].product.unit);
-		brandInput.attr("value",barcodes[0].product.brand.brand_Name);
-		productCodeInput.attr("value",barcodes[0].product.productCode);
+    	barcodeInput.val(barcodes[0].barcode);
+    	productIdInput.val(barcodes[0].id);
+		unitInput.val(barcodes[0].product.unit);
+		brandInput.val(barcodes[0].product.brand.brand_Name);
+		productCodeInput.val(barcodes[0].product.productCode);
 		if (fullOrSingle == 0)
-		   quantityInput.attr("value",barcodes[0].product.numPerHand);
+		   quantityInput.val(barcodes[0].product.numPerHand);
 		else 
-			quantityInput.attr("value",1);
-		yearInput.attr("value", barcodes[0].product.year.year);
-		quarterInput.attr("value", barcodes[0].product.quarter.quarter_Name);
+			quantityInput.val(1);
+		yearInput.val( barcodes[0].product.year.year);
+		quarterInput.val( barcodes[0].product.quarter.quarter_Name);
 		var color = barcodes[0].color;
 		var colorName = "";
 		if (color != null)
     		colorName = color.name;
 		
-		colorInput.attr("value", colorName);
+		colorInput.val( colorName);
         var salesPrice = barcodes[0].product.salesPrice;
         if (salesPrice == "")
-        	salePriceInput.attr("value","");
+        	salePriceInput.val("");
         else
-		    salePriceInput.attr("value",salesPrice);
+		    salePriceInput.val(salesPrice);
         
         
         var wholeSalePrice = 0;
@@ -209,8 +209,8 @@ function backProcess(data){
             default: ;
         }
 
-        wholeSalePriceInput.attr("value",wholeSalePrice);
-        discountInput.attr("value",discount);
+        wholeSalePriceInput.val(wholeSalePrice);
+        discountInput.val(discount);
 
         
         //set the price select drop down
@@ -222,15 +222,15 @@ function backProcess(data){
         
 /*        var recCost = barcodes[0].product.recCost;
         if (recCost == "")
-        	recCostInput.attr("value","");
+        	recCostInput.val("");
         else
-        	recCostInput.attr("value",recCost);*/
+        	recCostInput.val(recCost);*/
         
-		numPerHandInput.attr("value",barcodes[0].product.numPerHand);
+		numPerHandInput.val(barcodes[0].product.numPerHand);
 		
 		if (barcodes[0].boughtBefore != 0){
 			document.getElementById("bgs").src = baseurl+"/conf_files/web-image/already.mp3";
-			boughtBeforeInput.attr("value",barcodes[0].boughtBefore);
+			boughtBeforeInput.val(barcodes[0].boughtBefore);
 			takeBeforeDiv.html("配" + barcodes[0].boughtBefore);
 			takeBeforeDiv.show();
          }else
@@ -244,18 +244,18 @@ function backProcess(data){
     	  errorRow.css('background-color', '#EE8553');
     	  document.getElementById("bgs").src = baseurl+"/conf_files/web-image/error.mp3";
     	}
-    	barcodeInput.attr("value","");
-    	productIdInput.attr("value","");
-		unitInput.attr("value","");
-		brandInput.attr("value","");
-		productCodeInput.attr("value","");
-		quantityInput.attr("value","");
-		yearInput.attr("value","");
-		quarterInput.attr("value","");
-		//recCostInput.attr("value","");
-		wholeSalePriceInput.attr("value","");
-		discountInput.attr("value","");
-		salePriceInput.attr("value","");
+    	barcodeInput.val("");
+    	productIdInput.val("");
+		unitInput.val("");
+		brandInput.val("");
+		productCodeInput.val("");
+		quantityInput.val("");
+		yearInput.val("");
+		quarterInput.val("");
+		//recCostInput.val("");
+		wholeSalePriceInput.val("");
+		discountInput.val("");
+		salePriceInput.val("");
 		$("#priceSlect" +preIndex).empty();
     }
 
@@ -293,10 +293,10 @@ function calculateTotal(){
 		 } 
 	 }
 	 
-	 $("#totalQuantity").attr("value",totalQ);
-	 $("#totalRetailPrice").attr("value",(totalRetailPrice).toFixed(2));
-//	 $("#totalRecCost").attr("value",(totalRecCost).toFixed(2));
-	 $("#totalWholePrice").attr("value",(totalWholePrice).toFixed(2));
+	 $("#totalQuantity").val(totalQ);
+	 $("#totalRetailPrice").val((totalRetailPrice).toFixed(2));
+//	 $("#totalRecCost").val((totalRecCost).toFixed(2));
+	 $("#totalWholePrice").val((totalWholePrice).toFixed(2));
 }
 /*
 function calculateWholeTotal(){
@@ -311,7 +311,7 @@ function calculateWholeTotal(){
 		 } 
 	 }
 	 
-	 $("#totalWholePrice").attr("value",(totalWholePrice).toFixed(2));
+	 $("#totalWholePrice").val((totalWholePrice).toFixed(2));
 }*/
 
 function deleteRow(rowID, delIndex){
@@ -447,7 +447,7 @@ function validateForm(){
 			alert(error);
 			return false;
 		}else{
-			$("#barcode" + index).attr("value","");
+			$("#barcode" + index).val("");
 		    recordSubmit();
 			return true;
 		}
@@ -482,15 +482,15 @@ function onWholeSalePriceChange(triggerSource,triggerIndex){
 	 if (triggerSource == 1){
 		 var discount = parseFloat(discountInput.val());
 		 wholePrice = salePrice * discount;
-		 wholeSalePriceInput.attr("value",(wholePrice).toFixed(2));
+		 wholeSalePriceInput.val((wholePrice).toFixed(2));
 	 } else if (triggerSource == 2){
 		 wholePrice = parseFloat(wholeSalePriceInput.val());
 		 var discount = wholePrice / salePrice;
-		 discountInput.attr("value",(discount).toFixed(2));
+		 discountInput.val((discount).toFixed(2));
 	 } else if (triggerSource == 3){
 		 var discount = parseFloat(discountInput.val());
 		 wholePrice = salePrice * discount;
-		 wholeSalePriceInput.attr("value",(wholePrice).toFixed(2));
+		 wholeSalePriceInput.val((wholePrice).toFixed(2));
 	 }
 	 
 	 //2. calclate the total value and checkt the price consistent
@@ -513,7 +513,7 @@ function onWholeSalePriceChange(triggerSource,triggerIndex){
 			 } 
 		 }
 	
-		 $("#totalWholePrice").attr("value",(totalWholePrice).toFixed(2));
+		 $("#totalWholePrice").val((totalWholePrice).toFixed(2));
 		 
 		 if (!consistent){
 			 var productCode = $("#productCode" + triggerIndex).val();
@@ -546,23 +546,23 @@ function retrieveProductByExcel(products){
         	var quarterInput = $("#quarter" + index);
         	var colorInput = $("#color" + index);
         	
-        	barcodeInput.attr("value",products[i].productBarcode.barcode);
-        	productIdInput.attr("value",products[i].productBarcode.id);
-    		unitInput.attr("value",products[i].productBarcode.product.unit);
-    		brandInput.attr("value",products[i].productBarcode.product.brand.brand_Name);
-    		productCodeInput.attr("value",products[i].productBarcode.product.productCode);
-    		quantityInput.attr("value",products[i].quantity);
-    		yearInput.attr("value", products[i].productBarcode.product.year.year);
-    		quarterInput.attr("value", products[i].productBarcode.product.quarter.quarter_Name);
+        	barcodeInput.val(products[i].productBarcode.barcode);
+        	productIdInput.val(products[i].productBarcode.id);
+    		unitInput.val(products[i].productBarcode.product.unit);
+    		brandInput.val(products[i].productBarcode.product.brand.brand_Name);
+    		productCodeInput.val(products[i].productBarcode.product.productCode);
+    		quantityInput.val(products[i].quantity);
+    		yearInput.val( products[i].productBarcode.product.year.year);
+    		quarterInput.val( products[i].productBarcode.product.quarter.quarter_Name);
     		var color = products[i].productBarcode.color;
     		if (color != null)
-    		    colorInput.attr("value", color.name);
+    		    colorInput.val( color.name);
     		
             var salesPrice = products[i].salesPrice;
             if (salesPrice == "")
-            	salePriceInput.attr("value","");
+            	salePriceInput.val("");
             else
-    		    salePriceInput.attr("value",(salesPrice).toFixed(2));
+    		    salePriceInput.val((salesPrice).toFixed(2));
 
             var wholeSalePrice = products[i].wholeSalePrice;
             var priceSelected = products[i].salePriceSelected;
@@ -594,8 +594,8 @@ function retrieveProductByExcel(products){
                 default: alert("no price");
             }
 
-            wholeSalePriceInput.attr("value",(wholeSalePrice).toFixed(2));
-            discountInput.attr("value",(discount).toFixed(2));
+            wholeSalePriceInput.val((wholeSalePrice).toFixed(2));
+            discountInput.val((discount).toFixed(2));
 
             
             //set the price select drop down
@@ -606,9 +606,9 @@ function retrieveProductByExcel(products){
             $("#priceSlect" +index).append("<option value='"+salesPriceFactory+"'"+select4+">零售价 "+salesPriceFactory+"</option>"); 
             
 //            var recCost = products[i].productBarcode.product.recCost;
-//            recCostInput.attr("value",(recCost).toFixed(2));
+//            recCostInput.val((recCost).toFixed(2));
             
-    		numPerHandInput.attr("value",products[i].numPerHand);
+    		numPerHandInput.val(products[i].numPerHand);
 
     	    barcodeInput.attr("readonly",true);
     	    

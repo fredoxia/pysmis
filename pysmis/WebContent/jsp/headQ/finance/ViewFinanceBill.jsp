@@ -20,7 +20,22 @@ function cancelBill(){
 	document.financeBillForm.action = "<%=request.getContextPath()%>/action/financeHQJSP!cancelFHQBill";
 	document.financeBillForm.submit();
 }
+function printBill(){
+	 var url = "<%=request.getContextPath()%>/action/financeHQJSON!printOrder";
+	 var params=$("#financeBillForm").serialize();  
+	 
+	 $.post(url,params, printOrderBackProcess,"json");	
+}	
+function printOrderBackProcess(data){
+   var response = data;
+	var returnCode = response.returnCode;
 
+	if (returnCode != SUCCESS)
+		alert("获取单据失败 ： " + response.message);
+	else {
+       alert(response.returnValue);
+	}
+}
 </script>
 </head>
 <body>
@@ -100,6 +115,7 @@ function cancelBill(){
 			          <s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!cancelFHQBill') && formBean.canCancel"> 
 			                 <input type="button" value="红冲单据"  onclick="cancelBill();"/> 
 			          </s:if>
+			          <input type="button" value="打印单据"  onclick="printBill();"/> 
 			      </td>
 			    </tr>
 			  </table>

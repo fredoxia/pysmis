@@ -46,7 +46,7 @@ $(document).ready(function(){
 			width : 50,
 			formatter : function(value, row, index) {
 				var str = '';
-				str += $.formatString('<a href="#" onclick=""><img border="0" src="{1}" title="编辑品牌"/></a>', row.colorId, '<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
+				str += $.formatString('<a href="#" onclick="EditColor(\'{0}\');"><img border="0" src="{1}" title="修改颜色"/></a>', row.colorId, '<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
 				return str;
 			}
 		}]],
@@ -63,7 +63,7 @@ function EditColor(colorId){
 	$.modalDialog.opener_dataGrid = dataGrid;
 	
 	$.modalDialog({
-		title : "添加/更新品牌",
+		title : "添加/更新颜色",
 		width : 540,
 		height : 380,
 		modal : false,
@@ -99,7 +99,7 @@ function backProcessS(data){
 		        </table>
 	
 			<div id="toolbar" style="display: none;">
-		             
+		             <a onclick="EditColor(0);" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
                      <a onclick="refresh();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-reload'">刷新</a>
 	        </div>
 		</div>

@@ -11,10 +11,8 @@
 <body>
 <script>
 function saveCategory(){
-	if ($("#categoryName").val() == "")
-		alert("类别不能为空");
-	else {
-	    var params=$("#updateCategoryForm").serialize();
+	if ($('#updateCategoryForm').form('validate')){
+		var params=$("#updateCategoryForm").serialize();
 
         $.post("basicDataJSON!updateCategory",params, updateCategoryBKProcess,"json");	
 	}
@@ -23,32 +21,32 @@ function updateCategoryBKProcess(data){
 	var response = data.response;
 	var returnCode = response.returnCode;
 	if (returnCode != SUCCESS)
-		alert(response.message);
+		$.messager.alert('操作失败', response.message, 'error');
 	else {
 		$.modalDialog.handler.dialog('close');
 		$("#dataGrid").datagrid('reload');
 	}		
 }
 </script>
-    <s:form id="updateCategoryForm" name="updateCategoryForm" method="post" action="" theme="simple" onsubmit="return validateForm();">
+    <s:form id="updateCategoryForm" name="updateCategoryForm" cssClass="easyui-form" method="post" action="" theme="simple" onsubmit="return validateForm();">
 	    <table width="100%" border="0">
 	       <tr>
 	          <td colspan="2"></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>类别:</td><td><s:hidden name="formBean.category.category_ID"/>
-	          <s:textfield id="categoryName" name="formBean.category.category_Name" maxLength="15" required="required" /></td>
+	          <s:textfield id="categoryName" name="formBean.category.category_Name"  cssClass="easyui-textbox" data-options="required:true,validType:['required','length[1,15]']"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>面料:</td><td>
-	          <s:textfield id="material" name="formBean.category.material" maxLength="12"/></td>
+	          <s:textfield id="material" name="formBean.category.material"  cssClass="easyui-textbox" data-options="validType:['length[0,12]']"/></td>
 	       </tr>	
 	       <tr class="InnerTableContent">
 	          <td>填充物:</td><td>
-	          <s:textfield id="filler" name="formBean.category.filler" maxLength="12"/></td>
+	          <s:textfield id="filler" name="formBean.category.filler" cssClass="easyui-textbox" data-options="validType:['length[0,12]']"/></td>
 	       </tr>		              
 	       <tr class="InnerTableContent">
-	          <td>所属         :</td><td><s:select id="type" name="formBean.category.chainId" list="#{-1:'总部类别',1:'连锁店类别'}" listKey="key" listValue="value"/></td>
+	          <td>所属         :</td><td><s:select id="type" cssClass="easyui-combobox"  data-options="width:100,editable:false"  name="formBean.category.chainId" list="#{-1:'总部类别',1:'连锁店类别'}" listKey="key" listValue="value"/></td>
 	       </tr>	       
 	       <tr class="InnerTableContent" >
 	          <td colspan="2">

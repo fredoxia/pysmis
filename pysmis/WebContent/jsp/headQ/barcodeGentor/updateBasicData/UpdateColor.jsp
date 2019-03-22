@@ -7,51 +7,45 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>朴与素连锁店管理信息系统</title>
-<script>
-function validateForm(){
-	var color = $("#color").val();
 
-	var error = "";
-	if (color == "" || color.length > 4){
-       error = error + "颜色长度必须是大于0小于4\n";
-	}
-	if (error != ""){
-	       alert(error);
-	       return false;
-	}
-	return true;	
-}
-</script>
 </head>
 <body>
-    <%@ include file="../../../common/Style.jsp"%>
-    <table width="90%" align="center"  class="OuterTable">
-    <tr><td>
-        <s:form id="updateColorForm" name="updateColorForm" method="post" action="action/basicData!saveUpdateColor" theme="simple" onsubmit="return validateForm();">
+<script>
+function updateColor(){
+    if ($('#updateColorForm').form('validate')){
+    	var params=$("#updateColorForm").serialize();
+
+        $.post("basicDataJSON!updateColor",params, updateColorBKProcess,"json");	
+	}
+}
+function updateColorBKProcess(data){
+	var response = data.response;
+	var returnCode = response.returnCode;
+	if (returnCode != SUCCESS)
+		$.messager.alert('操作失败', response.message, 'error');
+	else {
+		$.modalDialog.handler.dialog('close');
+		$("#dataGrid").datagrid('reload');
+	}		
+}
+</script>
+    <s:form id="updateColorForm" name="updateColorForm" method="post"  cssClass="easyui-form" action="action/basicData!saveUpdateColor" theme="simple" onsubmit="return validateForm();">
 	    <table width="100%" border="0">
-	       <tr class="PBAOuterTableTitale">
-	          <td colspan="2">新建/更新颜色信息</td>
-	       </tr>
 	       <tr>
 	          <td colspan="2"><font color="red"><s:fielderror/></font><s:actionmessage/>
 	          </td>
 	       </tr>
 	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
-	          <td>颜色序号:</td><td><s:textfield name="formBean.color.colorId" readonly="true"/></td>
+	          <td>颜色序号:</td><td><s:textfield name="formBean.color.colorId" cssClass="easyui-textbox"  readonly="true"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
-	          <td>颜色    :</td><td><s:textfield id="color" name="formBean.color.color" length="4"/>*</td>
+	          <td>颜色    :</td><td><s:textfield id="color" name="formBean.color.name" cssClass="easyui-textbox" data-options="required:true,validType:['required','length[1,4]']"/>*</td>
 	       </tr>
 	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
-	          <td colspan="2"><input type="submit" value="新建/修改"/><input type="button" value="取消" onclick="window.close();"/></td>
+	          <td colspan="2"><a onclick="updateColor();" href="javascript:void(0);" class="easyui-linkbutton">新建/修改</a></td>
 	       </tr>
 	    </table>
 	    </s:form>
-	    </td>
-	</tr>
-	</table>
-
-
-	      
+   
 </body>
 </html>

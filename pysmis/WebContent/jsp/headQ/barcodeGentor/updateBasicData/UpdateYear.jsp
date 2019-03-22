@@ -19,7 +19,7 @@ function updateYearBKProcess(data){
 	var response = data.response;
 	var returnCode = response.returnCode;
 	if (returnCode != SUCCESS)
-		alert(response.message);
+		$.messager.alert('操作失败', response.message, 'error');
 	else {
 		$.modalDialog.handler.dialog('close');
 		$("#dataGrid").datagrid('reload');

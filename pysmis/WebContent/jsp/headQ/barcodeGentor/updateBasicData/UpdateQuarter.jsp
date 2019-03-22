@@ -11,10 +11,8 @@
 <body>
 <script>
 function saveQuarter(){
-	if ($("#quarterName").val() == "")
-		alert("季度不能为空");
-	else {
-	    var params=$("#updateBrandForm").serialize();
+	if ($('#updateBrandForm').form('validate')){
+		var params=$("#updateBrandForm").serialize();
 
         $.post("basicDataJSON!updateQuarter",params, updateQuarterBKProcess,"json");	
 	}
@@ -23,21 +21,21 @@ function updateQuarterBKProcess(data){
 	var response = data.response;
 	var returnCode = response.returnCode;
 	if (returnCode != SUCCESS)
-		alert(response.message);
+		$.messager.alert('操作失败', response.message, 'error');
 	else {
 		$.modalDialog.handler.dialog('close');
 		$("#dataGrid").datagrid('reload');
 	}		
 }
 </script>
-    <s:form id="updateBrandForm" name="updateBrandForm" method="post" action="action/basicData!saveUpdateBrand" theme="simple" onsubmit="return validateForm();">
+    <s:form id="updateBrandForm" name="updateBrandForm" method="post" cssClass="easyui-form" action="action/basicData!saveUpdateBrand" theme="simple" onsubmit="return validateForm();">
 	    <table width="100%" border="0">
 	       <tr>
 	          <td colspan="2"></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>季度:</td><td><s:hidden name="formBean.quarter.quarter_ID"/>
-	          <s:textfield id="quarterName" name="formBean.quarter.quarter_Name" maxLength="5" required="required" /></td>
+	          <s:textfield id="quarterName" name="formBean.quarter.quarter_Name"  cssClass="easyui-textbox" data-options="required:true,validType:['required','length[1,5]']" /></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td colspan="2">

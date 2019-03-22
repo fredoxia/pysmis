@@ -14,11 +14,7 @@
 <body>
 <script>
 function saveBrand(){
-	var brandName = $("#brand_Name").val();
-	var supplier = $("#supplier").val();
-	if (brandName =="" || supplier =="")
-		alert("品牌名称 和 供应商都不应该为空");
-	else {
+	if ($('#updateBrandForm').form('validate')){
 		var params=$("#updateBrandForm").serialize();
     	$.post("basicDataJSON!updateBrand",params, updateBrandBKProcess,"json");	
 	}
@@ -27,25 +23,23 @@ function updateBrandBKProcess(data){
 	var response = data.response;
 	var returnCode = response.returnCode;
 	if (returnCode != SUCCESS)
-		alert(response.message);
+		$.messager.alert('操作失败', response.message, 'error');
 	else {
 		$.modalDialog.handler.dialog('close');
 		$("#dataGrid").datagrid('reload');
 	}		
 }
 </script>
-    <s:form id="updateBrandForm" name="updateBrandForm" method="post" action="action/basicData!saveUpdateBrand" theme="simple" onsubmit="return validateForm();">
+    <s:form id="updateBrandForm" name="updateBrandForm" cssClass="easyui-form" method="post" action="action/basicData!saveUpdateBrand" theme="simple" onsubmit="return validateForm();">
 	    <table width="100%" border="0">
-	       <tr class="PBAOuterTableTitale">
-	          <td colspan="2">新建/更新品牌信息</td>
-	       </tr>
+
 	       <tr class="InnerTableContent">
 	          <td>品牌名称    :</td><td>
 	          <s:hidden name="formBean.brand.brand_ID"/>
-	          <s:textfield id="brand_Name" name="formBean.brand.brand_Name" required="required"  maxlength="20"/>*</td>
+	          <s:textfield id="brand_Name" name="formBean.brand.brand_Name" cssClass="easyui-textbox" data-options="required:true,validType:['required','length[1,20]']"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
-	          <td>供货商         :</td><td><s:textfield id="supplier" name="formBean.brand.supplier" required="required"  maxlength="20"/></td>
+	          <td>供货商         :</td><td><s:textfield id="supplier" name="formBean.brand.supplier"  cssClass="easyui-textbox" data-options="required:true,validType:['required','length[1,20]']"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>所属         :</td><td><s:hidden name="formBean.brand.chainStore.chain_id"/>

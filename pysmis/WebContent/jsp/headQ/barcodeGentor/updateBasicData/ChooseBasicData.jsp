@@ -14,7 +14,7 @@ function changeBasicData(value){
 	         <strong>基础资料类别：</strong>
 	      </td>
 		  <td>
-		      <s:select name="formBean.basicData" cssClass="easyui-combobox"  data-options="width:100,editable:false,onChange:function(param1, param2){changeBasicData(param2);}" onchange="changeBasicData(this.value);"  list="#{'year':'年份','quarter':'季度','brand':'品牌','category':'货品类别','color':'颜色','productUnit':'货品单位','numPerHand':'齐手数量'}" listKey="key" listValue="value"  headerKey=""  headerValue="请选择"/>
+		      <s:select name="formBean.basicData" cssClass="easyui-combobox"  data-options="width:100,editable:false,onChange:function(param1, param2){changeBasicData(param2);}" onchange="changeBasicData(this.value);"  list="#{'year':'年份','quarter':'季度','brand':'品牌','category':'货品类别','color':'颜色','productUnit':'货品单位','numPerHand':'齐手数量'}" listKey="key" listValue="value"  headerKey="-"  headerValue="请选择"/>
 		  </td>
 	    </tr>
 	 </table>

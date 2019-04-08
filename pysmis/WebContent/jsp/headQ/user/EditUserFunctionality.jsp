@@ -190,7 +190,7 @@ function changeFunction14(){
       <td>仓库单据录入:<input type="checkbox" name="functionalities" id="function21" value="21"/></td>
       <td>搜索单据:<input type="checkbox" name="functionalities" id="function22" value="22"/></td>
       <td>会计修改单据:<input type="checkbox" name="functionalities" id="function23" value="23"/></td>
-      <td></td>
+      <td>总部费用:<input type="checkbox" name="functionalities" id="function23" value="33"/></td>
     </tr>
     <tr class="InnerTableContent">
       <td height="19"></td>

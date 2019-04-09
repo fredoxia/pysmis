@@ -165,36 +165,41 @@ function searchOrder(){
 		    <tr class="InnerTableContent">
 		      <td height="19"><strong>客户名字：</strong></td>
 		      <td colspan="3"><%@ include file="../include/ClientInput.jsp"%></td>
-
 		      <td><strong>单据号：</strong></td>
 		      <td><input name="formBean.order.order_ID" id="order_Status"  onkeypress="return is_number(event);" size="7"/></td>
+		      <td><strong>包含货品</strong></td>
+			  <td><%@ include file="../include/SearchProduct.jsp"%></td>
+
 		    </tr>	   
-		    <tr class="InnerTableContent">
-		      <td height="4" colspan="6"><hr width="100%" color="#FFCC00"/></td>
-		    </tr>
+
 		    <tr class="InnerTableContent">
 		      <td width="95" height="32"><strong>单据种类：</strong></td>
 		      <td width="100"><s:select name="formBean.order.order_type" id="order_type"  list="uiBean.orderTypeMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" /></td>
 		      <td width="65"><strong>状态：</strong></td>
 		      <td width="100"><s:select name="formBean.order.order_Status" id="order_Status"  list="uiBean.orderStatusMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" />      </td>
 		      <td width="90"><strong>录入会计：</strong></td>
-		      <td><s:select name="formBean.order.order_Auditor.user_id" id="accountant"  list="uiBean.users" listKey="user_id" listValue="user_name" headerKey="-1" headerValue="---全部---" />      </td>
+		      <td width="90"><s:select name="formBean.order.order_Auditor.user_id" id="accountant"  list="uiBean.users" listKey="user_id" listValue="user_name" headerKey="-1" headerValue="---全部---" />      </td>
+		      <td width="90"></td>
+			  <td rowspan="2"><div id="productInfo"></div></td>
 		    </tr>
 		
 		    <tr class="InnerTableContent">
 		      <td height="19"><strong>仓库开始时间：</strong></td>
-		      <td colspan="5">
+		      <td colspan="6">
 		        <s:textfield id="startDate" name="formBean.search_Start_Time" cssClass="easyui-datebox"  data-options="width:100,editable:false"/> 
 		        &nbsp;至 &nbsp;
 		        <s:textfield id="endDate" name="formBean.search_End_Time" cssClass="easyui-datebox"  data-options="width:100,editable:false"/></td>
-      		</tr>
+
+      	    </tr>
 
 		    <tr class="InnerTableContent">
-		      <td height="5" colspan="6"><hr width="100%" color="#FFCC00"/></td>
+		      <td height="5" colspan="8"><hr width="100%" color="#FFCC00"/></td>
 		    </tr>
 		    <tr class="InnerTableContent">
 		      <td height="30">&nbsp;</td>
 		      <td><input type="button" onclick="searchOrder();" value="查询销售单据"/> </td>
+		      <td>&nbsp;</td>
+		      <td>&nbsp;</td>
 		      <td>&nbsp;</td>
 		      <td>&nbsp;</td>
 		      <td>&nbsp;</td>

@@ -330,7 +330,7 @@ $(document).ready(function(){
 				     <input type="button" value="红冲单据" onclick="cancelOrder();"/>
 				 </s:if>
 				 
-				 <input type="button" value="打印单据" onclick="printOrder();"/><a href="#" onclick="printF();">test</a>
+				 <input type="button" value="打印单据" onclick="printOrder();"/>
 			 </td>			 					 		
 			 <td>
 				 <s:if test="formBean.order.order_Status== 1 || formBean.order.order_Status==2 || formBean.order.order_Status==6  || formBean.order.order_Status==9">

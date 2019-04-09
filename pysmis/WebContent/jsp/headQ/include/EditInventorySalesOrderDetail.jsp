@@ -38,9 +38,9 @@
 			 		<th style="width: 10%">产品品牌</th>	
 			 		<th style="width: 4%">年份</th>	
 			 		<th style="width: 4%">季度</th>	
-			 		<th style="width: 8%">数量</th>
+			 		<th style="width: 4%">数量</th>
 			 		<th style="width: 5%">单位</th>		
-			 		<th style="width: 10%">单价</th>
+			 		<th style="width: 8%">单价</th>
 			 		<th style="width: 5%">折扣</th>
 			 		<th style="width: 8%">批发价</th>
 			 		<th style="width: 8%">连锁零售</th>
@@ -89,7 +89,7 @@
 					 	<td><input type="text" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].discount" id="discount<s:property value='formBean.order.product_List.size()'/>" onchange="onWholeSalePriceChange(1,<s:property value='formBean.order.product_List.size()'/>);" onfocus='this.select();'  size='3'/></td>
 					 	<td><input type="text" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].wholeSalePrice" id="wholeSalePrice<s:property value='formBean.order.product_List.size()'/>"  onchange="onWholeSalePriceChange(2,<s:property value='formBean.order.product_List.size()'/>);"   onfocus="this.select();" size='8'/></td>
 				 		<td><input type="text" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].salesPrice" id="salesPrice<s:property value='formBean.order.product_List.size()'/>" readonly="readonly"  size='8'/></td>
-				 		<td><div id="takeBefore<s:property value='formBean.order.product_List.size()'/>" style="display:none;color:red"></div><input type="hidden" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].productBarcode.boughtBefore" id="boughtBefore<s:property value='formBean.order.product_List.size()'/>" size='14' value="0"/></td>
+				 		<td><div id="inventory<s:property value='formBean.order.product_List.size()'/>" style='display:inline;color:blue'></div>&nbsp;<div id="takeBefore<s:property value='formBean.order.product_List.size()'/>" style="display:inline;color:red"></div><input type="hidden" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].productBarcode.boughtBefore" id="boughtBefore<s:property value='formBean.order.product_List.size()'/>" size='14' value="0"/></td>
 				 		<td><div id="delIcon<s:property value='formBean.order.product_List.size()'/>" style="display:none"><img src="<%=request.getContextPath()%>/conf_files/web-image/delete.png" border="0" onclick="deleteRow('row<s:property value="formBean.order.product_List.size()"/>',<s:property value='formBean.order.product_List.size()'/>);"  style="cursor:pointer;"/></div></td>			 		
 	                </tr>
                 </tbody>

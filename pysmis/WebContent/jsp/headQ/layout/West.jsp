@@ -79,7 +79,7 @@ $(function() {
 			 	</li>
 			 	</s:if>-->
 			 	
-			 	<li  data-options="iconCls:'icon-status_online',state:'closed',border:false">
+			 	<li  data-options="iconCls:'icon-status_online',state:'open',border:false">
 			  	    <span>供应商&客户管理</span>
 			  		<ul style="width: 150%">
 			  		    <s:if test="#session.LOGIN_USER.containFunction('headQSupplierMgmtJSPAction!preSupplier')"><li data-options="iconCls:'icon-status_online',attributes:{url:'headQSupplierMgmtJSPAction!preSupplier'}">供应商信息管理 </li></s:if>
@@ -87,7 +87,7 @@ $(function() {
 			    	</ul>
 			    </li>
 			    <s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase') || #session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchaseReturn') || #session.LOGIN_USER.containFunction('supplierPurchaseJSP!preSearchPurchase')">
-			  	<li  data-options="iconCls:'icon-images',state:'closed',border:false">
+			  	<li  data-options="iconCls:'icon-images',state:'open',border:false">
 			  	    <span>供应商单据管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchase'}">采购单据录入 </li></s:if>
@@ -97,7 +97,7 @@ $(function() {
 			    </li>
 			    </s:if>
 			    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preCreate') || #session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchFiance')">
-			  	<li  data-options="iconCls:'icon-money_yen',state:'closed',border:false">
+			  	<li  data-options="iconCls:'icon-money_yen',state:'open',border:false">
 			  	    <span>供应商财务管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preCreate')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preCreate'}">创建供应商财务单据</li></s:if>
@@ -107,12 +107,7 @@ $(function() {
 			    	</ul>
 			    </li>
 			    </s:if>	
-			    <li  data-options="iconCls:'icon-database',state:'closed',border:false">
-			  	    <span>库存管理</span>
-			  		<ul style="width: 150%">
-			    		<s:if test="#session.LOGIN_USER.containFunction('headqInventoryFlowJSPAction!preInventoryRpt')"><li data-options="iconCls:'icon-database',attributes:{url:'headqInventoryFlowJSPAction!preInventoryRpt'}">当前库存统计</li></s:if>
-			    	</ul>
-			    </li>		 	
+	 	
 			 	<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!create') || #session.LOGIN_USER.containFunction('inventoryOrder!createReturnOrder') || #session.LOGIN_USER.containFunction('inventoryOrder!search') || #session.LOGIN_USER.containFunction('inventoryOrder!preSearch')">
 			  	<li  data-options="iconCls:'icon-images',state:'open',border:false">
 			  	    <span>批发销售管理</span>
@@ -140,6 +135,32 @@ $(function() {
 			    </s:if>
 
 			    
+
+		</ul>
+
+	</div>  
+    <div title="其他功能" style="padding:10px;">  
+    	<ul id="treeMenu2" class="easyui-tree"  data-options="lines:true,animate:true" >  
+        		 <li  data-options="iconCls:'icon-database',state:'open',border:false">
+			  	    <span>库存管理</span>
+			  		<ul style="width: 150%">
+			    		<s:if test="#session.LOGIN_USER.containFunction('headqInventoryFlowJSPAction!preInventoryRpt')"><li data-options="iconCls:'icon-database',attributes:{url:'headqInventoryFlowJSPAction!preInventoryRpt'}">当前库存统计</li></s:if>
+			    	</ul>
+			    </li>
+			    <s:if test="#session.LOGIN_USER.containFunction('expenseHeadqJSP!preCreateExpenseHeadq') || #session.LOGIN_USER.containFunction('expenseHeadqJSP!preSearchExpenseHeadq')">
+				<li data-options="iconCls:'icon-money_yen',state:'open'">
+					<span>总部费用管理</span>
+					<ul>
+						<s:if test="#session.LOGIN_USER.containFunction('expenseHeadqJSP!preCreateExpenseHeadq')">
+							<li data-options="iconCls:'icon-money_yen',attributes:{url:'expenseHeadqJSP!preCreateExpenseHeadq'}">创建总部费用</li>
+						</s:if>
+						<s:if test="#session.LOGIN_USER.containFunction('expenseHeadqJSP!preSearchExpenseHeadq')">
+							<li data-options="iconCls:'icon-money_yen',attributes:{url:'expenseHeadqJSP!preSearchExpenseHeadq'}">查找总部费用</li>
+						</s:if>		
+														
+					</ul>
+				</li>
+				 </s:if>	
 			    <li  data-options="iconCls:'icon-status_online',state:'open',border:false">
 			    	<span>我的系统</span>
 				  	<ul style="width: 150%">
@@ -149,7 +170,7 @@ $(function() {
 			 	</li>
 				
 				<s:if test="#session.LOGIN_USER.containFunction('userJSP!preEditFunctionality') || #session.LOGIN_USER.containFunction('userJSP!retrieveLog') || #session.LOGIN_USER.containFunction('userJSP!swithToChain') || #session.LOGIN_USER.roleType == 99">
-				<li data-options="iconCls:'icon-cog',state:'closed',border:false">
+				<li data-options="iconCls:'icon-cog',state:'open',border:false">
 				<span>管理员</span>
 				  		<ul style="width: 150%">
 				    		<s:if test="#session.LOGIN_USER.containFunction('userJSP!preEditFunctionality') || #session.LOGIN_USER.roleType == 99"><li data-options="iconCls:'icon-cog',attributes:{url:'userJSP!preEditFunctionality'}">总部权限管理</li></s:if>
@@ -161,17 +182,6 @@ $(function() {
 				    	</ul>
 				 </li>
 		        </s:if>
-		</ul>
-
-	</div>  
-    <div title="其他功能" style="padding:10px;">  
-    	<ul id="treeMenu2" class="easyui-tree"  data-options="lines:true,animate:true" >  
-        		<li  data-options="iconCls:'icon-images',state:'open',border:false">
-			  	    <span>订货会订单管理</span>
-			  		<ul style="width: 150%">
-			    		<li data-options="iconCls:'icon-images',attributes:{url:'preorderHQJSP!preOrderSearch'}">订货会订单查询</li>
-			    	</ul>
-			    </li>
 		</ul>
     </div>  
 </div>

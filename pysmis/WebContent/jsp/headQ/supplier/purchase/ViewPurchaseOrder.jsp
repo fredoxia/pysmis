@@ -101,8 +101,16 @@ $(document).ready(function(){
 					 		<td><s:property value="#orderProduct.pb.color.name"/></td>	
 				 		    <td><s:property value="#orderProduct.pb.product.unit"/></td>						 			 		
 					 		<td><s:property value="#orderProduct.quantity"/></td>
-					 		<td><s:property value="#orderProduct.recCost"/></td>		 					 		
-					 		<td><s:property value="#orderProduct.wholeSalePrice"/></td>			 							 		
+					 		<td>
+					 		     <s:text name="format.totalPrice">
+						       			<s:param value="#orderProduct.recCost"/>
+						       	 </s:text>					 		
+					 		</td>		 					 		
+					 		<td>
+					 		     <s:text name="format.totalPrice">
+						       			<s:param value="#orderProduct.wholeSalePrice"/>
+						       	  </s:text>
+						    </td>			 							 		
 					 		<td></td>
 					 		<td></td>				
 		                </tr>

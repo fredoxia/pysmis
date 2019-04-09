@@ -8,7 +8,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="formBean.order.order_type_ws"/></title>
 <%@ include file="../../common/Style.jsp"%>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
 <script type="text/javascript">
+var PAZU_Config = { 
+        prot:"http",           //è®¿é®ä½ çåºç¨çåè®®   
+        server: 'localhost',   //æå°æå¡å¨å°åï¼å¦æä½ çåºç¨é¢åWindowså¹³å°ï¼åæ éæ´æ¹ï¼æ¯å°å®¢æ·ç«¯é½èªå·±åæå°æå¡å¨ï¼ 
+        port: 6894,            //ä¸è¦æ´æ¹ç«¯å£,å¹¶ç¡®ä¿æå°æå¡å¨ä¸ 
+        license:'8F34B771723DCC171F931EA900F9967E'             //ä½ çPAZUè®¸å¯ç ï¼å¯ä»¥èªè¡å¨å®æ¹ç³è¯·ï¼ä¸æ¶è´¹ï¼è½¬åå¾®ä¿¡æååå³å¯ç³è¯·æå 
+    }
+function chkPAZU(){ 
+    if(!window.PAZU){ 
+       alert("PAZU is not ready \r\n :" + PAZU_Config.server + " download PAZUCloud_setup.exeçurl"); 
+       //ä¹å¯ä»¥ä½ èªå·±å¨é¡µé¢éé¢æå»ºä¸ä¸ªé¾æ¥æç¤ºç¨æ·ä¸è½½  
+       return false;
+    } 
+    return true; 
+ }
+function printF(){
+	if (chkPAZU()){
+		var dfPrinter=pazu.TPrinter.getDefaultPrinter();
+		PAZU.TPrinter.printToDefaultPrinter("add ");
+	}
+}
 function exportOrderToExcel(){
 	var url = "<%=request.getContextPath()%>/action/exportInventoryOrToExcel.action";
 	document.inventoryOrderForm.action = url;
@@ -87,6 +108,8 @@ function deleteOrder(){
 		} ]
 		});
 }
+
+var dfPrinter ;
 function printOrder(){
 	 var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!printOrder";
 	    var params=$("#inventoryOrderForm").serialize();  
@@ -99,9 +122,49 @@ function printOrderBackProcess(data){
 	if (returnCode != SUCCESS)
 		alert("获取单据失败 ： " + response.message);
 	else {
-        alert(response.returnValue);
+        var returnValue = response.returnValue;
+        var inventoryOrder = returnValue.inventoryOrder;
+       
+        if (inventoryOrder != null && inventoryOrder != ""){
+        	dfPrinter=PAZU.TPrinter.getDefaultPrinter();
+        	printContent(inventoryOrder);
+        }
 	}
  }
+
+function printContent(io){
+	dfPrinter.fontSize = 12;
+    var s = "单据号 : " + io.id + " " + "客户名字 : " + io.clientName + "  " + "单据日期  : " + io.orderTime + "\n";
+    	s += "单据种类 : " + io.orderType + " " + "上欠 : " + io.preAcctAmt + "  " + "下欠  : " + io.postAcctAmt + "\n";
+		s += "单据明细  : \n";
+	var products = io.products;
+
+	var j =1;
+	var k = 1; //每页多少行了
+  	for (var i = 1; i <= products.length; i++){
+	  	var product = products[i-1];
+	  	s += i + "  " + product.brand + "  " + product.productCode + " " + product.color + "   " +product.quantity + "   " + product.wholeSales + "   " + product.totalWholeSales + "\n";
+	  	if (i > 68)
+	  		alert(i + " ," + product.productCode + " , " + products.length);
+	  	if (j == 1 && i == 10){
+	  		alert(s + "," + j + "," + i);
+	  		//printOut(s);
+	  		s = "";
+	  		j++;
+	  	} else if (j!=1 && (i-10) % 15 == 0){
+	  		alert(s + "," + j + "," + i);
+	  		//printOut(s);
+	  		s = "";
+	  	} else if (i >= products.length){
+	  		alert(s + "," + j + "," + i);
+	  		//printOut(s);
+	  	}
+  	}
+}
+
+function printOut(data){
+	PAZU.TPrinter.printToDefaultPrinter(data);
+}
 		
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
@@ -267,7 +330,7 @@ $(document).ready(function(){
 				     <input type="button" value="红冲单据" onclick="cancelOrder();"/>
 				 </s:if>
 				 
-				 <input type="button" value="打印单据" onclick="printOrder();"/>
+				 <input type="button" value="打印单据" onclick="printOrder();"/><a href="#" onclick="printF();">test</a>
 			 </td>			 					 		
 			 <td>
 				 <s:if test="formBean.order.order_Status== 1 || formBean.order.order_Status==2 || formBean.order.order_Status==6  || formBean.order.order_Status==9">

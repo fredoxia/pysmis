@@ -109,7 +109,6 @@ function deleteOrder(){
 		});
 }
 
-var dfPrinter ;
 function printOrder(){
 	 var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!printOrder";
 	    var params=$("#inventoryOrderForm").serialize();  
@@ -126,44 +125,58 @@ function printOrderBackProcess(data){
         var inventoryOrder = returnValue.inventoryOrder;
        
         if (inventoryOrder != null && inventoryOrder != ""){
-        	dfPrinter=PAZU.TPrinter.getDefaultPrinter();
+        	pageSetup();
         	printContent(inventoryOrder);
         }
 	}
  }
-
+function pageSetup(){
+	PAZU.TPrinter.header = "成都朴与素 大成市场2期A座3楼";
+	PAZU.TPrinter.fontCSS = "font-size:16px;";
+}
 function printContent(io){
-	dfPrinter.fontSize = 12;
-    var s = "单据号 : " + io.id + " " + "客户名字 : " + io.clientName + "  " + "单据日期  : " + io.orderTime + "\n";
-    	s += "单据种类 : " + io.orderType + " " + "上欠 : " + io.preAcctAmt + "  " + "下欠  : " + io.postAcctAmt + "\n";
-		s += "单据明细  : \n";
+	var space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    var s = "单据号 : " + io.id + space + "客户名字 : " + io.clientName + space + "单据日期  : " + io.orderTime + "<br/>";
+    	s += "单据种类 : " + io.orderType + space + "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
+		s += "单据明细  : <br/>";
 	var products = io.products;
 
 	var j =1;
 	var k = 1; //每页多少行了
   	for (var i = 1; i <= products.length; i++){
 	  	var product = products[i-1];
-	  	s += i + "  " + product.brand + "  " + product.productCode + " " + product.color + "   " +product.quantity + "   " + product.wholeSales + "   " + product.totalWholeSales + "\n";
-	  	if (i > 68)
-	  		alert(i + " ," + product.productCode + " , " + products.length);
-	  	if (j == 1 && i == 10){
-	  		alert(s + "," + j + "," + i);
-	  		//printOut(s);
+	  	s += i + space + product.brand + space + product.productCode + space + product.color + space +product.quantity + space + product.wholeSales + space + product.totalWholeSales + "<br/>";
+
+//	  	if (i == (products.length - 2))
+//	  	   alert(i + "," +products.length);
+	  	
+/*	  	if ((j == 1 && i == 15) || i == products.length){
+	  		if (i == products.length)
+		  		s += "合计                                             总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales;
+ 	  		//alert(s);
+	  		printOut(s);
 	  		s = "";
 	  		j++;
-	  	} else if (j!=1 && (i-10) % 15 == 0){
-	  		alert(s + "," + j + "," + i);
-	  		//printOut(s);
+	  	} else if (j!=1 && (i-15) % 20 == 0){
+	  		if (i == products.length)
+		  		s += "合计                                             总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales;
+	  		//alert(s);
+	  		printOut(s);
 	  		s = "";
-	  	} else if (i >= products.length){
-	  		alert(s + "," + j + "," + i);
-	  		//printOut(s);
+	  	} else*/
+	  		
+	  		if (i == products.length){
+	  		s += "合计                                             总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales;
+	  		//alert(s);
+	  		printOut(s);
 	  	}
   	}
+	
+	
 }
 
 function printOut(data){
-	PAZU.TPrinter.printToDefaultPrinter(data);
+	PAZU.print("<p>" + data);
 }
 		
 $(document).ready(function(){
@@ -330,7 +343,7 @@ $(document).ready(function(){
 				     <input type="button" value="红冲单据" onclick="cancelOrder();"/>
 				 </s:if>
 				 
-				 <input type="button" value="打印单据" onclick="printOrder();"/><a href="#" onclick="printF();">test</a>
+				 <input type="button" value="打印单据" onclick="printOrder();"/>
 			 </td>			 					 		
 			 <td>
 				 <s:if test="formBean.order.order_Status== 1 || formBean.order.order_Status==2 || formBean.order.order_Status==6  || formBean.order.order_Status==9">

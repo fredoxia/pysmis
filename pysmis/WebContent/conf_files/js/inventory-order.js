@@ -54,7 +54,7 @@ function searchProductsProductCode(index_trigger){
 	if (validateProductCodeInput(productCode)){
 	    var params= "formBean.productBarcode.product.productCode=" + productCode + "&formBean.indexPage=" + index_trigger+ "&formBean.fromSrc=1" ; 
 	    
-	    var url = encodeURI(encodeURI("productJSPAction!scanByProductCode?" +params));
+	    var url = encodeURI(encodeURI("productJSPAction!scanByProductCodeHeadq?" +params));
 		
 	    window.open(url,'新窗口','height=570, width=630, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no');    
 	}
@@ -120,6 +120,7 @@ function backProcess(data){
 	var numPerHandInput = $("#numPerHand" + preIndex);
 	var boughtBeforeInput = $("#boughtBefore" + preIndex);
 	var takeBeforeDiv = $("#takeBefore" + preIndex);
+	var inventoryDiv = $("#inventory" + preIndex);
 	var yearInput = $("#year" + preIndex);
 	var quarterInput = $("#quarter" + preIndex);
 	var colorInput = $("#color" + preIndex);
@@ -229,13 +230,15 @@ function backProcess(data){
 		numPerHandInput.val(barcodes[0].product.numPerHand);
 		
 		if (barcodes[0].boughtBefore != 0){
-			document.getElementById("bgs").src = baseurl+"/conf_files/web-image/already.mp3";
 			boughtBeforeInput.val(barcodes[0].boughtBefore);
 			takeBeforeDiv.html("配" + barcodes[0].boughtBefore);
 			takeBeforeDiv.show();
          }else
 			takeBeforeDiv.hide();
 		
+		inventoryDiv.html(" 库存" + barcodes[0].inventoryLevel);
+		inventoryDiv.show();
+
 		$("#row"+preIndex).css('background-color', '');		
     } else {
     	var errorRow = $("#row"+preIndex);
@@ -350,7 +353,7 @@ function addNewRow(){
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].wholeSalePrice'  onchange='onWholeSalePriceChange(2,"+index+");' id='wholeSalePrice"+index+"'  size='8'   onfocus='this.select();'/></td>";
 //    str += "<td><input type='text' name='formBean.order.product_List["+index+"].recCost' readonly id='recCost"+index+"'  size='8'/></td>";
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].salesPrice' readonly id='salesPrice"+index+"'  size='8'/></td>" ;
-    str += "<td><div id='takeBefore"+index+"' style='display:none;color:red'></div><input type='hidden' name='formBean.order.product_List["+index+"].productBarcode.boughtBefore' id='boughtBefore"+index+"' size='14' value='0'/></td>";
+    str += "<td><div id='inventory"+index+"' style='display:inline;color:blue'></div>&nbsp;<div id='takeBefore"+index+"' style='display:inline;color:red'></div><input type='hidden' name='formBean.order.product_List["+index+"].productBarcode.boughtBefore' id='boughtBefore"+index+"' size='14' value='0'/></td>";
     str += "<td><div id='delIcon"+index+"' style='display:none'> <img src='"+baseurl+"/conf_files/web-image/delete.png' border='0' onclick='deleteRow(\"row"+index +"\","+index+")' style='cursor:pointer;'/></div></td>";			 		
     str += "</tr>";
 

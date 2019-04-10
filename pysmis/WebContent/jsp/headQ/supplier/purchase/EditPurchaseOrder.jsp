@@ -57,7 +57,7 @@ function searchProductsProductCode(index_trigger){
 	if (validateProductCodeInput(productCode)){
 	    var params= "formBean.productBarcode.product.productCode=" + productCode + "&formBean.indexPage=" + index_trigger + "&formBean.fromSrc=1"; 
 	    
-	    var url = encodeURI(encodeURI("productJSPAction!scanByProductCode?" +params));
+	    var url = encodeURI(encodeURI("productJSPAction!scanByProductCodeHeadq?" +params));
 		
 	    window.open(url,'新窗口','height=570, width=630, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no');    
 	}

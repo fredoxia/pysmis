@@ -25,7 +25,7 @@ function backProcessSearchSupplier(data){
 	    	if ((i % 2) == 0)
 	    		bg = " style='background-color: rgb(255, 250, 208);'";
 	        if (clients[i] != "")  
-		          $("<tr align='center'  height='10' " + bg +"><td>"+clients[i].name+"</td><td>"+clients[i].pinyin+"</td><td>"+clients[i].comment+"</td><td><a href='#' onclick='selectSupplier("+clients[i].id+",\""+clients[i].name +"\")'><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></td></tr>").appendTo("#supplierTablebody");
+		          $("<tr align='center'  height='10' " + bg +"><td>"+clients[i].name+"</td><td>"+clients[i].comment+"</td><td>"+clients[i].currentAcctBalance+"</td><td><a href='#' onclick='selectSupplier("+clients[i].id+",\""+clients[i].name +"\")'><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></td></tr>").appendTo("#supplierTablebody");
 	    }
     }else {
     	$("<tr class='InnerTableContent' height='10' style='background-color: rgb(255, 250, 208);' align='center'><td colspan=5><font color='red'>对应信息没有查询信息</font> </td></tr>").appendTo("#clientTablebody");
@@ -55,8 +55,8 @@ function clearSupplier(){
 	    <table width="100%" border="0">
 	       <tr class="InnerTableContent" style="background-color: #CCCCCC">
 	          <th width="30%" height="10">供应商名字</th>
-	          <th width="30%" height="10">名字首字母</th>
-	          <th width="20%">备注</th>
+	          <th width="30%">备注</th>
+	          <th width="20%" height="10">当前账目</th>
 	          <th width="20%"></th>
 	       </tr>
 		   <tbody id="supplierTablebody">

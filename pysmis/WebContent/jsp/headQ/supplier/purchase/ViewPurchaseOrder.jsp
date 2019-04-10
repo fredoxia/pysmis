@@ -45,7 +45,7 @@ $(document).ready(function(){
 <s:form action="/action/inventoryOrder!previewOrder" method="POST" name="purchaseOrderForm"  id="purchaseOrderForm" theme="simple" enctype="multipart/form-data">
  <s:hidden name="formBean.order.id"  id="orderId"/>
 
- <table cellpadding="0" border="0" cellspacing="0"  style="width: 98%" align="center" class="OuterTable">
+ <table cellpadding="0" cellspacing="0"  style="width: 90%" align="center" class="OuterTable">
 	<tr class="title">
 	     <td colspan="7">
 	     <s:if test="formBean.order.type == 1">
@@ -65,90 +65,93 @@ $(document).ready(function(){
 			<table cellpadding="0" cellspacing="0" style="width: 100%" border="0" id="org_table">
 			 	<tr class="PBAOuterTableTitale" align="left">
 			 		<th>&nbsp;</th>
-			 		<th colspan="10">供应商名字&nbsp;:&nbsp;<s:property value="formBean.order.supplier.name"/>&nbsp&nbsp&nbsp&nbsp&nbsp货品点数&nbsp; :&nbsp;<s:property value="formBean.order.orderCounter.name" />	</th>
-			 		<th colspan="2">订单号&nbsp;:&nbsp;<s:property value="formBean.order.id"/> </th>	 
+			 		<th>供应商名字&nbsp;:&nbsp;<s:property value="formBean.order.supplier.name"/>&nbsp&nbsp&nbsp&nbsp&nbsp货品点数&nbsp; :&nbsp;<s:property value="formBean.order.orderCounter.name" />	</th>
+			 		<th>订单号&nbsp;:&nbsp;<s:property value="formBean.order.id"/> </th>	 
 			 	</tr>
 				<tr height="10">
-					<th colspan="15"></th>
+					<th colspan="3"></th>
 				</tr>	
 				<tr height="10">
-					<th colspan="15"></th>
-				</tr>							 	
-			 	<tr class="PBAOuterTableTitale" height="22">
-		 		    <th style="width: 6%">&nbsp;</th>
-			 		<th style="width: 9%">条型码</th>
-			 		<th style="width: 4%">年份</th>	
-			 		<th style="width: 4%">季度</th>				 				
-			 		<th style="width: 10%">产品品牌</th>		 					 				 		
-			 		<th style="width: 8%">产品货号</th>
-			 		<th style="width: 4%">颜色</th>
-			 		<th style="width: 5%">单位</th>				 		
-			 		<th style="width: 4%">数量</th>	
-			 		<th style="width: 5%">进价 (单价)</th>
-			 		<th style="width: 8%">批发价(单价)</th>
-			 		<th style="width: 6%">&nbsp;</th>	
-			 		<th style="width: 6%"></th> 		 		
-                </tr>
-                <tbody  id="inventoryTable">
-	                <s:iterator value="formBean.order.productList" status = "st" id="orderProduct" >
-					 	<tr id="row<s:property value="#st.index"/>"  class="excelTable" align="center">
-					 		<td align="center"><s:property value="#st.index +1"/></td>
-					 		<td><s:property value="#orderProduct.pb.barcode"/></td>		
-					 		<td><s:property value="#orderProduct.pb.product.year.year"/></td>
-					 		<td><s:property value="#orderProduct.pb.product.quarter.quarter_Name"/></td>					 		
-					 		<td><s:property value="#orderProduct.pb.product.brand.brand_Name"/></td>		 					 		
-					 		<td><s:property value="#orderProduct.pb.product.productCode"/> <s:property value="#orderProduct.pb.product.numPerHand"/></td>
-					 		<td><s:property value="#orderProduct.pb.color.name"/></td>	
-				 		    <td><s:property value="#orderProduct.pb.product.unit"/></td>						 			 		
-					 		<td><s:property value="#orderProduct.quantity"/></td>
-					 		<td>
-					 		     <s:text name="format.totalPrice">
-						       			<s:param value="#orderProduct.recCost"/>
-						       	 </s:text>					 		
-					 		</td>		 					 		
-					 		<td>
-					 		     <s:text name="format.totalPrice">
-						       			<s:param value="#orderProduct.wholeSalePrice"/>
-						       	  </s:text>
-						    </td>			 							 		
+					<td colspan="3">
+					 <table class="easyui-datagrid" style="height:400px"  data-options="singleSelect:true,border : false">	
+						<thead>
+						 <tr align="center"  class="PBAOuterTableTitale" height="22">
+				 		    <th data-options="field:'1',width:40">&nbsp;</th>
+					 		<th data-options="field:'2',width:90">条型码</th>
+					 		<th data-options="field:'3',width:90">年份</th>	
+					 		<th data-options="field:'4',width:90">季度</th>				 				
+					 		<th data-options="field:'5',width:90">产品品牌</th>		 					 				 		
+					 		<th data-options="field:'6',width:90">产品货号</th>
+					 		<th data-options="field:'7',width:90">颜色</th>
+					 		<th data-options="field:'8',width:90">单位</th>				 		
+					 		<th data-options="field:'9',width:90">数量</th>	
+					 		<th data-options="field:'10',width:90">进价 (单价)</th>
+					 		<th data-options="field:'11',width:90">批发价(单价)</th>
+					 		<th data-options="field:'12',width:90">&nbsp;</th>	
+					 		<th data-options="field:'13',width:90"></th> 		 		
+		                 </tr>
+		                </thead>
+		                <tbody  id="inventoryTable">
+			                <s:iterator value="formBean.order.productList" status = "st" id="orderProduct" >
+							 	<tr id="row<s:property value="#st.index"/>"  class="excelTable" align="center">
+							 		<td align="center"><s:property value="#st.index +1"/></td>
+							 		<td><s:property value="#orderProduct.pb.barcode"/></td>		
+							 		<td><s:property value="#orderProduct.pb.product.year.year"/></td>
+							 		<td><s:property value="#orderProduct.pb.product.quarter.quarter_Name"/></td>					 		
+							 		<td><s:property value="#orderProduct.pb.product.brand.brand_Name"/></td>		 					 		
+							 		<td><s:property value="#orderProduct.pb.product.productCode"/> <s:property value="#orderProduct.pb.product.numPerHand"/></td>
+							 		<td><s:property value="#orderProduct.pb.color.name"/></td>	
+						 		    <td><s:property value="#orderProduct.pb.product.unit"/></td>						 			 		
+							 		<td><s:property value="#orderProduct.quantity"/></td>
+							 		<td>
+							 		     <s:text name="format.totalPrice">
+								       			<s:param value="#orderProduct.recCost"/>
+								       	 </s:text>					 		
+							 		</td>		 					 		
+							 		<td>
+							 		     <s:text name="format.totalPrice">
+								       			<s:param value="#orderProduct.wholeSalePrice"/>
+								       	  </s:text>
+								    </td>			 							 		
+							 		<td></td>
+							 		<td></td>				
+				                </tr>
+			                </s:iterator>
+		                </tbody>
+		                <tr class="PBAOuterTableTitale" height="22" align="center">
+					 		<td align ="center">总计</td>		 					 		
 					 		<td></td>
-					 		<td></td>				
+					 		<td></td>	
+					 		<td></td>
+					 		<td></td>	
+					 		<td></td>	
+					 		<td></td>		 					 		
+					 		<td></td>			 					 		
+					 		<td><s:property value="formBean.order.totalQuantity"/></td>
+					 		<td><s:property value="formBean.order.totalRecCost"/></td>
+					 		<td>&nbsp;</td>	
+					 		<td>&nbsp;</td>	
+					 		<td>&nbsp;</td>		 		
 		                </tr>
-	                </s:iterator>
-                </tbody>
-                <tr class="PBAOuterTableTitale" height="22" align="center">
-			 		<td align ="center">总计</td>		 					 		
-			 		<td></td>
-			 		<td></td>	
-			 		<td></td>
-			 		<td></td>	
-			 		<td></td>	
-			 		<td></td>		 					 		
-			 		<td></td>			 					 		
-			 		<td><s:property value="formBean.order.totalQuantity"/></td>
-			 		<td><s:property value="formBean.order.totalRecCost"/></td>
-			 		<td>&nbsp;</td>	
-			 		<td>&nbsp;</td>	
-			 		<td>&nbsp;</td>		 		
-                </tr>
+					</table>					
+					
+					
+					
+					</td>
+				</tr>						 	
+
                 <tr height="10">
-			         <td colspan="13" align="left"></td>			 					 		
+			         <td colspan="3" align="left"></td>			 					 		
 	            </tr>
 				<tr height="10" class="InnerTableContent" >
 				  	 <td align ="center">备注</td>
-					 <td colspan="12"><textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
+					 <td colspan="2"><textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
 				</tr>
                 <tr class="InnerTableContent">
-                  <td height="27" align="center">优惠</td>
-                  <td colspan="2"><s:property value="formBean.order.totalDiscount"/></td>
-                  <td colspan="3"></td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
+                  <td width="5%" height="27" align="center">优惠</td>
+                  <td width="85%"><s:property value="formBean.order.totalDiscount"/></td>
+                  <td width="10%"></td>
+
                 </tr>
 		 </table>
 	     </td>

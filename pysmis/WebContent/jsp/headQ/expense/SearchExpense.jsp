@@ -38,6 +38,7 @@ $(document).ready(function(){
 					{field:'expenseDate', width:100,title:'费用日期'},	
 					{field:'parentType', width:100,title:'费用大类'},
 					{field:'expenseType', width:100,title:'费用小类'},
+					{field:'feeType', width:100,title:'支付方式'},
 					{field:'amount', width:60,title:'金额'},
 					{field:'userName', width:70,title:'修改人员'}	,
 					{field:'comment', width:200,title:'备注'}	,

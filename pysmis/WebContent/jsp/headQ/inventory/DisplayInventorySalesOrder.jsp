@@ -247,7 +247,7 @@ $(document).ready(function(){
 	                    <th data-options="field:'10',width:60">原批发价</th>
 	                    <th data-options="field:'11',width:60">折扣</th>
 	                    <th data-options="field:'12',width:80">折后批发价</th>		
-				 		<th data-options="field:'13',width:80">连锁零售</th>		 		
+				 		<th data-options="field:'13',width:80">批发价汇总</th>		 		
 	                </tr>
                </thead>
                <tbody>
@@ -265,7 +265,7 @@ $(document).ready(function(){
 				 		<td><s:property value="#order.salePriceSelected"/></td>	
 				 		<td><s:property value="#order.discount"/></td>	
 				 		<td><s:property value="#order.wholeSalePrice"/></td>	
-				 		<td><s:property value="#order.salesPrice"/></td>			 		
+				 		<td><s:text name="format.price"><s:param value="#order.wholeSalePrice * #order.quantity"/></s:text></td>			 		
 				 	</tr>
 			 	</s:iterator>
 			 	
@@ -281,8 +281,8 @@ $(document).ready(function(){
 					 <td><s:property value="formBean.order.totalQuantity"/></td>
 					 <td>&nbsp;</td>
 					 <td>&nbsp;</td>
+					 <td></td>
 					 <td><s:property value="formBean.order.totalWholePrice"/></td>
-					 <td><s:property value="formBean.order.totalRetailPrice"/></td>
 			    </tr>
 				</tbody>
 		 </table>

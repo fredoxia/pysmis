@@ -5,7 +5,7 @@
 		<img src='<%=request.getContextPath()%>/conf_files/web-image/mis-logo.jpg' height='55' width='280' align="left">
     </div>
     <div id="version" style="position: absolute; left: 290px; bottom: 4px;" class="alert alert-info">
-	     总部系统  V1.5
+	     总部端口  V2.0
     </div>
 	<div id="sessionInfoDiv" style="position: absolute; right: 10px; top: 3px;" class="alert alert-info">
 	    欢迎 <s:property value="#session.LOGIN_USER.name"/>

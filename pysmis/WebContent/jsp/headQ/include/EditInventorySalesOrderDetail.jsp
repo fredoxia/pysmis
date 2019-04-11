@@ -70,7 +70,6 @@
 					 		<td><input type="text" name="formBean.order.product_List[<s:property value="#st.index"/>].wholeSalePrice" id="wholeSalePrice<s:property value="#st.index"/>" onchange='onWholeSalePriceChange(2,<s:property value="#st.index"/>);'  size='8' value="<s:property value="#orderProduct.wholeSalePrice"/>"   onfocus="this.select();"/></td>			 							 		
 					 		<td>
 					 		<input type="text" name="formBean.order.product_List[<s:property value="#st.index"/>].totalWholeSalePrice" id="totalWholeSalePrice<s:property value="#st.index"/>" readonly="readonly"  size='8' value="<s:text name="format.price"><s:param value="#orderProduct.wholeSalePrice * #orderProduct.quantity"/></s:text>"/>
-					 		<input type="hidden" name="formBean.order.product_List[<s:property value="#st.index"/>].salesPrice" id="salesPrice<s:property value="#st.index"/>" value="<s:property value="#orderProduct.salesPrice"/>"/>
 					 		</td>
 					 		<td><div id="delIcon0" style="display:block"><img src="<%=request.getContextPath()%>/conf_files/web-image/delete.png" border="0" onclick="deleteRow('row<s:property value="#st.index"/>',<s:property value="#st.index"/>);"  style="cursor:pointer;"/></div></td>				
 					 		<td><div id="takeBefore0" style="display:block;color:red"><s:if test="#orderProduct.productBarcode.boughtBefore > 0">已配<s:property value="#orderProduct.productBarcode.boughtBefore"/></s:if></div><input type="hidden" name="formBean.order.product_List[<s:property value="#st.index"/>].productBarcode.boughtBefore" id="boughtBefore<s:property value="#st.index"/>" size='14' value="0"/></td>
@@ -93,7 +92,7 @@
 					 	<td><input type="text" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].discount" id="discount<s:property value='formBean.order.product_List.size()'/>" onchange="onWholeSalePriceChange(1,<s:property value='formBean.order.product_List.size()'/>);" onfocus='this.select();'  size='3'/></td>
 					 	<td><input type="text" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].wholeSalePrice" id="wholeSalePrice<s:property value='formBean.order.product_List.size()'/>"  onchange="onWholeSalePriceChange(2,<s:property value='formBean.order.product_List.size()'/>);"   onfocus="this.select();" size='8'/></td>
 				 		<td><input type="text" name="formBean.order.product_List[<s:property value="#st.index"/>].totalWholeSalePrice" id="totalWholeSalePrice<s:property value='formBean.order.product_List.size()'/>" readonly="readonly"  size='8'/>
-				 		    <input type="hidden" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].salesPrice" id="salesPrice<s:property value='formBean.order.product_List.size()'/>" /></td>
+				 		    </td>
 				 		<td><div id="delIcon<s:property value='formBean.order.product_List.size()'/>" style="display:none"><img src="<%=request.getContextPath()%>/conf_files/web-image/delete.png" border="0" onclick="deleteRow('row<s:property value="formBean.order.product_List.size()"/>',<s:property value='formBean.order.product_List.size()'/>);"  style="cursor:pointer;"/></div></td>			 		
 	                    <td><div id="inventory<s:property value='formBean.order.product_List.size()'/>" style='display:inline;color:blue'></div>&nbsp;<div id="takeBefore<s:property value='formBean.order.product_List.size()'/>" style="display:inline;color:red"></div><input type="hidden" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].productBarcode.boughtBefore" id="boughtBefore<s:property value='formBean.order.product_List.size()'/>" size='14' value="0"/></td>
 				 		 </tr>
@@ -111,7 +110,7 @@
 			 		<td>&nbsp;</td>
 			 		<td>&nbsp;</td>
 			 		<td></td>
-			 		<td><s:textfield name="formBean.order.totalWholePrice" id="totalWholePrice" size='8' readonly="true"/><s:hidden name="formBean.order.totalRetailPrice" id="totalRetailPrice"/></td>
+			 		<td><s:textfield name="formBean.order.totalWholePrice" id="totalWholePrice" size='8' readonly="true"/></td>
 			 		<td>&nbsp;</td>	
 			 		<td>&nbsp;</td>		 		
                 </tr>
@@ -124,20 +123,22 @@
 							<tr height="10" class="InnerTableContent" >
 							     <td>&nbsp;</td>
 							  	 <td>备注</td>
-								 <td colspan="11"><textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
+								 <td colspan="13"><textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
 							</tr>
 			                <tr class="InnerTableContent">
 			                  <td style="width: 6%" height="27">&nbsp;</td>
 			                  <td style="width: 4%">优惠</td>
-			                  <td style="width: 8%"><s:textfield name="formBean.order.totalDiscount" id="totalDiscount" size="4" cssClass="easyui-numberbox"  data-options="precision:1"/></td>
+			                  <td style="width: 6%"><s:textfield name="formBean.order.totalDiscount" id="totalDiscount" size="4" cssClass="easyui-numberbox"  data-options="precision:2,onChange:function(param1, param2){calculateCasher();}"/></td>
 			                  <td style="width: 4%">现金</td>
-			                  <td style="width: 8%"><s:textfield name="formBean.order.cash" id="cash" size="4" cssClass="easyui-numberbox" data-options="precision:1"  onfocus='this.select();'/></td>
+			                  <td style="width: 6%"><s:textfield name="formBean.order.cash" id="cash" size="4" cssClass="easyui-numberbox"  data-options="onChange:function(param1, param2){calculateCasher();}"/></td>
 			                  <td style="width: 4%">刷卡</td>
-			                  <td style="width: 8%"><s:textfield name="formBean.order.card" id="card" size="4" cssClass="easyui-numberbox" data-options="precision:1"/></td>
+			                  <td style="width: 6%"><s:textfield name="formBean.order.card" id="card" size="4" cssClass="easyui-numberbox"  data-options="onChange:function(param1, param2){calculateCasher();}"/></td>
 			                  <td style="width: 4%">支付宝</td>
-			                  <td style="width: 8%"><s:textfield name="formBean.order.alipay" id="alipay" size="4" cssClass="easyui-numberbox" data-options="precision:1"/></td>
+			                  <td style="width: 6%"><s:textfield name="formBean.order.alipay" id="alipay" size="4" cssClass="easyui-numberbox"  data-options="onChange:function(param1, param2){calculateCasher();}"/></td>
 			                  <td style="width: 4%">微信</td>
-			                  <td style="width: 25%"><s:textfield name="formBean.order.wechat" id="wechat" size="4" cssClass="easyui-numberbox" data-options="precision:1"/></td>
+			                  <td style="width: 6%"><s:textfield name="formBean.order.wechat" id="wechat" size="4" cssClass="easyui-numberbox"  data-options="onChange:function(param1, param2){calculateCasher();}"/></td>
+			                  <td style="width: 6%">待付/待收金额</td>
+			                  <td style="width: 8%"><input type="text" id="casher" size="4" class="easyui-numberbox"  data-options="prefix:'$',precision:2" readonly/></td>
 			                  <td style="width: 25%">&nbsp;</td>
 			                  <td>&nbsp;</td>
 			                </tr>

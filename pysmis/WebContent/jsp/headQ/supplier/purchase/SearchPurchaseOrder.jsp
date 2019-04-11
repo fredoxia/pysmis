@@ -139,29 +139,33 @@ function searchOrder(){
 
 		      <td><strong>单据号：</strong></td>
 		      <td><input name="formBean.order.id" id="orderId"  onkeypress="return is_number(event);" size="7"/></td>
+		      <td><strong>包含货品：</strong></td>
+		      <td><%@ include file="../../include/SearchProduct.jsp"%></td>		 
+	       
 		    </tr>	   
-		    <tr class="InnerTableContent">
-		      <td height="4" colspan="6"><hr width="100%" color="#FFCC00"/></td>
-		    </tr>
 		    <tr class="InnerTableContent">
 		      <td width="95" height="32"><strong>单据种类：</strong></td>
 		      <td width="100"><s:select name="formBean.order.type" id="orderType"  list="formBean.order.typeHQMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" /></td>
 		      <td width="75"><strong>状态：</strong></td>
 		      <td width="95"><s:select name="formBean.order.status" id="orderStatus"  list="formBean.order.statusMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" />      </td>
-		      <td width="90"></td>
-		      <td> </td>
+		      <td width="70"></td>
+		      <td width="90"> </td>
+		      <td width="70"> </td>
+		      <td rowspan="2"><div id="productInfo"></div></td>
+
 		    </tr>
 		
 		    <tr class="InnerTableContent">
 		      <td height="19"><strong>单据创建时间：</strong></td>
-		      <td colspan="5">
+		      <td colspan="6">
 		        <s:textfield id="startDate" name="formBean.searchStartTime" cssClass="easyui-datebox"  data-options="width:100,editable:false"/> 
 		        &nbsp;至 &nbsp;
 		        <s:textfield id="endDate" name="formBean.searchEndTime" cssClass="easyui-datebox"  data-options="width:100,editable:false"/></td>
+
       		</tr>
 
 		    <tr class="InnerTableContent">
-		      <td height="5" colspan="6"><hr width="100%" color="#FFCC00"/></td>
+		      <td height="5" colspan="8"><hr width="100%" color="#FFCC00"/></td>
 		    </tr>
 		    <tr class="InnerTableContent">
 		      <td height="30">&nbsp;</td>
@@ -170,6 +174,8 @@ function searchOrder(){
 		      <td>&nbsp;</td>
 		      <td>&nbsp;</td>
 		      <td>&nbsp;</td>
+		      <td>&nbsp;</td>
+		      <td>&nbsp;</td>		      		      
 		    </tr>
   			</table>
 		</s:form>

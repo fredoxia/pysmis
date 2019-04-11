@@ -27,19 +27,19 @@ $(document).ready(function(){
 		rownumbers:true,
 		nowrap : false,
 		columns : [ [
-					{field:'date', width:80,title:'单据日期'},
-					{field:'supplierName', width:70,title:'供应商',fixed:true,
+					{field:'date', width:100,title:'单据日期'},
+					{field:'supplierName', width:80,title:'供应商',fixed:true,
 						formatter: function (value, row, index){
 							return row.supplier.name;
 						}},
-					{field:'itemTypeName', width:50,title:'单据种类'},
-					{field:'quantity', width:50,title:'单据数量',
+					{field:'itemTypeName', width:60,title:'单据种类'},
+					{field:'quantity', width:60,title:'单据数量',
 						formatter: function (value, row, index){
 							return parseQuantity(row.quantity);
 						}},
 					{field:'amount', width:50,title:'单据金额'},
-					{field:'comment', width:70,title:'单据摘要'},
-					{field:'acctIncrease', width:40,title:'应付增加',
+					{field:'comment', width:80,title:'单据摘要'},
+					{field:'acctIncrease', width:60,title:'应付增加',
 						formatter: function (value, row, index){
 							return parseNumberValue(row.acctIncrease);
 						}},
@@ -47,7 +47,7 @@ $(document).ready(function(){
 						formatter: function (value, row, index){
 							return parseNumberValue(row.acctDecrease);
 						}},
-					{field:'postAcct', width:70,title:'+应付/-应收金额',
+					{field:'postAcct', width:90,title:'+应付/-应收金额',
 						formatter: function (value, row, index){
 							return (row.postAcct).toFixed(0);
 						}},

@@ -212,42 +212,46 @@ function getProductBySNBackProcess(data){
 }
 function assignProductValue(p){
 	if (p != undefined && p != null){
-		$("#salesPrice").attr("value","");
-		$("#productCode").attr("value",p.productCode);
-		$("#recCost").attr("value",p.recCost);
-		$("#wholeSalePrice").attr("value",p.wholeSalePrice);
+		$("#productCode").val(p.productCode);
+		$("#recCost").val(p.recCost);
+		$("#wholeSalePrice").val(p.wholeSalePrice);
 		if (p.wholeSalePrice2 > 0)
-			$("#wholeSalePrice2").attr("value",p.wholeSalePrice2);
+			$("#wholeSalePrice2").val(p.wholeSalePrice2);
 		if (p.wholeSalePrice3 > 0)
-			$("#wholeSalePrice3").attr("value",p.wholeSalePrice3);
+			$("#wholeSalePrice3").val(p.wholeSalePrice3);
 		if (p.salesPriceFactory > 0)
-		    $("#salesPriceFactory").attr("value",p.salesPriceFactory);
-		$("#discount").attr("value",p.discount);
-		$("#numPerHand").attr("value",p.numPerHand);
-		$("#unit").attr("value",p.unit);
-		$("#year_ID").attr("value",p.year.year_ID);
-		$("#quarter_ID").attr("value",p.quarter.quarter_ID);
-		$("#brand_ID").attr("value",p.brand.brand_ID);
-		$("#brandName").attr("value",p.brand.brand_Name);
-		$("#salesPrice").attr("value",p.salesPrice);
+		    $("#salesPriceFactory").val(p.salesPriceFactory);
+		$("#discount").val(p.discount);
+		$("#numPerHand").val(p.numPerHand);
+		$("#unit").val(p.unit);
+		$("#year_ID").val(p.year.year_ID);
+		$("#quarter_ID").val(p.quarter.quarter_ID);
+		$("#brand_ID").val(p.brand.brand_ID);
+		$("#brandName").val(p.brand.brand_Name);
+		$("#salesPrice").val(p.salesPrice);
 		$("#category_ID").combobox("select",p.category.category_ID);
 		
+		$("#sizeMin").val(p.sizeMin);
+		$("#sizeMax").val(p.sizeMax);
+		$("#gender").val(p.gender);
+		$("#sizeRange").val(p.sizeRange);
 	}
 }
 function clearAllData(){
 	$("#error").html("");
 	$("#tip").html("");
-	$("#salesPrice").attr("value","");
-	$("#barcode").attr("value","");
-	$("#productCode").attr("value","");
-	$("#recCost").attr("value","");
-	$("#wholeSalePrice").attr("value","");
-	$("#wholeSalePrice2").attr("value","");
-	$("#wholeSalePrice3").attr("value","");
-	$("#salesPriceFactory").attr("value","");
-	$("#serialNum").attr("value","");
+	$("#salesPrice").val("");
+	$("#barcode").val("");
+	$("#productCode").val("");
+	$("#recCost").val("");
+	$("#wholeSalePrice").val("");
+	$("#wholeSalePrice2").val("");
+	$("#wholeSalePrice3").val("");
+	$("#salesPriceFactory").val("");
+	$("#serialNum").val("");
 	$("#color").empty();
-	$("#colorName").attr("value","");
+	$("#colorName").val("");
+	$("#discount").val("");
 	
     $('#orgTablebody tr').each(function () {                
         $(this).remove();

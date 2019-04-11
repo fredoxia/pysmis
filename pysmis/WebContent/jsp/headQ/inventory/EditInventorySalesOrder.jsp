@@ -7,12 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="formBean.order.order_type_ws"/> <s:property value="formBean.order.order_Status_s"/></title>
 <%@ include file="../../common/Style.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-21"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-23"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/HtmlTable.js"></script>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js></script>
 <script type="text/javascript">
 var baseurl = "<%=request.getContextPath()%>";
+
 
 //the index is depends on the preview or not
 <s:if test="formBean.isPreview == true">
@@ -133,6 +134,7 @@ $(document).ready(function(){
 	$("#org_table tr").mouseover(function(){      
 		$(this).addClass("over");}).mouseout(function(){    
 		$(this).removeClass("over");}); 
+	calculateCasher();
 });
 </script>
 
@@ -208,12 +210,7 @@ $(document).ready(function(){
 </table>
 
 </s:form>
-<object  classid="clsid:AF33188F-6656-4549-99A6-E394F0CE4EA4"       
-         codebase="<%=request.getContextPath()%>/conf_files/sc_setup.exe"     
-         id="pazu"       
-         name="pazu" >       
-    <param  name="License"  value="8F34B771723DCC171F931EA900F9967E"/>     
-</object>
+
 <bgsound id="bgs" src="bg.mp3" loop=1>
 </body>
 </html>

@@ -51,7 +51,8 @@ function selectProductValue(barcode){
     window.close();
 }
 function selectAll(){
-	if ($("#selectAllCheck").attr("checked") == 'checked')
+
+	if ($("#selectAllCheck").prop("checked"))
 		$("input[name='products']").attr("checked",true); 
 	else
 		$("input[name='products']").attr("checked",false); 

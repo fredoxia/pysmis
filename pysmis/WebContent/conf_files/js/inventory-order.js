@@ -113,7 +113,7 @@ function backProcess(data){
 	var brandInput =  $("#brand" +preIndex);   
 	var productCodeInput = $("#productCode"+preIndex); 
 	var quantityInput =  $("#quantity"+preIndex); 
-	var salePriceInput = $("#salesPrice"+preIndex); 
+
 	var wholeSalePriceInput = $("#wholeSalePrice"+preIndex); 
 	var discountInput = $("#discount"+preIndex); 
 	//var recCostInput = $("#recCost"+preIndex); 
@@ -147,13 +147,7 @@ function backProcess(data){
 		if (color != null)
     		colorName = color.name;
 		
-		colorInput.val( colorName);
-        var salesPrice = barcodes[0].product.salesPrice;
-        if (salesPrice == "")
-        	salePriceInput.val("");
-        else
-		    salePriceInput.val(salesPrice);
-        
+		colorInput.val( colorName);    
         
         var wholeSalePrice = 0;
         var lastInputPrice = barcodes[0].product.lastInputPrice;
@@ -267,41 +261,88 @@ function backProcess(data){
     var barcodeInput = $("#barcode"+preIndex);
     barcodeInput.attr("readonly",true);
     
-    if (index < calculateRowNum)
-        calculateTotal();
+    calculateTotal();
 }
 
 
 function calculateTotal(){
 	 var totalQ = 0;
-	 var totalRetailPrice = 0;
+//	 var totalRetailPrice = 0;
 //	 var totalRecCost = 0;
 	 var totalWholePrice = 0;
 	 
 	 for (var i =0; i < index; i++){
 		 var quantityInputs = $("#quantity" + i).val();
-		 var salesPriceInputs = $("#salesPrice" + i).val();
+
 //		 var recCostInputs = $("#recCost" + i).val();
-		 var wholeSalePriceInputs = $("#wholeSalePrice" + i).val();
+		 var wholeSalePriceInputs = $("#totalWholeSalePrice" + i).val();
 		 
 		 if (quantityInputs != undefined){
 			 totalQ = totalQ + parseInt(quantityInputs);
 		 } 
-		 if (quantityInputs != undefined && salesPriceInputs != undefined && salesPriceInputs !=""){
-			 totalRetailPrice = totalRetailPrice + parseInt(quantityInputs)*parseFloat(salesPriceInputs);
-		 } 
+
 //		 if (quantityInputs != undefined && recCostInputs != undefined && recCostInputs !=""){
 //			 totalRecCost = totalRecCost + parseInt(quantityInputs)*parseFloat(recCostInputs);
 //		 } 
 		 if (quantityInputs != undefined && wholeSalePriceInputs != undefined && wholeSalePriceInputs !=""){
-			 totalWholePrice = totalWholePrice + parseInt(quantityInputs)*parseFloat(wholeSalePriceInputs);
+			 totalWholePrice = totalWholePrice + parseFloat(wholeSalePriceInputs);
 		 } 
 	 }
 	 
 	 $("#totalQuantity").val(totalQ);
-	 $("#totalRetailPrice").val((totalRetailPrice).toFixed(2));
+//	 $("#totalRetailPrice").val((totalRetailPrice).toFixed(2));
 //	 $("#totalRecCost").val((totalRecCost).toFixed(2));
 	 $("#totalWholePrice").val((totalWholePrice).toFixed(2));
+	 
+	 var orderType = $("#orderType").val();
+
+	 //销售退货
+	 if (orderType == 1){
+			var floor = Math.floor(totalWholePrice);
+
+			var discount = (floor - totalWholePrice).toFixed(2);
+			$("#totalDiscount").numberbox("setValue",discount);
+	//销售出库
+	} else if (orderType == 0){
+			var ceil = Math.ceil(totalWholePrice);
+
+			var discount = (totalWholePrice - ceil).toFixed(2);
+			$("#totalDiscount").numberbox("setValue",discount);
+	}
+	 
+	 calculateCasher();
+}
+
+function calculateCasher(){
+	var totalWhole = parseFloat($("#totalWholePrice").val());
+	var discount = parseFloat($("#totalDiscount").val());
+	var orderType = $("#orderType").val();
+	var cash = parseFloat($("#cash").val());
+	var card = parseFloat($("#card").val());
+	var alipay = parseFloat($("#alipay").val());
+	var wechat = parseFloat($("#wechat").val());
+    
+	if (isNaN(discount))
+		discount = 0;
+	if (isNaN(cash))
+		cash = 0;
+	if (isNaN(card))
+		card = 0;
+	if (isNaN(alipay))
+		alipay = 0;
+	if (isNaN(wechat))
+		wechat = 0;
+	
+	var casherInput = $("#casher");
+	 //销售退货
+	 if (orderType == 1){
+		 var result = totalWhole+discount+cash+card+alipay+wechat;
+
+		 casherInput.numberbox("setValue",(result).toFixed(2));
+	//销售出库
+	} else if (orderType == 0){
+		casherInput.numberbox("setValue",( totalWhole-discount-cash-card-alipay-wechat).toFixed(2));
+	}
 }
 /*
 function calculateWholeTotal(){
@@ -328,8 +369,7 @@ function deleteRow(rowID, delIndex){
 	if (confirm(msg)){	
 		$("#"+rowID).remove(); 
 		
-		if (index < calculateRowNum)
-		   calculateTotal(); 
+		calculateTotal(); 
 	} else {
 		$("#row" + delIndex).css('background-color', '');
 	}
@@ -354,7 +394,7 @@ function addNewRow(){
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].discount' id='discount"+index+"' onchange='onWholeSalePriceChange(1,"+index+");' onfocus='this.select();' size='3'/></td>";
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].wholeSalePrice'  onchange='onWholeSalePriceChange(2,"+index+");' id='wholeSalePrice"+index+"'  size='8'   onfocus='this.select();'/></td>";
 //    str += "<td><input type='text' name='formBean.order.product_List["+index+"].recCost' readonly id='recCost"+index+"'  size='8'/></td>";
-    str += "<td><input type='text' name='formBean.order.product_List["+index+"].totalWholeSalePrice' id='totalWholeSalePrice"+index+"'  size='8'/><input type='hidden' name='formBean.order.product_List["+index+"].salesPrice' readonly id='salesPrice"+index+"'  size='8'/></td>" ;
+    str += "<td><input type='text' name='formBean.order.product_List["+index+"].totalWholeSalePrice' id='totalWholeSalePrice"+index+"'  size='8'/></td>" ;
     str += "<td><div id='delIcon"+index+"' style='display:none'> <img src='"+baseurl+"/conf_files/web-image/delete.png' border='0' onclick='deleteRow(\"row"+index +"\","+index+")' style='cursor:pointer;'/></div></td>";			 		
     str += "<td><div id='inventory"+index+"' style='display:inline;color:blue'></div>&nbsp;<div id='takeBefore"+index+"' style='display:inline;color:red'></div><input type='hidden' name='formBean.order.product_List["+index+"].productBarcode.boughtBefore' id='boughtBefore"+index+"' size='14' value='0'/></td>";
     str += "</tr>";
@@ -398,10 +438,7 @@ function validateForm(){
 		if ($("#totalQuantity").val() <= 0){
 			error += "必须录入数据后才能输入\n";
 		}
-		var totalDiscount = $("#totalDiscount").val();
-		if (isNaN(totalDiscount) || totalDiscount < 0){
-			error += "优惠 - 必须是大于或者等于0的数字!\n";
-		}
+
 		var hasChar = false;
 		var hasChar_w = false;
 		var invalid_d = false;
@@ -475,8 +512,7 @@ function changeTotalWholePriceRow(triggerIndex){
 function onQuantityChange(triggerIndex){
 	changeTotalWholePriceRow(triggerIndex);
 
-	if (index < calculateRowNum)
-		calculateTotal();
+	calculateTotal();
 }
 /**
  * on the discount or whole sale price change, need re-calculate the total of the whole price
@@ -513,15 +549,11 @@ function onWholeSalePriceChange(triggerSource,triggerIndex){
 		
 	 
 	 //2. calclate the total value and checkt the price consistent
-	 if (index < calculateRowNum){
-		 for (var i =0; i < index; i++){
+	 for (var i =0; i < index; i++){
 			 //calate the total value
-			 var quantityInputs = $("#quantity" + i).val();
 			 var wholeSalePriceInputs = $("#wholeSalePrice" + i).val();
 			 
-			 if (quantityInputs != undefined && wholeSalePriceInputs != undefined && wholeSalePriceInputs !=""){
-				 totalWholePrice = totalWholePrice + parseInt(quantityInputs)*parseFloat(wholeSalePriceInputs);
-				 
+			 if ( wholeSalePriceInputs != undefined && wholeSalePriceInputs !=""){
 				 //check the value consistent
 				 var productIdChange = $("#productId" + triggerIndex).val();
 				 var productIdLoop = $("#productId" + i).val();
@@ -530,15 +562,15 @@ function onWholeSalePriceChange(triggerSource,triggerIndex){
 						 consistent = false;
 				 }
 			 } 
-		 }
+	}
 	
-		 $("#totalWholePrice").val((totalWholePrice).toFixed(2));
+	 calculateTotal();
 		 
-		 if (!consistent){
-			 var productCode = $("#productCode" + triggerIndex).val();
-			 alert(productCode + " 该商品出现批发价不一致情况，请检查");
-		 }
-	 }
+	if (!consistent){
+		var productCode = $("#productCode" + triggerIndex).val();
+		alert(productCode + " 该商品出现批发价不一致情况，请检查");
+	}
+
 }
 
 function importFile(){
@@ -556,7 +588,7 @@ function retrieveProductByExcel(products){
         	var brandInput =  $("#brand" +index);   
         	var productCodeInput = $("#productCode"+index); 
         	var quantityInput =  $("#quantity"+index); 
-        	var salePriceInput = $("#salesPrice"+index); 
+
         	var wholeSalePriceInput = $("#wholeSalePrice"+index); 
         	var discountInput = $("#discount"+index); 
 //        	var recCostInput = $("#recCost"+index); 
@@ -576,12 +608,7 @@ function retrieveProductByExcel(products){
     		var color = products[i].productBarcode.color;
     		if (color != null)
     		    colorInput.val( color.name);
-    		
-            var salesPrice = products[i].salesPrice;
-            if (salesPrice == "")
-            	salePriceInput.val("");
-            else
-    		    salePriceInput.val((salesPrice).toFixed(2));
+
 
             var wholeSalePrice = products[i].wholeSalePrice;
             var priceSelected = products[i].salePriceSelected;
@@ -644,53 +671,41 @@ function retrieveProductByExcel(products){
  * 打印小票配货单
  */
 function printPOSOrderToPrinter(){
+	    var s = "<p>";
+	    PAZU.TPrinter.fontCSS = "font-size:12px;";
 		try {
-			var dfPrinter=pazu.TPrinter.getDefaultPrinter();
-		
-			if (dfPrinter == null){
-		        alert("还未设置默认打印机，请设置后打印订货单");
-			} else {
-				if (dfPrinter != "POS58"){
-					pazu.TPrinter.setDefaultPrinter("POS58") ;
-					dfPrinter=pazu.TPrinter.getDefaultPrinter();
-				}
+			var clientName = $("#clientName").val();
+			var orderId = $("#orderId").val();
+			s += clientName + "<br/>";
+			s += "单据号: " + orderId + "<br/>";
+
+		  	for (var i = 0; i < index; i++){
+			   	var quantityInput =  $("#quantity"+i); 
+				var yearInput = $("#year"+i); 
+				var unitInput = $("#unit"+i); 
+				var quarterInput = $("#quarter"+i); 
+				var colorInput = $("#color"+i); 
+				var brandInput = $("#brand"+i); 
+				var productCodeInput = $("#productCode"+i); 
 				
-				var clientName = $("#clientName").val();
-				var orderId = $("#orderId").val();
-				pazu.TPrinter.printToDefaultPrinter(clientName);
-				pazu.TPrinter.printToDefaultPrinter("单据号: " + orderId);
-				
-				dfPrinter.FontBold=true;
-				dfPrinter.FontSize=9;
-			  	for (var i = 0; i < index; i++){
-				   	var quantityInput =  $("#quantity"+i); 
-					var yearInput = $("#year"+i); 
-					var unitInput = $("#unit"+i); 
-					var quarterInput = $("#quarter"+i); 
-					var colorInput = $("#color"+i); 
-					var brandInput = $("#brand"+i); 
-					var productCodeInput = $("#productCode"+i); 
-					
-					var yearS = yearInput.val();
-					var colorS = colorInput.val();
-					if (colorS == "")
-						colorS = "-";
-			
-					var j = i +1;
-			        if (quantityInput.val()!= undefined && yearInput.val()!=undefined && quarterInput.val()!=undefined && brandInput.val()!=undefined && productCodeInput.val()!=undefined){
-			        	tempstr1 = j + "   "  +  brandInput.val()  + " " + productCodeInput.val()+ "  " + yearS.substring(2) + "-" + quarterInput.val() ;
-			        	pazu.TPrinter.printToDefaultPrinter(tempstr1);
+				var yearS = yearInput.val();
+				var colorS = colorInput.val();
+				if (colorS == "")
+					colorS = "-";
 		
-			    	    tempstr2 = "       " + colorS + " " + quantityInput.val() + " " + unitInput.val();
-			        	pazu.TPrinter.printToDefaultPrinter(tempstr2);  
-			        }
-				}
-			  	var totalInput = $("#totalQuantity");
-			  	pazu.TPrinter.printToDefaultPrinter("        总数 : " + totalInput.val());  
-			  	
-			  	dfPrinter.EndDoc();
-			  	pazu.TPrinter.setDefaultPrinter("TSC TTP-244 Plus") ;
+				var j = i +1;
+		        if (quantityInput.val()!= undefined && yearInput.val()!=undefined && quarterInput.val()!=undefined && brandInput.val()!=undefined && productCodeInput.val()!=undefined){
+		        	tempstr1 = j + "   "  +  brandInput.val()  + " " + productCodeInput.val()+ "  " + yearS.substring(2) + "-" + quarterInput.val() ;
+		        	s += tempstr1 + "<br/>";
+	
+		    	    tempstr2 = "       " + colorS + " " + quantityInput.val() + " " + unitInput.val();
+		    	    s += tempstr2 + "<br/>";  
+		        }
 			}
+		  	var totalInput = $("#totalQuantity");
+		  	s += "        总数 : " + totalInput.val() + "<br/>";   
+
+		  	printOut(s);
 	    } catch (e){
 		    alert("小票打印有问题,请检查 : " + e.name + "\n" + e.message);
 		    pazu.TPrinter.setDefaultPrinter("TSC TTP-244 Plus") ;

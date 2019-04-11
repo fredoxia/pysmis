@@ -11,7 +11,7 @@
 	<div id="loginPage" data-role="page">
 
 		<header data-role="header" data-theme="b">
-			<h1>PDA在线选货</h1>
+			<h1>朴与素PDA在线选货</h1>
 		</header>
 
 		<div data-role="content" class="content">

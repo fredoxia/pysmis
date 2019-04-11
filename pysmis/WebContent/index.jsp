@@ -16,6 +16,10 @@ function login(typeOfRole){
 	    window.location.href = '2.jsp';
 	else if (typeOfRole == 2)
 	    window.location.href = 'indexHeadQPDA.jsp';
+	else if (typeOfRole == 3)
+	    window.location.href = '3.jsp';
+	else if (typeOfRole == 4)
+	    window.location.href = '4.jsp';
 }
 </script>
 </head>
@@ -40,7 +44,15 @@ function login(typeOfRole){
        <label>
        <input type="button" name="Submit2" value="连锁客户" onClick="login(0);">
        </label>
-
+       <label>
+       <input type="button" name="Submit3" value="总部老款PDA选货" onClick="login(2);">
+       </label>       
+       <label>
+       <input type="button" name="Submit4" value="总部平板选货" onClick="login(3);">
+       </label>
+       <label>
+        <input type="button" name="Submit5" value="总部新款PDA选货" onClick="login(4);">
+       </label>
      </td>
      <td width="45%" align="left" valign="middle"></td>
   </tr>

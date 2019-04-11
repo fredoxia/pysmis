@@ -146,7 +146,7 @@ function searchOrder(){
 		    <tr class="InnerTableContent">
 		      <td width="95" height="32"><strong>单据种类：</strong></td>
 		      <td width="100"><s:select name="formBean.order.type" id="orderType"  list="formBean.order.typeHQMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" /></td>
-		      <td width="65"><strong>状态：</strong></td>
+		      <td width="75"><strong>状态：</strong></td>
 		      <td width="95"><s:select name="formBean.order.status" id="orderStatus"  list="formBean.order.statusMap" listKey="key" listValue="value" headerKey="-1" headerValue="---全部---" />      </td>
 		      <td width="90"></td>
 		      <td> </td>

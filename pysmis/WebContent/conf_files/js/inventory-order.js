@@ -124,6 +124,7 @@ function backProcess(data){
 	var yearInput = $("#year" + preIndex);
 	var quarterInput = $("#quarter" + preIndex);
 	var colorInput = $("#color" + preIndex);
+	var totalWholePriceRow = $("#totalWholeSalePrice" + preIndex);
 	
 	if (where == 1)
 		quantityInput.focus();
@@ -212,7 +213,8 @@ function backProcess(data){
 
         wholeSalePriceInput.val(wholeSalePrice);
         discountInput.val(discount);
-
+        
+        totalWholePriceRow.val((wholeSalePrice * quantityInput.val()).toFixed(2));
         
         //set the price select drop down
         $("#priceSlect" +preIndex).empty();
@@ -346,13 +348,13 @@ function addNewRow(){
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].productBarcode.product.brand.brand_Name' readonly  id='brand"+index+"'  size='12'/></td>";			 					 		
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].productBarcode.product.year.year' readonly  id='year"+index+"'  size='2'/></td>";	
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].productBarcode.product.quarter.quarter_Name' readonly  id='quarter"+index+"'  size='2'/></td>";	
-    str += "<td><input type='text' name='formBean.order.product_List["+index+"].quantity' id='quantity"+index+"' value='0' size='2'  onchange='onQuantityChange();'  onfocus='this.select();'/>  <input type='hidden' name='formBean.order.product_List["+index+"].productBarcode.product.numPerHand' id='numPerHand"+index+"' size='5' value='0' /></td>";
+    str += "<td><input type='text' name='formBean.order.product_List["+index+"].quantity' id='quantity"+index+"' value='0' size='2'  onchange='onQuantityChange("+index+");'  onfocus='this.select();'/>  <input type='hidden' name='formBean.order.product_List["+index+"].productBarcode.product.numPerHand' id='numPerHand"+index+"' size='5' value='0' /></td>";
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].productBarcode.product.unit' readonly  id='unit"+index+"'  size='3'/></td>";			 					 		
     str += "<td><select id='priceSlect"+index+"' name='formBean.order.product_List["+index+"].salePriceSelected' onchange='onWholeSalePriceChange(3,"+index+");'></select></td>";
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].discount' id='discount"+index+"' onchange='onWholeSalePriceChange(1,"+index+");' onfocus='this.select();' size='3'/></td>";
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].wholeSalePrice'  onchange='onWholeSalePriceChange(2,"+index+");' id='wholeSalePrice"+index+"'  size='8'   onfocus='this.select();'/></td>";
 //    str += "<td><input type='text' name='formBean.order.product_List["+index+"].recCost' readonly id='recCost"+index+"'  size='8'/></td>";
-    str += "<td><input type='text' name='formBean.order.product_List["+index+"].salesPrice' readonly id='salesPrice"+index+"'  size='8'/></td>" ;
+    str += "<td><input type='text' name='formBean.order.product_List["+index+"].totalWholeSalePrice' id='totalWholeSalePrice"+index+"'  size='8'/><input type='hidden' name='formBean.order.product_List["+index+"].salesPrice' readonly id='salesPrice"+index+"'  size='8'/></td>" ;
     str += "<td><div id='inventory"+index+"' style='display:inline;color:blue'></div>&nbsp;<div id='takeBefore"+index+"' style='display:inline;color:red'></div><input type='hidden' name='formBean.order.product_List["+index+"].productBarcode.boughtBefore' id='boughtBefore"+index+"' size='14' value='0'/></td>";
     str += "<td><div id='delIcon"+index+"' style='display:none'> <img src='"+baseurl+"/conf_files/web-image/delete.png' border='0' onclick='deleteRow(\"row"+index +"\","+index+")' style='cursor:pointer;'/></div></td>";			 		
     str += "</tr>";
@@ -459,10 +461,20 @@ function validateForm(){
     }
 }
 
+function changeTotalWholePriceRow(triggerIndex){
+
+	var discountInputs = $("#discount" + triggerIndex).val();
+	var quantityInputs = $("#quantity" + triggerIndex).val();
+	var wholeSalePriceInputs = $("#wholeSalePrice" + triggerIndex).val();
+	var totalWholePrice = parseInt(quantityInputs)*parseFloat(wholeSalePriceInputs); 
+	$("#totalWholeSalePrice" + triggerIndex).val((totalWholePrice).toFixed(2));
+}
 /**
  * 数量改变
  */
-function onQuantityChange(){
+function onQuantityChange(triggerIndex){
+	changeTotalWholePriceRow(triggerIndex);
+
 	if (index < calculateRowNum)
 		calculateTotal();
 }
@@ -473,6 +485,7 @@ function onQuantityChange(){
  *               3 = sale price drop down
  */
 function onWholeSalePriceChange(triggerSource,triggerIndex){
+	 
 	 var consistent = true;
      var wholePrice = 0;
 	 var totalWholePrice = 0;
@@ -495,6 +508,9 @@ function onWholeSalePriceChange(triggerSource,triggerIndex){
 		 wholePrice = salePrice * discount;
 		 wholeSalePriceInput.val((wholePrice).toFixed(2));
 	 }
+	 
+	 changeTotalWholePriceRow(triggerIndex);
+		
 	 
 	 //2. calclate the total value and checkt the price consistent
 	 if (index < calculateRowNum){

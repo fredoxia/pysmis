@@ -42,7 +42,7 @@ function backProcessSaveExpense(data){
 function changeParentType(current){
 	$('#expenseType').combobox('clear');
 	var params = "formBean.parentType.id=" + current;
-	alert(params);
+
 	$('#expenseType').combobox('reload','<%=request.getContextPath()%>/action/expenseHeadqJSON!changeParentExpenseType?' + params);
 }
 </script>
@@ -69,7 +69,13 @@ function changeParentType(current){
 		      <td colspan="2">
 		      	<s:select name="formBean.expense.expenseType.id" id="expenseType" cssClass="easyui-combobox" data-options="required:true,width:140,valueField:'id',textField:'name',required:true," list="uiBean.expenseTypes" listKey="id" listValue="name"/>
 		      </td>
-		    </tr>	    
+		    </tr>	
+		    <tr class="InnerTableContent">
+		      <td>支付方式 *</td>
+		      <td colspan="2">
+		      	<s:select name="formBean.expense.feeType" id="feeType" cssClass="easyui-combobox" data-options="width:100,editable:false" list="#{1:'现金',2:'银行',3:'支付宝',4:'微信'}"  listKey="key" listValue="value" />
+		      </td>
+		    </tr>			        
 		    <tr class="InnerTableContent">
 		      <td>金额 *</td>
 		      <td colspan="2">

@@ -133,6 +133,7 @@ function printOrderBackProcess(data){
 function pageSetup(){
 	PAZU.TPrinter.header = "成都朴与素 大成市场2期A座3楼";
 	PAZU.TPrinter.fontCSS = "font-size:16px;";
+	PAZU.TPrinter.paperName= "zhenchi";
 }
 function printContent(io){
 	var space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -143,14 +144,14 @@ function printContent(io){
 
 	var j =1;
 	var k = 1; //每页多少行了
-  	for (var i = 1; i <= products.length; i++){
+ 	for (var i = 1; i <= products.length; i++){
 	  	var product = products[i-1];
 	  	s += i + space + product.brand + space + product.productCode + space + product.color + space +product.quantity + space + product.wholeSales + space + product.totalWholeSales + "<br/>";
 
 //	  	if (i == (products.length - 2))
 //	  	   alert(i + "," +products.length);
 	  	
-/*	  	if ((j == 1 && i == 15) || i == products.length){
+ 	  	if ((j == 1 && i == 15) || i == products.length){
 	  		if (i == products.length)
 		  		s += "合计                                             总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales;
  	  		//alert(s);
@@ -163,9 +164,7 @@ function printContent(io){
 	  		//alert(s);
 	  		printOut(s);
 	  		s = "";
-	  	} else*/
-	  		
-	  		if (i == products.length){
+	  	} else if (i == products.length){
 	  		s += "合计                                             总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales;
 	  		//alert(s);
 	  		printOut(s);

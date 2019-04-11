@@ -7,8 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="formBean.order.order_type_ws"/> <s:property value="formBean.order.order_Status_s"/></title>
 <%@ include file="../../common/Style.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-20"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-21"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/HtmlTable.js"></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js></script>
 <script type="text/javascript">
 var baseurl = "<%=request.getContextPath()%>";
 
@@ -72,11 +74,30 @@ function submitOrder(){
 			title : '提示',
 			text : '数据处理中，请稍后....'
 		});
-		   document.inventoryOrderForm.action = "<%=request.getContextPath()%>/action/inventoryOrder!save";
-		   document.inventoryOrderForm.submit();
+		
+		 var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!save";
+		 var params=$("#inventoryOrderForm").serialize();  
+		 $.post(url,params, saveOrderBackProcess,"json");	
 	}
 }
+function saveOrderBackProcess(data){
+    var response = data;
+	var returnCode = response.returnCode;
 
+	if (returnCode != SUCCESS)
+		alert("获取单据失败 ： " + response.message);
+	else {
+        var returnValue = response.returnValue;
+        var inventoryOrder = returnValue.inventoryOrder;
+       
+        if (inventoryOrder != null && inventoryOrder != ""){
+        	pageSetup();
+        	printContent(inventoryOrder);
+        }
+        setTimeout(function(){ window.location.href = "<%=request.getContextPath()%>/action/inventoryOrder!create";}, 3000);
+        
+	}
+ }
 /**
  * 下载配货单
  */

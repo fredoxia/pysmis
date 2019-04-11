@@ -35,7 +35,7 @@
 			 		<th style="width: 9%">条型码</th>			 					 				 		
 			 		<th style="width: 8%">产品货号</th>
 			 		<th style="width: 4%">颜色</th>
-			 		<th style="width: 10%">产品品牌</th>	
+			 		<th style="width: 9%">产品品牌</th>	
 			 		<th style="width: 4%">年份</th>	
 			 		<th style="width: 4%">季度</th>	
 			 		<th style="width: 4%">数量</th>
@@ -44,8 +44,8 @@
 			 		<th style="width: 5%">折扣</th>
 			 		<th style="width: 8%">批发价</th>
 			 		<th style="width: 8%">批发价汇总</th>
-			 		<th style="width: 6%">&nbsp;</th>	
-			 		<th style="width: 6%"></th> 		 		
+			 		<th style="width: 4%">&nbsp;</th>	
+			 		<th style="width: 10%"></th> 		 		
                 </tr>
                 <tbody  id="inventoryTable">
 	                <s:iterator value="formBean.order.product_List" status = "st" id="orderProduct" >
@@ -72,8 +72,9 @@
 					 		<input type="text" name="formBean.order.product_List[<s:property value="#st.index"/>].totalWholeSalePrice" id="totalWholeSalePrice<s:property value="#st.index"/>" readonly="readonly"  size='8' value="<s:text name="format.price"><s:param value="#orderProduct.wholeSalePrice * #orderProduct.quantity"/></s:text>"/>
 					 		<input type="hidden" name="formBean.order.product_List[<s:property value="#st.index"/>].salesPrice" id="salesPrice<s:property value="#st.index"/>" value="<s:property value="#orderProduct.salesPrice"/>"/>
 					 		</td>
-					 		<td><div id="takeBefore0" style="display:block;color:red"><s:if test="#orderProduct.productBarcode.boughtBefore > 0">已配<s:property value="#orderProduct.productBarcode.boughtBefore"/></s:if></div><input type="hidden" name="formBean.order.product_List[<s:property value="#st.index"/>].productBarcode.boughtBefore" id="boughtBefore<s:property value="#st.index"/>" size='14' value="0"/></td>
 					 		<td><div id="delIcon0" style="display:block"><img src="<%=request.getContextPath()%>/conf_files/web-image/delete.png" border="0" onclick="deleteRow('row<s:property value="#st.index"/>',<s:property value="#st.index"/>);"  style="cursor:pointer;"/></div></td>				
+					 		<td><div id="takeBefore0" style="display:block;color:red"><s:if test="#orderProduct.productBarcode.boughtBefore > 0">已配<s:property value="#orderProduct.productBarcode.boughtBefore"/></s:if></div><input type="hidden" name="formBean.order.product_List[<s:property value="#st.index"/>].productBarcode.boughtBefore" id="boughtBefore<s:property value="#st.index"/>" size='14' value="0"/></td>
+					 		
 		                </tr>
 	                </s:iterator>
 				 	<tr height="22" id="row<s:property value='formBean.order.product_List.size()'/>" class="excelTable">
@@ -93,9 +94,9 @@
 					 	<td><input type="text" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].wholeSalePrice" id="wholeSalePrice<s:property value='formBean.order.product_List.size()'/>"  onchange="onWholeSalePriceChange(2,<s:property value='formBean.order.product_List.size()'/>);"   onfocus="this.select();" size='8'/></td>
 				 		<td><input type="text" name="formBean.order.product_List[<s:property value="#st.index"/>].totalWholeSalePrice" id="totalWholeSalePrice<s:property value='formBean.order.product_List.size()'/>" readonly="readonly"  size='8'/>
 				 		    <input type="hidden" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].salesPrice" id="salesPrice<s:property value='formBean.order.product_List.size()'/>" /></td>
-				 		<td><div id="inventory<s:property value='formBean.order.product_List.size()'/>" style='display:inline;color:blue'></div>&nbsp;<div id="takeBefore<s:property value='formBean.order.product_List.size()'/>" style="display:inline;color:red"></div><input type="hidden" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].productBarcode.boughtBefore" id="boughtBefore<s:property value='formBean.order.product_List.size()'/>" size='14' value="0"/></td>
 				 		<td><div id="delIcon<s:property value='formBean.order.product_List.size()'/>" style="display:none"><img src="<%=request.getContextPath()%>/conf_files/web-image/delete.png" border="0" onclick="deleteRow('row<s:property value="formBean.order.product_List.size()"/>',<s:property value='formBean.order.product_List.size()'/>);"  style="cursor:pointer;"/></div></td>			 		
-	                </tr>
+	                    <td><div id="inventory<s:property value='formBean.order.product_List.size()'/>" style='display:inline;color:blue'></div>&nbsp;<div id="takeBefore<s:property value='formBean.order.product_List.size()'/>" style="display:inline;color:red"></div><input type="hidden" name="formBean.order.product_List[<s:property value='formBean.order.product_List.size()'/>].productBarcode.boughtBefore" id="boughtBefore<s:property value='formBean.order.product_List.size()'/>" size='14' value="0"/></td>
+				 		 </tr>
                 </tbody>
                 <tr class="PBAOuterTableTitale" height="22">
 			 		<td align ="center">总计</td>		 					 		
@@ -128,15 +129,15 @@
 			                <tr class="InnerTableContent">
 			                  <td style="width: 6%" height="27">&nbsp;</td>
 			                  <td style="width: 4%">优惠</td>
-			                  <td style="width: 8%"><s:textfield name="formBean.order.totalDiscount" id="totalDiscount" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 8%"><s:textfield name="formBean.order.totalDiscount" id="totalDiscount" size="4" cssClass="easyui-numberbox"  data-options="precision:1"/></td>
 			                  <td style="width: 4%">现金</td>
-			                  <td style="width: 8%"><s:textfield name="formBean.order.cash" id="cash" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 8%"><s:textfield name="formBean.order.cash" id="cash" size="4" cssClass="easyui-numberbox" data-options="precision:1"  onfocus='this.select();'/></td>
 			                  <td style="width: 4%">刷卡</td>
-			                  <td style="width: 8%"><s:textfield name="formBean.order.card" id="card" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 8%"><s:textfield name="formBean.order.card" id="card" size="4" cssClass="easyui-numberbox" data-options="precision:1"/></td>
 			                  <td style="width: 4%">支付宝</td>
-			                  <td style="width: 8%"><s:textfield name="formBean.order.alipay" id="alipay" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 8%"><s:textfield name="formBean.order.alipay" id="alipay" size="4" cssClass="easyui-numberbox" data-options="precision:1"/></td>
 			                  <td style="width: 4%">微信</td>
-			                  <td style="width: 25%"><s:textfield name="formBean.order.wechat" id="wechat" size="4" cssClass="easyui-numberbox"/></td>
+			                  <td style="width: 25%"><s:textfield name="formBean.order.wechat" id="wechat" size="4" cssClass="easyui-numberbox" data-options="precision:1"/></td>
 			                  <td style="width: 25%">&nbsp;</td>
 			                  <td>&nbsp;</td>
 			                </tr>

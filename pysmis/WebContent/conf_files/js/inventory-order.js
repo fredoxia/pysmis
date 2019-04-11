@@ -355,8 +355,8 @@ function addNewRow(){
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].wholeSalePrice'  onchange='onWholeSalePriceChange(2,"+index+");' id='wholeSalePrice"+index+"'  size='8'   onfocus='this.select();'/></td>";
 //    str += "<td><input type='text' name='formBean.order.product_List["+index+"].recCost' readonly id='recCost"+index+"'  size='8'/></td>";
     str += "<td><input type='text' name='formBean.order.product_List["+index+"].totalWholeSalePrice' id='totalWholeSalePrice"+index+"'  size='8'/><input type='hidden' name='formBean.order.product_List["+index+"].salesPrice' readonly id='salesPrice"+index+"'  size='8'/></td>" ;
-    str += "<td><div id='inventory"+index+"' style='display:inline;color:blue'></div>&nbsp;<div id='takeBefore"+index+"' style='display:inline;color:red'></div><input type='hidden' name='formBean.order.product_List["+index+"].productBarcode.boughtBefore' id='boughtBefore"+index+"' size='14' value='0'/></td>";
     str += "<td><div id='delIcon"+index+"' style='display:none'> <img src='"+baseurl+"/conf_files/web-image/delete.png' border='0' onclick='deleteRow(\"row"+index +"\","+index+")' style='cursor:pointer;'/></div></td>";			 		
+    str += "<td><div id='inventory"+index+"' style='display:inline;color:blue'></div>&nbsp;<div id='takeBefore"+index+"' style='display:inline;color:red'></div><input type='hidden' name='formBean.order.product_List["+index+"].productBarcode.boughtBefore' id='boughtBefore"+index+"' size='14' value='0'/></td>";
     str += "</tr>";
 
     $("#inventoryTable").append(str);

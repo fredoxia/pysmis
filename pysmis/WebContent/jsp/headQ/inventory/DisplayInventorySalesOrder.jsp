@@ -9,27 +9,10 @@
 <title><s:property value="formBean.order.order_type_ws"/></title>
 <%@ include file="../../common/Style.jsp"%>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js></script>
 <script type="text/javascript">
-var PAZU_Config = { 
-        prot:"http",           //è®¿é®ä½ çåºç¨çåè®®   
-        server: 'localhost',   //æå°æå¡å¨å°åï¼å¦æä½ çåºç¨é¢åWindowså¹³å°ï¼åæ éæ´æ¹ï¼æ¯å°å®¢æ·ç«¯é½èªå·±åæå°æå¡å¨ï¼ 
-        port: 6894,            //ä¸è¦æ´æ¹ç«¯å£,å¹¶ç¡®ä¿æå°æå¡å¨ä¸ 
-        license:'8F34B771723DCC171F931EA900F9967E'             //ä½ çPAZUè®¸å¯ç ï¼å¯ä»¥èªè¡å¨å®æ¹ç³è¯·ï¼ä¸æ¶è´¹ï¼è½¬åå¾®ä¿¡æååå³å¯ç³è¯·æå 
-    }
-function chkPAZU(){ 
-    if(!window.PAZU){ 
-       alert("PAZU is not ready \r\n :" + PAZU_Config.server + " download PAZUCloud_setup.exeçurl"); 
-       //ä¹å¯ä»¥ä½ èªå·±å¨é¡µé¢éé¢æå»ºä¸ä¸ªé¾æ¥æç¤ºç¨æ·ä¸è½½  
-       return false;
-    } 
-    return true; 
- }
-function printF(){
-	if (chkPAZU()){
-		var dfPrinter=pazu.TPrinter.getDefaultPrinter();
-		PAZU.TPrinter.printToDefaultPrinter("add ");
-	}
-}
+
+
 function exportOrderToExcel(){
 	var url = "<%=request.getContextPath()%>/action/exportInventoryOrToExcel.action";
 	document.inventoryOrderForm.action = url;
@@ -114,69 +97,8 @@ function printOrder(){
 	    var params=$("#inventoryOrderForm").serialize();  
 	    $.post(url,params, printOrderBackProcess,"json");	
 }	
-function printOrderBackProcess(data){
-    var response = data;
-	var returnCode = response.returnCode;
 
-	if (returnCode != SUCCESS)
-		alert("获取单据失败 ： " + response.message);
-	else {
-        var returnValue = response.returnValue;
-        var inventoryOrder = returnValue.inventoryOrder;
-       
-        if (inventoryOrder != null && inventoryOrder != ""){
-        	pageSetup();
-        	printContent(inventoryOrder);
-        }
-	}
- }
-function pageSetup(){
-	PAZU.TPrinter.header = "成都朴与素 大成市场2期A座3楼";
-	PAZU.TPrinter.fontCSS = "font-size:16px;";
-	PAZU.TPrinter.paperName= "zhenchi";
-}
-function printContent(io){
-	var space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    var s = "单据号 : " + io.id + space + "客户名字 : " + io.clientName + space + "单据日期  : " + io.orderTime + "<br/>";
-    	s += "单据种类 : " + io.orderType + space + "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
-		s += "单据明细  : <br/>";
-	var products = io.products;
 
-	var j =1;
-	var k = 1; //每页多少行了
- 	for (var i = 1; i <= products.length; i++){
-	  	var product = products[i-1];
-	  	s += i + space + product.brand + space + product.productCode + space + product.color + space +product.quantity + space + product.wholeSales + space + product.totalWholeSales + "<br/>";
-
-//	  	if (i == (products.length - 2))
-//	  	   alert(i + "," +products.length);
-	  	
- 	  	if ((j == 1 && i == 15) || i == products.length){
-	  		if (i == products.length)
-		  		s += "合计                                             总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales;
- 	  		//alert(s);
-	  		printOut(s);
-	  		s = "";
-	  		j++;
-	  	} else if (j!=1 && (i-15) % 20 == 0){
-	  		if (i == products.length)
-		  		s += "合计                                             总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales;
-	  		//alert(s);
-	  		printOut(s);
-	  		s = "";
-	  	} else if (i == products.length){
-	  		s += "合计                                             总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales;
-	  		//alert(s);
-	  		printOut(s);
-	  	}
-  	}
-	
-	
-}
-
-function printOut(data){
-	PAZU.print("<p>" + data);
-}
 		
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 

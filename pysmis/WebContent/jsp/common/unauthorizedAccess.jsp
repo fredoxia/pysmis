@@ -5,15 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>访问失败</title>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/jquery-1.8.0.min.js"></script>
-<LINK href="<%=request.getContextPath()%>/conf_files/css/qxbaby_css.css" type=text/css rel=STYLESHEET> 
+<%@ include file="Style.jsp"%>
 <script type="text/javascript">
-
+$(document).ready(function(){
+	parent.$.messager.progress('close'); 
+});
 </script>
 
 </head>
 <body>
-   <%@ include file="Style.jsp"%>
    <s:actionmessage/><s:fielderror/>
    <br/>
    您暂时还没有该功能访问权限。请联系管理人员。

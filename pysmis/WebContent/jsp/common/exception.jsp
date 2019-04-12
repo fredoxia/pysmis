@@ -5,9 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>访问失败</title>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/jquery-1.7.js"></script>
-<LINK href="<%=request.getContextPath()%>/conf_files/css/qxbaby_css.css" type=text/css rel=STYLESHEET> 
+<%@ include file="Style.jsp"%>
 <script type="text/javascript">
+$(document).ready(function(){
+	parent.$.messager.progress('close'); 
+});
 function viewLog(){
     var exceptionDiv = document.getElementById("exceptionDiv");
 
@@ -20,7 +22,6 @@ function viewLog(){
 
 </head>
 <body>
-   <%@ include file="Style.jsp"%>
    <br/>
    	     系统在运行时发生错误，无法响应你的请求。请联系管理员查看。<p/>
    	  <s:actionmessage/><s:fielderror/> 

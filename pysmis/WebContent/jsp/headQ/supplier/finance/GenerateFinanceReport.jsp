@@ -9,9 +9,7 @@
 <%@ include file="../../../common/Style.jsp"%>
 
 <script>
-$(document).ready(function(){
-	parent.$.messager.progress('close'); 
-});
+
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 
@@ -26,6 +24,7 @@ $(document).ready(function(){
 		selectOnCheck : false,
 		singleSelect:true,
 		nowrap : false,
+		showFooter:true,
 		columns : [ [ {
 			field : 'category',
 			title : '账目名称',

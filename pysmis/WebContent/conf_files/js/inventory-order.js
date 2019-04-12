@@ -681,29 +681,21 @@ function printPOSOrderToPrinter(){
 
 		  	for (var i = 0; i < index; i++){
 			   	var quantityInput =  $("#quantity"+i); 
-				var yearInput = $("#year"+i); 
-				var unitInput = $("#unit"+i); 
-				var quarterInput = $("#quarter"+i); 
 				var colorInput = $("#color"+i); 
 				var brandInput = $("#brand"+i); 
 				var productCodeInput = $("#productCode"+i); 
 				
-				var yearS = yearInput.val();
 				var colorS = colorInput.val();
 				if (colorS == "")
 					colorS = "-";
 		
 				var j = i +1;
-		        if (quantityInput.val()!= undefined && yearInput.val()!=undefined && quarterInput.val()!=undefined && brandInput.val()!=undefined && productCodeInput.val()!=undefined){
-		        	tempstr1 = j + "   "  +  brandInput.val()  + " " + productCodeInput.val()+ "  " + yearS.substring(2) + "-" + quarterInput.val() ;
-		        	s += tempstr1 + "<br/>";
-	
-		    	    tempstr2 = "       " + colorS + " " + quantityInput.val() + " " + unitInput.val();
-		    	    s += tempstr2 + "<br/>";  
+		        if (quantityInput.val()!= undefined && brandInput.val()!=undefined && productCodeInput.val()!=undefined){
+		        	s += j + "   "  +  brandInput.val()  + " " + productCodeInput.val() + colorS + " " + quantityInput.val() + "<br/>";  
 		        }
 			}
 		  	var totalInput = $("#totalQuantity");
-		  	s += "        总数 : " + totalInput.val() + "<br/>";   
+		  	s += "     总数 : " + totalInput.val() + "<br/>";   
 
 		  	printOut(s);
 	    } catch (e){

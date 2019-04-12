@@ -40,6 +40,7 @@ $(document).ready(function(){
 		selectOnCheck : false,
 		singleSelect:true,
 		nowrap : false,
+		showFooter:true,
 		rowStyler: function(index,row){
 			var style = "";
 			if (row.status == 9)
@@ -51,16 +52,19 @@ $(document).ready(function(){
 				style += 'background-color:#F9F8FA;';
 			return style;
 		},
-		columns : [ [ {
-			field : 'id',
-			title : '编号',
-			width : 50
-		}, {
-			field : 'clientName',
-			title : '客户名称',
-			width : 120
-				
-		}, {
+		frozenColumns :[[					
+			{
+				field : 'id',
+				title : '编号',
+				width : 50
+			}, {
+				field : 'clientName',
+				title : '客户名称',
+				width : 120
+					
+			}]],
+		columns : [ [ 
+		{
 			field : 'startTime',
 			title : '开始时间',
 			width : 125
@@ -159,7 +163,7 @@ function searchOrder(){
 </head>
 <body>
  	<div class="easyui-layout"  data-options="fit : true,border : false">
-		<div data-options="region:'north',border:false" style="height: 175px;">
+		<div data-options="region:'north',border:false" style="height: 155px;">
 		<s:form id="inventorySearchForm" action="/action/inventoryOrder!search" theme="simple" method="POST">
 		 <table width="100%" border="0">
 		    <tr class="InnerTableContent">

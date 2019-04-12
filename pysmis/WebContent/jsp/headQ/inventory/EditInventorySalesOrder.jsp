@@ -181,7 +181,7 @@ $(document).ready(function(){
 			 <td><input type="button" value="存入草稿" onclick="saveToDraft();"/><input type="button" value="重新计算" onclick="calculateTotal();"/></td>			 					 		
 			 <td>排序<input type="checkbox" name="formBean.sorting" value="true"/></td>			 					 		
 			 <td></td>
-			 <td></td>	
+			 <td><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
 	  </tr>
 	</s:elseif><s:elseif test="formBean.order.order_Status==9">
 	  <tr height="10">
@@ -201,7 +201,7 @@ $(document).ready(function(){
 			 <td><input type="button" value="重新计算" onclick="calculateTotal();"/></td>
 			 <td><input type="button" value="保存" onclick="save();"/></td>			 					 					 					 		
 			 <td style="width: 18%">排序<input type="checkbox" name="formBean.sorting" value="true"/></td>
-			 <td><input type="button" value="下载配货单" onclick="downloadOrder();"/></td>	
+			 <td><input type="button" value="下载配货单" onclick="downloadOrder();"/><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
 	  </tr>				 		      
 	</s:elseif>
 	  <tr height="10">

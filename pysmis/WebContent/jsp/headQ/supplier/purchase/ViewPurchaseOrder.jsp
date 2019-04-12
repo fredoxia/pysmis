@@ -78,17 +78,17 @@ $(document).ready(function(){
 						 <tr align="center"  class="PBAOuterTableTitale" height="22">
 				 		    <th data-options="field:'1',width:40">&nbsp;</th>
 					 		<th data-options="field:'2',width:90">条型码</th>
-					 		<th data-options="field:'3',width:90">年份</th>	
-					 		<th data-options="field:'4',width:90">季度</th>				 				
-					 		<th data-options="field:'5',width:90">产品品牌</th>		 					 				 		
-					 		<th data-options="field:'6',width:90">产品货号</th>
+					 		<th data-options="field:'3',width:70">年份</th>	
+					 		<th data-options="field:'4',width:70">季度</th>				 				
+					 		<th data-options="field:'5',width:100">产品品牌</th>		 					 				 		
+					 		<th data-options="field:'6',width:100">产品货号</th>
 					 		<th data-options="field:'7',width:90">颜色</th>
 					 		<th data-options="field:'8',width:90">单位</th>				 		
 					 		<th data-options="field:'9',width:90">数量</th>	
 					 		<th data-options="field:'10',width:90">进价 (单价)</th>
 					 		<th data-options="field:'11',width:90">批发价(单价)</th>
-					 		<th data-options="field:'12',width:90">&nbsp;</th>	
-					 		<th data-options="field:'13',width:90"></th> 		 		
+					 		<th data-options="field:'12',width:10">&nbsp;</th>	
+					 		<th data-options="field:'13',width:10"></th> 		 		
 		                 </tr>
 		                </thead>
 		                <tbody  id="inventoryTable">
@@ -129,7 +129,7 @@ $(document).ready(function(){
 					 		<td></td>			 					 		
 					 		<td><s:property value="formBean.order.totalQuantity"/></td>
 					 		<td><s:property value="formBean.order.totalRecCost"/></td>
-					 		<td>&nbsp;</td>	
+					 		<td><s:property value="formBean.order.totalWholePrice"/></td>	
 					 		<td>&nbsp;</td>	
 					 		<td>&nbsp;</td>		 		
 		                </tr>

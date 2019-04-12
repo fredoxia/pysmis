@@ -5,15 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>操作失败</title>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/jquery-1.8.0.min.js"></script>
-<LINK href="<%=request.getContextPath()%>/conf_files/css/qxbaby_css.css" type=text/css rel=STYLESHEET> 
+<%@ include file="Style.jsp"%>
 <script type="text/javascript">
-
+$(document).ready(function(){
+	parent.$.messager.progress('close'); 
+});
 </script>
 
 </head>
 <body>
-<%@ include file="Style.jsp"%>
    <div id="info">您的操作失败。</div>
    <s:actionmessage/><s:fielderror/>
 

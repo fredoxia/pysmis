@@ -130,7 +130,7 @@ function searchOrder(){
 </head>
 <body>
  	<div class="easyui-layout"  data-options="fit : true,border : false">
-		<div data-options="region:'north',border:false" style="height: 175px;">
+		<div data-options="region:'north',border:false" style="height: 155px;">
 		<s:form id="inventorySearchForm" action="/action/inventoryOrder!search" theme="simple" method="POST">
 		 <table width="100%" border="0">
 		    <tr class="InnerTableContent">

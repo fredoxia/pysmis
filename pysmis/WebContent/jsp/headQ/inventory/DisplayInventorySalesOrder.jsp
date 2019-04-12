@@ -166,7 +166,7 @@ $(document).ready(function(){
 					<td></td>
 			 	</tr>
 		 </table>
-		 <table class="easyui-datagrid" style="height:400px"  data-options="singleSelect:true,border : false">			 	
+		 <table class="easyui-datagrid" style="height:550px"  data-options="singleSelect:true,border : false">			 	
 			   <thead>
 				 	<tr align="center" class="PBAOuterTableTitale" height="22">
 				 		<th data-options="field:'1',width:40">序号</th>
@@ -185,6 +185,23 @@ $(document).ready(function(){
 	                </tr>
                </thead>
                <tbody>
+                  <s:if test="formBean.order.product_List.size > 20">
+	               	   <tr align="center"  height="10" class="InnerTableContent" >
+				  	     <td>总数</td>
+						 <td>&nbsp;</td>			 					 		
+						 <td>&nbsp;</td>
+						 <td>&nbsp;</td>			 					 		
+						 <td>&nbsp;</td>	
+						 <td>&nbsp;</td>			 					 		
+						 <td>&nbsp;</td>		
+						 <td>&nbsp;</td>	 					 		
+						 <td><s:property value="formBean.order.totalQuantity"/></td>
+						 <td>&nbsp;</td>
+						 <td>&nbsp;</td>
+						 <td></td>
+						 <td><s:property value="formBean.order.totalWholePrice"/></td>
+				        </tr>
+			      </s:if>
                <s:iterator value="formBean.order.product_List" status = "st" id="order" >
 				 	<tr>
 				 		<td><s:property value="#st.index+1"/></td>

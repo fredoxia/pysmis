@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="formBean.order.order_type_ws"/> <s:property value="formBean.order.order_Status_s"/></title>
 <%@ include file="../../common/Style.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-23"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-24"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/HtmlTable.js"></script>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js></script>
@@ -125,6 +125,14 @@ function exportBarcodeToExcel(){
 	   document.inventoryOrderForm.action = url;
 	   document.inventoryOrderForm.submit();	
 	}
+}
+
+/**
+ * 选择customer之后，更新preAcct
+ */
+function chooseClient(clientId, preAcct){
+	$("#preAcct").val(preAcct);
+	calculatePostAcct();
 }
 
 $(document).ready(function(){

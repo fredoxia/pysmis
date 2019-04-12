@@ -28,18 +28,22 @@ function backProcessSearchClient(data){
 	    	if ((i % 2) == 0)
 	    		bg = " style='background-color: rgb(255, 250, 208);'";
 	        if (clients[i] != "")  
-		          $("<tr align='center'  height='10' " + bg +"><td>"+clients[i].name+"</td><td>"+clients[i].area+"</td><td>"+clients[i].id+"</td><td>"+clients[i].currentAcctBalance+"</td><td><a href='#' onclick='selectClient("+clients[i].id+",\""+clients[i].name+"," +clients[i].area +"\")'><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></td></tr>").appendTo("#clientTablebody");
+		          $("<tr align='center'  height='10' " + bg +"><td>"+clients[i].name+"</td><td>"+clients[i].area+"</td><td>"+clients[i].id+"</td><td>"+clients[i].currentAcctBalance+"</td><td><a href='#' onclick='selectClient("+clients[i].id+",\""+clients[i].name+"," +clients[i].area +"\","+clients[i].currentAcctBalance+")'><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></td></tr>").appendTo("#clientTablebody");
 	    }
     }else {
     	$("<tr class='InnerTableContent' height='10' style='background-color: rgb(255, 250, 208);' align='center'><td colspan=5><font color='red'>对应信息没有查询信息</font> </td></tr>").appendTo("#clientTablebody");
     }  
     $("#ClientDiv").dialog("open");
 }
-function selectClient(clientId, clientName1){
+function selectClient(clientId, clientName1, preAcct){
 	$("#clientID").val(clientId);
 	$("#clientName").val(clientName1);
 	$("#ClientDiv").dialog("close");
+	try {
+      chooseClient(clientId, preAcct);
+	} catch (error){
 
+	}
 }
 function clearCustomer(){
 	$("#clientID").val(0);

@@ -313,6 +313,18 @@ function calculateTotal(){
 	 calculateCasher();
 }
 
+function calculatePostAcct(){
+	var casherInput = $("#casher");
+	var casher = parseFloat(casherInput.numberbox("getValue"));
+	
+	var preAcctInput = $("#preAcct");
+	var preAcct = parseFloat(preAcctInput.val());
+	if (isNaN(preAcct))
+		preAcct = 0;
+	
+	$("#postAcct").val((preAcct+casher).toFixed(2));
+}
+
 function calculateCasher(){
 	var totalWhole = parseFloat($("#totalWholePrice").val());
 	var discount = parseFloat($("#totalDiscount").val());
@@ -343,6 +355,8 @@ function calculateCasher(){
 	} else if (orderType == 0){
 		casherInput.numberbox("setValue",( totalWhole-discount-cash-card-alipay-wechat).toFixed(2));
 	}
+	 
+	 calculatePostAcct();
 }
 /*
 function calculateWholeTotal(){

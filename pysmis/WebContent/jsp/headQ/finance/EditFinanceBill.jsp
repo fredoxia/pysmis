@@ -189,8 +189,7 @@ function getChainCurrFinanceBackProcess(data){
 		
 }
 
-function chooseClient(clientId){
-
+function chooseClient(clientId, preAcct){
 	getChainCurrFinance(clientId);
 }
 </script>

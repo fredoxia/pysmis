@@ -5,9 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>更新成功</title>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/jquery-1.8.0.min.js"></script>
-<LINK href="<%=request.getContextPath()%>/conf_files/css/qxbaby_css.css" type=text/css rel=STYLESHEET> 
+<%@ include file="../../common/Style.jsp"%>
 <script type="text/javascript">
+$(document).ready(function(){
+	parent.$.messager.progress('close'); 
+});
 var prefix = "<%=request.getContextPath()%>";
 var postAction = "<%=request.getParameter("location")%>";
 var msg;

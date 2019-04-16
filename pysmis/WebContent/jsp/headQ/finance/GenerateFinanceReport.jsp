@@ -11,63 +11,80 @@
 <script>
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
+	
+	var params= $.serializeObject($('#preGenReportForm'));
+
+	$('#dataGrid').datagrid({
+		url : 'financeHQJSON!generateFinanceReport',
+		queryParams: params,
+		fit : true,
+		fitColumns : false,
+		pagination : false,
+		border : false,
+		checkOnSelect : false,
+		selectOnCheck : false,
+		singleSelect:true,
+		showFooter:true,
+		rownumbers:true,
+		nowrap : false,
+		frozenColumns :[[					
+			                {field:'cust', width:100,title:'客户名字',fixed:true}
+			           ]],
+		columns : [ [
+					{field:'cash', width:70,title:'现金 A',
+						formatter: function (value, row, index){
+							return (row.cash).toFixed(1);
+						}},
+					{field:'card', width:70,title:'银行卡 B',
+						formatter: function (value, row, index){
+							return (row.card).toFixed(1);
+						}},
+					{field:'alipay', width:70,title:'支付宝 C',
+						formatter: function (value, row, index){
+							return (row.alipay).toFixed(1);
+						}},
+					{field:'wechat', width:70,title:'微信 D',
+						formatter: function (value, row, index){
+							return (row.wechat).toFixed(1);
+						}},
+
+					{field:'sum', width:100,title:'汇总A+B+C+D',
+						formatter: function (value, row, index){
+							return (row.sum).toFixed(1);
+						}},
+					{field:'prepay', width:85,title:'预收款',
+						formatter: function (value, row, index){
+							return (row.prepay).toFixed(1);
+						}},						
+					{field:'discount', width:75,title:'财务折扣',
+							formatter: function (value, row, index){
+								return (row.discount).toFixed(2);
+						}},
+					{field:'acctFlow', width:120,title:'应收增加+/减少-',
+								formatter: function (value, row, index){
+									return (row.acctFlow).toFixed(1);
+						}}
+			     ]],
+		toolbar : '#toolbar',
+	});
 });
 function generateReport(){
-	$.messager.progress({
-		title : '提示',
-		text : '数据处理中，请稍后....'
-	});
 
-    var params=$("#preGenReportForm").serialize();  
-    var url = "financeHQJSON!generateFinanceReport";
-
-    $.post(url,params, generateReportBackProcess,"json");	
-}
-
-function generateReportBackProcess(data){
-    $('#reportTable tr').each(function () {                
-        $(this).remove();
-    });
-    
-	var report = data.report;
-
-	if (report != undefined){
-		showFinanceReport(report);
-	}     
-
-	$("#report").show();
-	$.messager.progress('close'); 
-}
-
-
-function showFinanceReport(report){
-	$("<tr class='PBAInnerTableTitale'>"+
-       "<td height='20' width='200'>账目名称</td>"+
-	   "<td>净入(+收/-付)</td>"+
-	   "</tr>").appendTo("#reportTable");
-	
-	var items = report.reportItems;
-	
-	for (var i = 0; i < items.length; i++){
-      $("<tr class='InnerTableContent'><td>"+
-    		items[i].category +"</td><td>"+
-	          (items[i].amount).toFixed(2) +"</td></tr>").appendTo("#reportTable");
-	}
+	var params = $.serializeObject($('#preGenReportForm')); 
+	$('#dataGrid').datagrid('load',params); 
 }
 
 </script>
 </head>
 <body>
-   <s:form id="preGenReportForm" action="" theme="simple" method="POST"> 
-     <table width="90%" align="center"  class="OuterTable">
-	    <tr><td>
-			 <table width="100%" border="0">
-			    <tr>
-			       <td height="50" colspan="7">
-					   	<table width="100%" border="0">
+
+	 	<div class="easyui-layout" data-options="fit : true,border : false">
+		<div data-options="region:'north',border:false" style="height: 85px;">
+		   <s:form id="preGenReportForm" name="preGenReportForm" action="" theme="simple" method="POST">  
+	                   <table width="100%" border="0">
 					    <tr class="InnerTableContent">
 					      <td width="45" height="35">&nbsp;</td>
-					      <td width="76"><strong>开始截止日期</strong></td>
+					      <td width="76"><strong>财务单据日期</strong></td>
 					      <td width="284" colspan="2">
 			      	 			<s:textfield id="startDate" name="formBean.searchStartTime" cssClass="easyui-datebox"  data-options="width:100,editable:false"/>			      
 			      					&nbsp; 至&nbsp;
@@ -85,27 +102,16 @@ function showFinanceReport(report){
 					      <td></td>
 					      <td></td>
 					    </tr>
-	                    <tr class="InnerTableContent">
-					      <td height="35">&nbsp;</td>
-					      <td>&nbsp;</td>
-					      <td colspan="2"><input type="button" value="生成报表" onclick="generateReport();"/></td>
-					      <td>&nbsp;</td>
-					    </tr>
-					  </table></td>
-			    </tr>
-	   			<tr>
-                    <td>
-            	      <div id="report" style="display:none">
-            	         <table width="70%" border="0" id="reportTable">
-
-					     </table>
-            	      </div>
-                    </td>
-                </tr>
-			  </table>
-	   </td></tr>
-
-	 </table>
-	 </s:form>
+					  </table>
+			</s:form>
+		</div>
+		<div data-options="region:'center',border:false">
+			    <table id="dataGrid">			       
+		        </table>
+		    <div id="toolbar" style="display: none;">
+			         <a onclick="generateReport();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询报表</a>
+	        </div>
+		</div>
+	</div>	
 </body>
 </html>

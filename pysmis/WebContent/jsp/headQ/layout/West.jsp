@@ -103,7 +103,7 @@ $(function() {
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preCreate')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preCreate'}">创建供应商财务单据</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchFH')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preSearchFH'}">搜索供应商财务单据 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preSearchAcctFlow')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preSearchAcctFlow'}">查询供应商往来账户</li></s:if>
-			    	    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preFinanceRpt'}">供应商财务报表</li></s:if>
+			    	    
 			    	</ul>
 			    </li>
 			    </s:if>	
@@ -129,7 +129,6 @@ $(function() {
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preCreateFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preCreateFHQ'}">创建批发财务单据</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchFHQ')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchFHQ'}">搜索批发财务单据 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preSearchAcctFlow')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preSearchAcctFlow'}">查询客户往来账户</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preFinanceRpt'}">批发财务报表</li></s:if>
 			    	</ul>
 			    </li>
 			    </s:if>
@@ -161,6 +160,13 @@ $(function() {
 					</ul>
 				</li>
 				 </s:if>	
+			    <li  data-options="iconCls:'icon-chart_bar',state:'open',border:false">
+			    	<span>总部报表功能</span>
+				  	<ul style="width: 150%">
+				  	    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preFinanceRpt'}">供应商财务报表</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preFinanceRpt'}">批发财务报表</li></s:if>
+					</ul>
+			 	</li>				
 			    <li  data-options="iconCls:'icon-status_online',state:'open',border:false">
 			    	<span>我的系统</span>
 				  	<ul style="width: 150%">

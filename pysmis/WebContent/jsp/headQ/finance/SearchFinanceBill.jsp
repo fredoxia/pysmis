@@ -90,7 +90,7 @@ function changeChainStore(chainId){
 						    </tr>
 						    <tr class="InnerTableContent">
 						      <td width="50" height="25">&nbsp;</td>
-						      <td width="78"><strong>单据日期</strong></td>
+						      <td width="78"><strong>开单日期</strong></td>
 						      <td width="267">开始日期 ：
 						      	<s:textfield id="startDate" name="formBean.searchStartTime" cssClass="easyui-datebox" data-options="width:100,editable:false"/>
 						      <td width="72"><strong>客户</strong></td>
@@ -146,7 +146,11 @@ function changeChainStore(chainId){
 						 	  <th width="120">过账日期</th>
 						      <th width="60">金额</th>
 						      <th width="60">状态</th>
+<<<<<<< HEAD
 						      <th width="200">备注</th>
+=======
+						      <th width="160">备注</th>
+>>>>>>> 1d9d488b679146f1dc29c49cdc3faf7b573e5b88
 						      <th width="60"></th>
 						    </tr>
 						    <tbody id="bills">

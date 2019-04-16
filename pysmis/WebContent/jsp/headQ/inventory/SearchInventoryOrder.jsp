@@ -125,7 +125,7 @@ $(document).ready(function(){
 				if (row.isAuthorizedToTransfer == true){
 					var dropDown = "<select id='transferTo"+row.id+"'>";
 					<s:iterator value="uiBean.users" status = "st" id="user" >
-					   dropDown +="<option value='<s:property value="#user.user_id"/>'><s:property value="#user.user_name"/></option>";
+					   dropDown +="<option value='<s:property value="#user.user_id"/>'><s:property value="#user.name"/></option>";
 					</s:iterator>
 					dropDown +="</select>";
 					

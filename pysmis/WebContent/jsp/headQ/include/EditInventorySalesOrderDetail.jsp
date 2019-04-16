@@ -151,7 +151,7 @@
 			                  <td style="width: 4%">微信</td>
 			                  <td style="width: 6%"><s:textfield name="formBean.order.wechat" id="wechat" size="4" cssClass="easyui-numberbox"  data-options="onChange:function(param1, param2){calculateCasher();}"/></td>
 			                  <td style="width: 6%">待付/待收金额</td>
-			                  <td style="width: 8%"><input type="text" id="casher" size="4" class="easyui-numberbox"  data-options="prefix:'$',precision:2" readonly/></td>
+			                  <td style="width: 8%"><input type="text" id="casher" size="4" class="easyui-numberbox"  data-options="precision:2" readonly/></td>
 			                  <td style="width: 25%">&nbsp;</td>
 			                  <td>&nbsp;</td>
 			                </tr>

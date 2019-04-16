@@ -33,7 +33,7 @@ function searchBillsBackProcess(data){
 	    	if (bills[i].status == 3)
 		    	color =  "<%=Common_util.CANCEL_ROW_FONT_COLOR%>";
 	        var urlLink = "financeHQJSP!getFHQ?formBean.order.id=" + bills[i].id;
-	        var nodeTitle = "财务单据" + bills[i].id;
+	        var nodeTitle = "批发财务单据" + bills[i].id;
 	        if (bills[i] != "")  
 		          $("<tr class='InnerTableContent' style='" + bg + color +"' align='center'><td height='25'>"+
 				          bills[i].id+"</td><td>"+
@@ -143,10 +143,14 @@ function changeChainStore(chainId){
 						      <th width="40" height="32">编号</th>
 						      <th width="90">客户</th>
 						      <th width="102">单据种类</th>
-						 	  <th width="150">过账日期</th>
+						 	  <th width="120">过账日期</th>
 						      <th width="60">金额</th>
 						      <th width="60">状态</th>
+<<<<<<< HEAD
+						      <th width="200">备注</th>
+=======
 						      <th width="160">备注</th>
+>>>>>>> 1d9d488b679146f1dc29c49cdc3faf7b573e5b88
 						      <th width="60"></th>
 						    </tr>
 						    <tbody id="bills">

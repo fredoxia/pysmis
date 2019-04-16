@@ -21,10 +21,11 @@ function cancelBill(){
 	document.financeBillForm.submit();
 }
 function printBill(){
-	 var url = "<%=request.getContextPath()%>/action/financeHQJSON!printOrder";
+	alert("财务单据打印功能还未完善");
+	 /*var url = "<%=request.getContextPath()%>/action/financeHQJSON!printOrder";
 	 var params=$("#financeBillForm").serialize();  
 	 
-	 $.post(url,params, printOrderBackProcess,"json");	
+	 $.post(url,params, printOrderBackProcess,"json");*/	
 }	
 function printOrderBackProcess(data){
    var response = data;

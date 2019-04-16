@@ -304,9 +304,9 @@ function calculateTotal(){
 			$("#totalDiscount").numberbox("setValue",discount);
 	//销售出库
 	} else if (orderType == 0){
-			var ceil = Math.ceil(totalWholePrice);
+			var floor = Math.floor(totalWholePrice);
 
-			var discount = (totalWholePrice - ceil).toFixed(2);
+			var discount = (totalWholePrice - floor).toFixed(2);
 			$("#totalDiscount").numberbox("setValue",discount);
 	}
 	 

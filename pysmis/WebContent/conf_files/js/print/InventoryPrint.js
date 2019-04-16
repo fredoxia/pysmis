@@ -5,18 +5,21 @@ var PAZU_Config = {
         license:'8F34B771723DCC171F931EA900F9967E'              
     }
 function pageSetup(){
-	PAZU.TPrinter.header = "成都朴与素 ";
-	PAZU.TPrinter.fontCSS = "font-size:16px;";
-	PAZU.TPrinter.paperName= "zhenchi";
+	PAZU.TPrinter.paperName= "dayin";
+	PAZU.TPrinter.marginTop= 0;                  //属性 上边距   数据类型：数字   单位：毫米 
+	PAZU.TPrinter.marginBottom= 3;
+	PAZU.TPrinter.marginLeft= 0;                 //属性 左边距   数据类型：数字   单位：毫米 
+	PAZU.TPrinter.marginRight= 0;                //属性 右边距   数据类型：数字   单位：毫米 
 
 }
 function printContent(io){
 	var space = "&nbsp;&nbsp;&nbsp;";
-    var s = "单据号 : " + io.id + space + "客户名字 : " + io.clientName  + "<br/>"; 
+	var s = "<font size='5pt'>成都朴与素</font><br/>";
+        s += "单据号 : " + io.id + space + "<br/>客户名字 : " + io.clientName  + "<br/>地区: " + io.clientArea + "<br/>"; 
         s += "单据日期  : " + io.orderTime + "<br/>";
     	s += "单据种类 : " + io.orderType + "<br/>";
     	s += "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
-		s += "单据明细  : <br/>";
+		s += "---------------单据明细 -------------<br/>";
 	var products = io.products;
 
 	var j =1;
@@ -26,15 +29,15 @@ function printContent(io){
 	  	s += i + space + product.productCode + product.color + space +product.quantity + space + product.wholeSales + space + product.totalWholeSales + "<br/>";
 
  	  	if (i == products.length){
-	  		s += "合计                                     总数 : " + io.totalQ + "       批发总额 : " + io.totalWholeSales + "<br/>";
+	  		s += "<b>总数 : " + io.totalQ + space +  "总金额 : " + io.totalWholeSales + "</b><br/>";
 	  		if (io.cash != 0)
-	  		  s += "现金 : " + io.cash;
+	  		  s += "现金 :" + io.cash;
 	  		if (io.card != 0)
-	  		  s += " 刷卡 : " +io.card;
+	  		  s += " 刷卡 :" +io.card;
 		    if (io.alipay != 0)
-			  s += "支付宝 : " + io.alipay;
+			  s += "支付宝 :" + io.alipay;
 		  	if (io.card != 0)
-			  s += " 微信 : " + io.wechat;
+			  s += " 微信 :" + io.wechat;
 		  	s +=  "<br/><br/>展厅电话 : 028-65775577"+ "<br/>"; 
 		  	s +=  "加盟热线 : 13880949886/18981987974"+ "<br/>";
 		  	s +=  "展厅地址  : 大成市场2期3楼52号";

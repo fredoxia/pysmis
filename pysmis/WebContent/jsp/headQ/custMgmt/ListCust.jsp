@@ -9,9 +9,25 @@
 <title>朴与素连锁店管理信息系统</title>
 <%@ include file="../../common/Style.jsp"%>
 <script>
+
+
+
 var dataGrid ;
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
+	function BSkeyDown(e){
+
+		 var ieKey = event.keyCode;
+
+		 if (ieKey==13){
+		   if (event.srcElement.id == "searchName"){
+			   searchCust(); 
+			   event.returnValue=false;
+		   } else
+			   event.returnValue=false; 
+		 } 
+	} 
+	document.onkeydown = BSkeyDown;
 	
 	var params = "";
 
@@ -37,21 +53,25 @@ $(document).ready(function(){
 
 			return style;
 		},
-		columns : [ [ {
-			field : 'id',
-			title : '客户代码',
-			width : 90,
-			sortable:true,
-			order:'desc',
-		    },{
+		columns : [ [
+		    {
 				field : 'name',
 				title : '客户名字',
-				width : 150
+				width : 150,
+				sortable:true,
+				order:'desc'
 			},{			    
 				field : 'area',
 				title : '客户地区',
-				width : 90
+				width : 90,
+				sortable:true,
+				order:'desc'
+				
 		    }, {
+				field : 'phone',
+				title : '客户电话',
+				width : 90
+		    }, {		    	
 				field : 'address',
 				title : '地址',
 				width : 200
@@ -62,7 +82,9 @@ $(document).ready(function(){
 			}, {		    	
 				field : 'currentAcctBalance',
 				title : '当前账目',
-				width : 90
+				width : 90,
+				sortable:true,
+				order:'desc'
 			}, {
 				field : 'comment',
 				title : '备注信息',
@@ -71,6 +93,8 @@ $(document).ready(function(){
 				field : 'status',
 				title : '状态',
 				width : 50,
+				sortable:true,
+				order:'desc',
 				formatter: function (value, row, index){
 					if (row.status == 0 )
 						return "正常";
@@ -151,8 +175,8 @@ function refresh(){
 			<form id="searchForm" name="searchForm" method="post">
 				<table border="0" class="table table-hover table-condensed" style="display: block;">
 					<tr>
-						<th>客户名字首字母</th>
-						<td><input name="formBean.cust.pinyin" id="searchName" placeholder="可以模糊查询客户名字首字母"/></td>
+						<th>客户名字</th>
+						<td><input name="formBean.cust.name" id="searchName" placeholder="可以模糊查询客户名字"/></td>
 						<th colspan="2"></th>
 					</tr>
 				</table>

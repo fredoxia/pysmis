@@ -191,6 +191,8 @@ function getChainCurrFinanceBackProcess(data){
 
 function chooseClient(clientId, preAcct){
 	getChainCurrFinance(clientId);
+	
+	self.parent.updateTabName("批发财务单据 " + clientId);
 }
 </script>
 </head>

@@ -91,7 +91,10 @@ $(document).ready(function(){
 		}, {
 			field : 'totalWholeSales',
 			title : '批发总额',
-			width : 80
+			width : 80,
+			formatter: function (value, row, index){
+				return (row.totalWholeSales).toFixed(2);
+			}
 		}, {
 			field : 'comment',
 			title : '备注',

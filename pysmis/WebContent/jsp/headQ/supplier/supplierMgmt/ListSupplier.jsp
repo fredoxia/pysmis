@@ -9,10 +9,27 @@
 <title>朴与素连锁店管理信息系统</title>
 <%@ include file="../../../common/Style.jsp"%>
 <script>
+
 var dataGrid ;
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 	
+	function BSkeyDown(e){
+
+		 var ieKey = event.keyCode;
+
+		 if (ieKey==13){
+		   if (event.srcElement.id == "searchName"){
+			   searchSupplier(); 
+			   event.returnValue=false;
+		   } else
+			   event.returnValue=false; 
+		 } 
+	} 
+
+
+	document.onkeydown = BSkeyDown;
+
 	var params = "";
 
 	dataGrid = $('#dataGrid').datagrid({
@@ -37,21 +54,15 @@ $(document).ready(function(){
 
 			return style;
 		},
-		columns : [ [ {
-			field : 'id',
-			title : '供应商代码',
-			width : 80,
-			sortable:true,
-			order:'desc',
-		    },{
+		columns : [ [ 
+		              
+		     {
 				field : 'name',
 				title : '供应商名字',
-				width : 150
-			},{		
-				field : 'pinyin',
-				title : '首字母',
-				width : 70
-			},{					
+				width : 150,
+				sortable:true,
+				order:'desc'
+			},{						
 				field : 'address',
 				title : '地址',
 				width : 200
@@ -62,7 +73,9 @@ $(document).ready(function(){
 			}, {		    	
 				field : 'currentAcctBalance',
 				title : '当前账目',
-				width : 90
+				width : 90,
+				sortable:true,
+				order:'desc'
 			}, {
 				field : 'comment',
 				title : '备注信息',
@@ -71,6 +84,8 @@ $(document).ready(function(){
 				field : 'status',
 				title : '状态',
 				width : 50,
+				sortable:true,
+				order:'desc',
 				formatter: function (value, row, index){
 					if (row.status == 0 )
 						return "正常";
@@ -151,8 +166,8 @@ function refresh(){
 			<form id="searchForm" name="searchForm" method="post">
 				<table border="0" class="table table-hover table-condensed" style="display: block;">
 					<tr>
-						<th>供应商名字首字母</th>
-						<td><input name="formBean.supplier.pinyin" id="searchName" placeholder="可以模糊查询供应商名字首字母"/></td>
+						<th>供应商名字</th>
+						<td><input name="formBean.supplier.name" id="searchName" placeholder="可以模糊查询供应商名字首"/></td>
 						<th colspan="2"></th>
 					</tr>
 				</table>

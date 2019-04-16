@@ -7,10 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="formBean.order.order_type_ws"/> <s:property value="formBean.order.order_Status_s"/></title>
 <%@ include file="../../common/Style.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-24"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-25"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/HtmlTable.js"></script>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
-<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-25></script>
 <script type="text/javascript">
 var baseurl = "<%=request.getContextPath()%>";
 
@@ -99,17 +99,7 @@ function saveOrderBackProcess(data){
         
 	}
  }
-/**
- * 下载配货单
- */
-function downloadOrder(){
-	var url = "<%=request.getContextPath()%>/action/exportInventoryOrToExcel!downloadOrder";
-	var msg = "请确认，你在下载配货单前 没有修改单据 或者已经保存了修改项目";
-	if (confirm(msg)){
-	   document.inventoryOrderForm.action = url;
-	   document.inventoryOrderForm.submit();	
-	}
-}
+
 function printPOSOrder(){
 	var msg = "请确认，你在打印pos小票配货单前 没有修改单据 或者已经保存了修改项目";
 	if (confirm(msg)){
@@ -126,13 +116,19 @@ function exportBarcodeToExcel(){
 	   document.inventoryOrderForm.submit();	
 	}
 }
-
+function exportOrderToExcel(){
+	var url = "<%=request.getContextPath()%>/action/exportInventoryOrToExcel.action";
+	document.inventoryOrderForm.action = url;
+	document.inventoryOrderForm.submit();	
+}
 /**
  * 选择customer之后，更新preAcct
  */
 function chooseClient(clientId, preAcct){
 	$("#preAcct").val(preAcct);
 	calculatePostAcct();
+	
+	self.parent.updateTabName("批发销售单据 " + clientId);
 }
 
 $(document).ready(function(){
@@ -199,7 +195,7 @@ $(document).ready(function(){
 			 <td><input type="button" value="存入草稿" onclick="saveToDraft();"/><input type="button" value="重新计算" onclick="calculateTotal();"/></td>			 					 		
 			 <td>排序<input type="checkbox" name="formBean.sorting" value="true"/></td>
 			 <td><input type="button" value="删除订单" onclick="deleteOrder();"/></td>			 					 		
-			 <td><input type="button" value="下载配货单" onclick="downloadOrder();"/><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
+			 <td><input type="button" value="订单导出到Excel" onclick="exportOrderToExcel();"/><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
 	  </tr>
 	</s:elseif><s:elseif test="#session.LOGIN_USER.containFunction('inventoryOrder!acctProcess') || #session.LOGIN_USER.roleType == 99">
 	  <tr height="10">
@@ -209,7 +205,7 @@ $(document).ready(function(){
 			 <td><input type="button" value="重新计算" onclick="calculateTotal();"/></td>
 			 <td><input type="button" value="保存" onclick="save();"/></td>			 					 					 					 		
 			 <td style="width: 18%">排序<input type="checkbox" name="formBean.sorting" value="true"/></td>
-			 <td><input type="button" value="下载配货单" onclick="downloadOrder();"/><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
+			 <td><input type="button" value="订单导出到Excel" onclick="exportOrderToExcel();"/><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
 	  </tr>				 		      
 	</s:elseif>
 	  <tr height="10">
@@ -219,6 +215,5 @@ $(document).ready(function(){
 
 </s:form>
 
-<bgsound id="bgs" src="bg.mp3" loop=1>
 </body>
 </html>

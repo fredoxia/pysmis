@@ -33,7 +33,7 @@ function searchBillsBackProcess(data){
 	    	if (bills[i].status == 3)
 		    	color =  "<%=Common_util.CANCEL_ROW_FONT_COLOR%>";
 	        var urlLink = "financeHQJSP!getFHQ?formBean.order.id=" + bills[i].id;
-	        var nodeTitle = "财务单据" + bills[i].id;
+	        var nodeTitle = "批发财务单据" + bills[i].id;
 	        if (bills[i] != "")  
 		          $("<tr class='InnerTableContent' style='" + bg + color +"' align='center'><td height='25'>"+
 				          bills[i].id+"</td><td>"+
@@ -138,15 +138,15 @@ function changeChainStore(chainId){
 			      <td colspan="7">
 			         <!-- table to display the draft order information -->
 			         <div id="billsDiv" style="display: none">
-						<table width="70%"  align="left" class="OuterTable" id="org_table">
+						<table width="90%"  align="left" class="OuterTable" id="org_table">
 						    <tr class="PBAInnerTableTitale">
 						      <th width="40" height="32">编号</th>
 						      <th width="90">客户</th>
 						      <th width="102">单据种类</th>
-						 	  <th width="150">过账日期</th>
+						 	  <th width="120">过账日期</th>
 						      <th width="60">金额</th>
 						      <th width="60">状态</th>
-						      <th width="60">备注</th>
+						      <th width="200">备注</th>
 						      <th width="60"></th>
 						    </tr>
 						    <tbody id="bills">

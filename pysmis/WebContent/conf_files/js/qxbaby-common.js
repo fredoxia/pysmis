@@ -287,21 +287,7 @@ function addTab4(params) {
 		t.tabs('add', opts);
  	}
 }
-/**
- * 检查tab title 是否是数字后最
- * @param url
- * @param title
- */
-function addTab7(params) {
-	parent.$.messager.progress({
-		title : '提示',
-		text : '数据处理中，请稍后....'
-	});
-	
-	var title = params.title;
-	
-	parent.addTab(params);
-}
+
 function updateTabName(newName){
 	var tab = $("#indexTab").tabs('getSelected');
 	var options = tab.panel("options");

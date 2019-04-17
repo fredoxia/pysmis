@@ -13,13 +13,15 @@ function pageSetup(){
 
 }
 function printContent(io){
+	pageSetup();
+	
 	var space = "&nbsp;&nbsp;&nbsp;";
 	var s = "<font size='5pt'>成都朴与素</font><br/>";
         s += "单据号 : " + io.id + space + "<br/>客户名字 : " + io.clientName  + "<br/>地区: " + io.clientArea + "<br/>"; 
         s += "单据日期  : " + io.orderTime + "<br/>";
     	s += "单据种类 : " + io.orderType + "<br/>";
     	s += "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
-		s += "---------------单据明细 -------------<br/>";
+		s += "-----------------单据明细 ---------------<br/>";
 	var products = io.products;
 
 	var j =1;
@@ -38,7 +40,7 @@ function printContent(io){
 			  s += "支付宝 :" + io.alipay;
 		  	if (io.card != 0)
 			  s += " 微信 :" + io.wechat;
-		  	s +=  "<br/><br/>展厅电话 : 028-65775577"+ "<br/>"; 
+		  	s +=  "<br/><br/>展厅电话 : 028-65775588"+ "<br/>"; 
 		  	s +=  "加盟热线 : 13880949886/18981987974"+ "<br/>";
 		  	s +=  "展厅地址  : 大成市场2期3楼52号";
 
@@ -60,14 +62,13 @@ function printOrderBackProcess(data){
         var inventoryOrder = returnValue.inventoryOrder;
        
         if (inventoryOrder != null && inventoryOrder != ""){
-        	pageSetup();
         	printContent(inventoryOrder);
         }
 	}
  }
 function printOut(data){
 
-	PAZU.print("<p>" + data);
+	PAZU.print("<br/>" + data);
 }
 
 

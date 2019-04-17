@@ -15,10 +15,10 @@ function callP(){
 				        <table cellpadding="0" cellspacing="0" style="width: 95%" border="0">	 	
 						 	<tr height="22">
 						 		<td colspan="9">
-						 		<p>2019-4-13更新:</p>
-						 		1. 增加客户,供应商查询排序,电话号码显示<p/>
-						 		2. 添加批发单据导出功能<p/>
-						 		3. 财务单据添加明细<p/>
+						 		<p>2019-4-15更新:</p>
+						 		1. 批发单据过账打印功能<p/>
+						 		2. 财务明细报表<p/>
+						 		3. 客户供应商信息排序<p/>
 						 		</td>
 						 	</tr>
 						</table>

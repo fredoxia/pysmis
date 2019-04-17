@@ -65,19 +65,7 @@ $(function() {
 			    	</ul>  
 			    </li>
 			    </s:if>
-			    <!--  
-			    <s:if test="#session.LOGIN_USER.containFunction('userJSP!preEdit') || #session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationConf') || #session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationMgmtNew') || #session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationMgmtSearch') || #session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationSummaryMgmtSearch')">
-			    <li data-options="iconCls:'icon-group',state:'closed',border:false">
-			        <span>人力资源管理</span>
-				  	<ul>
-			    		<s:if test="#session.LOGIN_USER.containFunction('userJSP!preEdit')"><li data-options="iconCls:'icon-group',attributes:{url:'userJSP!preEdit'}">员工信息管理</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationConf')"><li data-options="iconCls:'icon-group',attributes:{url:'hrEvalJSP!preEvaluationConf'}">绩效考核管理配置</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationMgmtNew')"><li data-options="iconCls:'icon-group',attributes:{url:'hrEvalJSP!preEvaluationMgmtNew'}">新建员工绩效考核</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationMgmtSearch') || #session.LOGIN_USER.containFunction(14)"><li data-options="iconCls:'icon-group',attributes:{url:'hrEvalJSP!preEvaluationMgmtSearch'}">查询员工绩效考核</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationSummaryMgmtSearch')"><li data-options="iconCls:'icon-group',attributes:{url:'hrEvalJSP!preEvaluationSummaryMgmtSearch'}">查询员工考核月报表</li></s:if>
-					</ul>
-			 	</li>
-			 	</s:if>-->
+			 
 			 	
 			 	<li  data-options="iconCls:'icon-status_online',state:'open',border:false">
 			  	    <span>供应商&客户管理</span>
@@ -166,7 +154,19 @@ $(function() {
 				  	    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preFinanceRpt'}">供应商财务报表</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preFinanceRpt'}">批发财务报表</li></s:if>
 					</ul>
-			 	</li>				
+			 	</li>
+			 	<s:if test="#session.LOGIN_USER.containFunction('userJSP!preEdit')">
+			    <li data-options="iconCls:'icon-group',state:'closed',border:false">
+			        <span>人力资源管理</span>
+				  	<ul>
+			    		<s:if test="#session.LOGIN_USER.containFunction('userJSP!preEdit')"><li data-options="iconCls:'icon-group',attributes:{url:'userJSP!preEdit'}">员工信息管理</li></s:if>
+			    		<!-- <s:if test="#session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationConf')"><li data-options="iconCls:'icon-group',attributes:{url:'hrEvalJSP!preEvaluationConf'}">绩效考核管理配置</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationMgmtNew')"><li data-options="iconCls:'icon-group',attributes:{url:'hrEvalJSP!preEvaluationMgmtNew'}">新建员工绩效考核</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationMgmtSearch') || #session.LOGIN_USER.containFunction(14)"><li data-options="iconCls:'icon-group',attributes:{url:'hrEvalJSP!preEvaluationMgmtSearch'}">查询员工绩效考核</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('hrEvalJSP!preEvaluationSummaryMgmtSearch')"><li data-options="iconCls:'icon-group',attributes:{url:'hrEvalJSP!preEvaluationSummaryMgmtSearch'}">查询员工考核月报表</li></s:if>-->
+					</ul>
+			 	</li>
+			 	</s:if>				
 			    <li  data-options="iconCls:'icon-status_online',state:'open',border:false">
 			    	<span>我的系统</span>
 				  	<ul style="width: 150%">

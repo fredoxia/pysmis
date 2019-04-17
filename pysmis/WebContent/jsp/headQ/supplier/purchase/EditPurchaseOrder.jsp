@@ -389,7 +389,7 @@ $(document).ready(function(){
 			<table cellpadding="0" cellspacing="0" style="width: 100%" border="0" id="org_table">
 			 	<tr class="PBAOuterTableTitale" align="left">
 			 		<th>&nbsp;</th>
-			 		<th colspan="10" align="left">供应商名字&nbsp;:&nbsp;<%@ include file="../SupplierInput.jsp"%>货品点数&nbsp; :&nbsp;<s:select name="formBean.order.orderCounter.user_id" id="counterId"  list="uiBean.users" listKey="user_id" listValue="user_name" headerKey="0" headerValue="" />	</th>
+			 		<th colspan="10" align="left">供应商名字&nbsp;:&nbsp;<%@ include file="../SupplierInput.jsp"%>货品点数&nbsp; :&nbsp;<s:select name="formBean.order.orderCounter.user_id" id="counterId"  list="uiBean.users" listKey="user_id" listValue="name" headerKey="0" headerValue="" />	</th>
 			 		<th colspan="2" align="left">订单号&nbsp;:&nbsp;<s:property value="formBean.order.id"/> </th>	 
 			 	</tr>
 			    <tr height="10">

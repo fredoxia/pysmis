@@ -165,26 +165,6 @@ function changeFunction14(){
       <td height="4" colspan="6"><hr width="100%" color="#FFCC00"/></td>
     </tr>
     <tr class="InnerTableContent">
-      <td height="19"><strong>人力资源管理权限</strong></td>
-      <td>员工信息管理:<input type="checkbox" name="functionalities" id="function10" value="10"/></td>
-      <td>绩效考核配置:<input type="checkbox" name="functionalities" id="function11" value="11"/></td>
-      <td>创建员工考核管理:<input type="checkbox" name="functionalities" id="function12" value="12"/></td>
-      <td>管理自己员工考核:<input type="checkbox" name="functionalities" id="function14" value="14" onclick="changeFunction14();"/></td>
-      <td>管理所有员工考核:<input type="checkbox" name="functionalities" id="function13" value="13" onclick="changeFunction13();"/></td>
-    </tr>
-    <tr class="InnerTableContent">
-      <td height="4">&nbsp;</td>
-      <td height="4">查看员工考核月报表:
-      <input type="checkbox" name="functionalities" id="function15" value="15"/></td>
-      <td height="4">&nbsp;</td>
-      <td height="4">&nbsp;</td>
-      <td height="4">&nbsp;</td>
-      <td height="4">&nbsp;</td>
-    </tr>
-    <tr class="InnerTableContent">
-      <td height="4" colspan="6"><hr width="100%" color="#FFCC00"/></td>
-    </tr>
-    <tr class="InnerTableContent">
       <td height="19"><strong>单据管理权限</strong></td>
       <td>PDA单据录入:<input type="checkbox" name="functionalities" id="function24" value="24"/></td>
       <td>仓库单据录入:<input type="checkbox" name="functionalities" id="function21" value="21"/></td>

@@ -10,7 +10,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-25"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/HtmlTable.js"></script>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
-<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-25></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-26></script>
 <script type="text/javascript">
 var baseurl = "<%=request.getContextPath()%>";
 
@@ -92,7 +92,7 @@ function saveOrderBackProcess(data){
         var inventoryOrder = returnValue.inventoryOrder;
        
         if (inventoryOrder != null && inventoryOrder != ""){
-        	pageSetup();
+        	printContent(inventoryOrder);
         	printContent(inventoryOrder);
         }
         setTimeout(function(){ window.location.href = "<%=request.getContextPath()%>/action/inventoryOrder!create";}, 3000);

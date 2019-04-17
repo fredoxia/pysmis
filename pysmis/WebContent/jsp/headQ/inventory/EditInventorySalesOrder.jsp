@@ -89,7 +89,7 @@ function preview(){
 }
 
 /**
- * to submit the order to account
+ * 提交并打印价格单据
  */
 function submitOrder(){
 	calculateTotal();
@@ -127,33 +127,89 @@ function saveOrderBackProcess(data){
         var inventoryOrder = returnValue.inventoryOrder;
        
         if (inventoryOrder != null && inventoryOrder != ""){
-        	printContent(inventoryOrder);
-        	printContent(inventoryOrder);
+        	printContent(inventoryOrder, true);
+        	printContent(inventoryOrder, true);
+        }
+        setTimeout(function(){ window.location.href = "<%=request.getContextPath()%>/action/inventoryOrder!create";}, 3000);
+        
+	}
+ }
+ 
+/**
+ * 提交并打印数量单据
+ */
+function submitOrderQ(){
+	calculateTotal();
+	
+	$.messager.confirm('单据提交确认', '你确认提交仓库订单?', function(r){
+		if (r){
+            var error = validateForm();
+			
+			if (error != ""){
+				$.messager.alert('错误', error, 'error');
+			}else{
+				$("#barcode" + index).val("");
+			    recordSubmit();
+				$.messager.progress({
+					title : '提示',
+					text : '数据处理中，请稍后....'
+				});
+				 
+				var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!save";
+				 var params=$("#inventoryOrderForm").serialize();  
+				 $.post(url,params, saveOrderBackProcessQ,"json");	
+			}
+		}
+	});
+}
+function saveOrderBackProcessQ(data){
+    var response = data;
+	var returnCode = response.returnCode;
+
+	if (returnCode != SUCCESS)
+		$.messager.alert('获取单据失败', response.message, 'error');
+	else {
+        var returnValue = response.returnValue;
+        var inventoryOrder = returnValue.inventoryOrder;
+       
+        if (inventoryOrder != null && inventoryOrder != ""){
+        	printContent(inventoryOrder, false);
+        	printContent(inventoryOrder, false);
         }
         setTimeout(function(){ window.location.href = "<%=request.getContextPath()%>/action/inventoryOrder!create";}, 3000);
         
 	}
  }
 
+
 function printPOSOrder(){
 	var orderId = $("#orderId").val()
 	if (orderId == 0){
 		$.messager.alert('操作失败', '请保存单据之后再打印配货单', 'error');
+	} else {
+
+		$.messager.confirm('打印确认', '请确认，你在打印pos小票配货单前 没有修改单据 或者已经保存了修改项目', function(r){
+			if (r){
+	            printPOSOrderToPrinter();	
+	
+			}
+		});
 	}
-	var msg = "请确认，你在打印pos小票配货单前 没有修改单据 或者已经保存了修改项目";
-	if (confirm(msg)){
-		    printPOSOrderToPrinter();	
-	}
+
 }
 
 function exportBarcodeToExcel(){
 	var url = "<%=request.getContextPath()%>/action/exportInventoryOrToExcel!ExportJinSuanOrder";
 
 	var msg = "请确认，你在下载订单条码前 没有修改单据 或者已经保存了修改项目";
-	if (confirm(msg)){
-	   document.inventoryOrderForm.action = url;
-	   document.inventoryOrderForm.submit();	
-	}
+	$.messager.confirm('导出单据确认', msg, function(r){
+		if (r){
+			   document.inventoryOrderForm.action = url;
+			   document.inventoryOrderForm.submit();	
+
+		}
+	});
+
 }
 function exportOrderToExcel(){
 	var url = "<%=request.getContextPath()%>/action/exportInventoryOrToExcel.action";
@@ -209,7 +265,15 @@ $(document).ready(function(){
     <s:if test="formBean.isPreview == true">
       <tr height="10">
 	  	     <td>&nbsp;</td>
-			 <td><input type="button" value="导入文件" onclick="importFile();"/>&nbsp;<input type="button" onclick="submitOrder();" value="单据提交"/></td>			 					 		
+			 <td>
+			      <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-database'" onclick="importFile();">导入文件</a>&nbsp;
+			 	  <a href="javascript:void(0)" id="mb" class="easyui-menubutton" data-options="iconCls:'icon-save',menu:'#mm',plain:false">单据提交</a>
+					<div id="mm" style="width:150px;">
+					    <div data-options="iconCls:'icon-save',name:'price'" onclick="javascript:submitOrder()">打印价格单</div>
+					    <div data-options="iconCls:'icon-save',name:'quantity'" onclick="javascript:submitOrderQ()">打印数量单</div>
+					</div>
+			 
+			 </td>			 					 		
 			 <td>&nbsp;</td>
 			 <td><input type="button" value="存入草稿" onclick="saveToDraft();"/><input type="button" value="重新计算" onclick="calculateTotal();"/></td>			 					 		
 			 <td>排序<input type="checkbox" name="formBean.sorting" value="true"/></td>			 					 		
@@ -219,32 +283,45 @@ $(document).ready(function(){
     </s:if><s:elseif test="formBean.order.order_Status==0">
 	  <tr height="10">
 	  	     <td>&nbsp;</td>
-			 <td><input type="button" value="导入文件" onclick="importFile();"/>&nbsp; <input type="button" onclick="submitOrder();" value="单据提交"/></td>			 					 		
+			 <td><a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-database'" onclick="importFile();">导入文件</a>&nbsp; 
+			 	  <a href="javascript:void(0)" id="mb" class="easyui-menubutton" data-options="iconCls:'icon-save',menu:'#mm',plain:false">单据提交</a>
+					<div id="mm" style="width:150px;">
+					    <div data-options="iconCls:'icon-print',name:'price'" onclick="javascript:submitOrder()">打印价格单</div>
+					    <div data-options="iconCls:'icon-print',name:'quantity'" onclick="javascript:submitOrderQ()">打印数量单</div>
+					</div>			 
+			 </td>			 					 		
 			 <td>&nbsp;</td>
-			 <td><input type="button" value="存入草稿" onclick="saveToDraft();"/><input type="button" value="重新计算" onclick="calculateTotal();"/></td>			 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveToDraft();">存入草稿</a>
+			 <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-sum'" onclick="calculateTotal();">重新计算</a></td>			 					 		
 			 <td>排序<input type="checkbox" name="formBean.sorting" value="true"/></td>			 					 		
 			 <td></td>
-			 <td><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="printPOSOrder();">打印小票配货</a></td>	
 	  </tr>
 	</s:elseif><s:elseif test="formBean.order.order_Status==9">
 	  <tr height="10">
 	  	     <td>&nbsp;</td>
-			 <td><input type="button" value="导入文件" onclick="importFile();"/>&nbsp; <input type="button" onclick="submitOrder();" value="单据提交"/></td>			 					 		
-			 <td><input type="button" value="条码标签导出" onclick="exportBarcodeToExcel();"/></td>
-			 <td><input type="button" value="存入草稿" onclick="saveToDraft();"/><input type="button" value="重新计算" onclick="calculateTotal();"/></td>			 					 		
+			 <td><a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-database'" onclick="importFile();">导入文件</a>&nbsp;
+			     	<a href="javascript:void(0)" id="mb" class="easyui-menubutton" data-options="iconCls:'icon-save',menu:'#mm',plain:false">单据提交</a>
+					<div id="mm" style="width:150px;">
+					    <div data-options="iconCls:'icon-print',name:'price'" onclick="javascript:submitOrder()">打印价格单</div>
+					    <div data-options="iconCls:'icon-print',name:'quantity'" onclick="javascript:submitOrderQ()">打印数量单</div>
+					</div>
+			 </td>			 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="exportBarcodeToExcel();">条码标签导出</a></td>
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveToDraft();">存入草稿</a><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-sum'" onclick="calculateTotal();">重新计算</a></td>			 					 		
 			 <td>排序<input type="checkbox" name="formBean.sorting" value="true"/></td>
-			 <td><input type="button" value="删除订单" onclick="deleteOrder();"/></td>			 					 		
-			 <td><input type="button" value="订单导出到Excel" onclick="exportOrderToExcel();"/><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="deleteOrder();">删除单据</a></td>			 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="exportOrderToExcel();">订单导出到Excel</a><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="printPOSOrder();">打印小票配货</a></td>	
 	  </tr>
 	</s:elseif><s:elseif test="#session.LOGIN_USER.containFunction('inventoryOrder!acctProcess') || #session.LOGIN_USER.roleType == 99">
 	  <tr height="10">
 	         <td>&nbsp;</td>
 	  	     <td>&nbsp;</td>
-			 <td><input type="button" value="条码标签导出" onclick="exportBarcodeToExcel();"/></td>			 					 		
-			 <td><input type="button" value="重新计算" onclick="calculateTotal();"/></td>
-			 <td><input type="button" value="保存" onclick="save();"/></td>			 					 					 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="exportBarcodeToExcel();">条码标签导出</a></td>			 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-sum'" onclick="calculateTotal();">重新计算</a></td>
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="save();">保存</a></td>			 					 					 					 		
 			 <td style="width: 18%">排序<input type="checkbox" name="formBean.sorting" value="true"/></td>
-			 <td><input type="button" value="订单导出到Excel" onclick="exportOrderToExcel();"/><input type="button" value="打印小票配货" onclick="printPOSOrder();"/></td>	
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="exportOrderToExcel();">订单导出到Excel</a><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="printPOSOrder();">打印小票配货</a></td>	
 	  </tr>				 		      
 	</s:elseif>
 	  <tr height="10">

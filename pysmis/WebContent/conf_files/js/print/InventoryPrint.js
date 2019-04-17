@@ -12,9 +12,9 @@ function pageSetup(){
 	PAZU.TPrinter.marginRight= 0;                //属性 右边距   数据类型：数字   单位：毫米 
 
 }
-function printContent(io){
+
+function printContent(io, wholeSalePrice){
 	pageSetup();
-	
 	var space = "&nbsp;&nbsp;&nbsp;";
 	var s = "<font size='5pt'>成都朴与素</font><br/>";
         s += "单据号 : " + io.id + space + "<br/>客户名字 : " + io.clientName  + "<br/>地区: " + io.clientArea + "<br/>"; 
@@ -28,10 +28,17 @@ function printContent(io){
 	var k = 1; //每页多少行了
  	for (var i = 1; i <= products.length; i++){
 	  	var product = products[i-1];
-	  	s += i + space + product.productCode + product.color + space +product.quantity + space + product.wholeSales + space + product.totalWholeSales + "<br/>";
-
+	  	if (wholeSalePrice == true)
+	  	    s += i + space + product.productCode + product.color + space +product.quantity + space + product.wholeSales + space + product.totalWholeSales + "<br/>";
+	  	else 
+	  		 s += i + space + product.productCode + product.color + space +product.quantity + "<br/>";
+	  	
  	  	if (i == products.length){
-	  		s += "<b>总数 : " + io.totalQ + space +  "总金额 : " + io.totalWholeSales + "</b><br/>";
+ 	  		if (wholeSalePrice == true)
+	  		    s += "<b>总数 : " + io.totalQ + space +  "总金额 : " + io.totalWholeSales + "</b><br/>";
+ 	  		else 
+ 	  			s += "<b>总数 : " + io.totalQ + "</b><br/>";
+ 	  		
 	  		if (io.cash != 0)
 	  		  s += "现金 :" + io.cash;
 	  		if (io.card != 0)
@@ -47,8 +54,6 @@ function printContent(io){
 	  		printOut(s);
 	  	}
   	}
-	
-	
 }
 function printOrderBackProcess(data){
     var response = data;
@@ -62,10 +67,26 @@ function printOrderBackProcess(data){
         var inventoryOrder = returnValue.inventoryOrder;
        
         if (inventoryOrder != null && inventoryOrder != ""){
-        	printContent(inventoryOrder);
+        	printContent(inventoryOrder, true);
         }
 	}
  }
+function printOrderQuantityBackProcess(data){
+    var response = data;
+	var returnCode = response.returnCode;
+
+	if (returnCode != SUCCESS){
+		$.messager.progress('close'); 
+		$.messager.alert('操作失败', response.message, 'error');
+	} else {
+        var returnValue = response.returnValue;
+        var inventoryOrder = returnValue.inventoryOrder;
+       
+        if (inventoryOrder != null && inventoryOrder != ""){
+        	printContent(inventoryOrder, false);
+        }
+	}
+}
 function printOut(data){
 
 	PAZU.print("<br/>" + data);

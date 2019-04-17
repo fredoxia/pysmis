@@ -9,7 +9,7 @@
 <title><s:property value="formBean.order.order_type_ws"/></title>
 <%@ include file="../../common/Style.jsp"%>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
-<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-40></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-42></script>
 <script type="text/javascript">
 
 
@@ -58,9 +58,9 @@ function updateOrderComment(){
 function updateOrderCommentBackProcess(data){
 	var returnValue = data.returnCode;
 	if (returnValue == SUCCESS)
-		alert(data.message);
+	    $.messager.alert('消息', data.message, 'info');
 	else 
-		alert("错误 : " + data.message);
+		$.messager.alert('操作失败', data.message, 'error');
 }
 
 function copyOrder(){
@@ -75,9 +75,9 @@ function copyOrderBackProcess(data){
     var response = data.response;
 	var returnCode = response.returnCode;
 	if (returnCode != SUCCESS)
-		alert("复制单据失败 ： " + response.message);
+	    $.messager.alert('复制单据失败', response.message, 'error');
 	else {
-        alert("复制单据成功,单据号 " + response.returnValue);
+        $.messager.alert('复制单据成功', "复制单据成功,单据号 " + response.returnValue, 'error');
     }
 		
 }
@@ -97,10 +97,13 @@ function deleteOrder(){
 		});
 }
 
-function printOrder(){
+function printOrder(wholePrice){
 	 var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!printOrder";
-	    var params=$("#inventoryOrderForm").serialize();  
+	 var params=$("#inventoryOrderForm").serialize();  
+	 if (wholePrice)
 	    $.post(url,params, printOrderBackProcess,"json");	
+	 else 
+		 $.post(url,params, printOrderQuantityBackProcess,"json");	
 }	
 
 
@@ -250,7 +253,7 @@ $(document).ready(function(){
 	  <tr height="10" class="InnerTableContent" >
 	  	     <td align="center"></td>
 			 <td colspan="4">备注 : <textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
-			 <td><input type="button" value="修改备注" onclick="updateOrderComment();"/></td>
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updateOrderComment();">修改备注</a></td>
 			 <td>&nbsp;</td>	
 	  </tr>
 	  <tr height="10" class="InnerTableContent" >
@@ -270,7 +273,8 @@ $(document).ready(function(){
 			 <td>
 			     <!-- for user, 1. the order is not in Complete status, 2. the order status ==1 || 2 -->
 				 <s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!acctProcess')  && (formBean.order.order_Status==1  || formBean.order.order_Status==2)">
-				     <input type="button" value="会计修改" onclick="edit();"/>
+
+				     <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="edit();">会计修改</a>
 				 </s:if>
 			 </td>			 					 		
 			 <td colspan="2"> 
@@ -278,26 +282,31 @@ $(document).ready(function(){
 				 
 				 <!-- for user, 1. This order is completed (status == 2 || status==6) 2. They have the authority to do complete without import jinsuan -->
 				 <s:if test="(#session.LOGIN_USER.containFunction('inventoryOrder!acctAuditOrder') && (formBean.order.order_Status==2 || formBean.order.order_Status == 6)) ">
-				     <input type="button" value="完成单据审核" onclick="completeAuditOrder();"/>
+				     <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="completeAuditOrder();">完成单据审核</a>
 				 </s:if>
 				 
 				 <!-- for user, 1. This order has been exported (status == 3) 2. They have the authority  -->
 				 <s:if test="(#session.LOGIN_USER.containFunction('inventoryOrder!cancelOrder') && formBean.order.order_Status==3) ">
-				     <input type="button" value="红冲单据" onclick="cancelOrder();"/>
+				     <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="cancelOrder();">红冲单据</a>
 				 </s:if>
 				 
-				 <input type="button" value="打印单据" onclick="printOrder();"/>
+
+				 <a href="javascript:void(0)" id="mb1" class="easyui-menubutton" data-options="iconCls:'icon-print',menu:'#mm',plain:false">打印单据</a>
+					<div id="mm" style="width:150px;">
+					    <div data-options="iconCls:'icon-print',name:'price'" onclick="javascript:printOrder(true)">打印价格单</div>
+					    <div data-options="iconCls:'icon-print',name:'quantity'" onclick="javascript:printOrder(false)">打印数量单</div>
+					</div>
 			 </td>			 					 		
 			 <td>
 				 <s:if test="formBean.order.order_Status== 1 || formBean.order.order_Status==2 || formBean.order.order_Status==6  || formBean.order.order_Status==9">
-				     <input type="button" value="删除单据" onclick="deleteOrder();"/>
+				     <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="deleteOrder();">删除单据</a>
 				 </s:if> 
 				 <s:if test="#session.LOGIN_USER.containFunction('inventoryOrderJSON!copyOrder') && formBean.order.order_Status==5">
-				     <input type="button" value="复制单据" onclick="copyOrder();"/>
+				     <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="copyOrder();">复制单据</a>
 				 </s:if> 				 
 			 </td>			 					 		
-			 <td><input type="button" value="订单导出到Excel" onclick="exportOrderToExcel();"/></td>
-			 <td><input type="button" value="条码标签导出" onclick="exportBarcodeToExcel();"/></td>	
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="exportOrderToExcel();">订单导出到Excel</a></td>
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="exportBarcodeToExcel();">条码标签导出</a></td>	
 	  </tr>
 	  <tr height="10">
 	  	     <td colspan="7"><s:actionerror cssStyle="color:red"/><s:actionmessage cssStyle="color:blue"/></td>

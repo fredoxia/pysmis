@@ -196,7 +196,7 @@ function changeFunction14(){
     </tr>
     <tr class="InnerTableContent">
       <td height="19"><strong>连锁管理权限</strong></td>
-      <td>销售报表:<input type="checkbox" name="functionalities" id="function31" value="31"/></td>
+      <td></td>
       <td>连锁店关联:<input type="checkbox" name="functionalities" id="function93" value="93"/></td>
       <td>连锁店起初库存:<input type="checkbox" name="functionalities" id="function94" value="94"/></td>
       <td></td>

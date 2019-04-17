@@ -151,8 +151,8 @@ $(function() {
 			    <li  data-options="iconCls:'icon-chart_bar',state:'open',border:false">
 			    	<span>总部报表功能</span>
 				  	<ul style="width: 150%">
-				  	    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeSupplierJSP!preFinanceRpt'}">供应商财务报表</li></s:if>
-			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-money_yen',attributes:{url:'financeHQJSP!preFinanceRpt'}">批发财务报表</li></s:if>
+				  	    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preFinanceRpt')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'financeSupplierJSP!preFinanceRpt'}">供应商财务报表</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'financeHQJSP!preFinanceRpt'}">批发财务报表</li></s:if>
 					</ul>
 			 	</li>
 			 	<s:if test="#session.LOGIN_USER.containFunction('userJSP!preEdit')">

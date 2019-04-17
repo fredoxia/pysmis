@@ -44,23 +44,33 @@ function financeBillBK(data){
 	var response = data.response;
 	var returnCode = response.returnCode;
 	if (returnCode != SUCCESS)
-		alert("错误 : " + response.message);
+	    $.messager.alert('错误', response.message, 'error');
 	else{
-		alert(response.message);
-		window.location.href = "financeHQJSP!preCreateFHQ";
+		$.messager.alert({
+			title: '保存成功',
+			msg: response.message,
+			fn: function(){
+				window.location.href = "financeHQJSP!preCreateFHQ";
+			}
+		});
+		
 	}
 }
 function deleteBill(){
-	if (confirm("你确定要删除单据")){
-	   document.financeBillForm.action = "<%=request.getContextPath()%>/action/financeHQJSP!deleteFHQBill";
-	   document.financeBillForm.submit();
-	}
+	$.messager.confirm('删除单据确认', "你确定要删除单据", function(r){
+		if (r){
+			document.financeBillForm.action = "<%=request.getContextPath()%>/action/financeHQJSP!deleteFHQBill";
+			   document.financeBillForm.submit();
+		}
+	});
 }
 function cancelBill(){
-	if (confirm("你确定要红冲单据")){
-		   document.financeBillForm.action = "<%=request.getContextPath()%>/action/financeHQJSP!cancelFHQBill";
-		   document.financeBillForm.submit();
-		}	
+	$.messager.confirm('红冲单据确认', "你确定要红冲单据", function(r){
+		if (r){
+			   document.financeBillForm.action = "<%=request.getContextPath()%>/action/financeHQJSP!cancelFHQBill";
+			   document.financeBillForm.submit();
+		}
+	});
 }
 function recalcualteTotal(){
 	var invoiceTotalInput = $("#invoiceTotal");
@@ -97,20 +107,20 @@ function validateForm(){
 	if (isNaN(invoiceTotal))
 		charInNum = true;
 	else if (parseFloat(invoiceTotal) == 0) 
-		error += "单据没有输入金额项,请检查\n";
+		error += "单据没有输入金额项,请检查<br\>";
 
 	if (charInNum)
-		error += "金额 - 只能允许输入大于零数字,请检查\n";
+		error += "金额 - 只能允许输入大于零数字,请检查<br\>";
 
 	var financeBillType = $("#financeBillType").val();
 	var financeBillChainStore = $("#clientID").val();
 
 	if (financeBillType == 0){
-		error += "单据种类 - 不能为空\n";
+		error += "单据种类 - 不能为空<br\>";
 	}
 
 	if (financeBillChainStore == 0){
-		error += "客户  - 不能为空\n";
+		error += "客户  - 不能为空<br\>";
 	}	
 
 	//1. check the pre-pay bill type
@@ -121,9 +131,9 @@ function validateForm(){
 		    var acctAmt = $("#financeBillItem"+i).numberbox('getValue');
 
 		    if (acctType == prepayAcctType &&  acctAmt !=0){
-		    	error += "预收款单  - 不能选择'预收款'账户\n";
+		    	error += "预收款单  - 不能选择'预收款'账户<br\>";
 			} else if (acctType == increaseDecreaseAcctType &&  acctAmt !=0){
-				error += "预收款单  - 不能选择'应收增加/减少'账户\n";
+				error += "预收款单  - 不能选择'应收增加/减少'账户<br\>";
 			}
 		}
 	}
@@ -134,7 +144,7 @@ function validateForm(){
 		    var acctType = $("#acctType" + i).val();
 
 		    if (acctType != increaseDecreaseAcctType && $("#financeBillItem"+i).numberbox('getValue') !=0){
-		    	error += "应收增加/减少单据  - 只能选择'应收增加/减少'账户\n";
+		    	error += "应收增加/减少单据  - 只能选择'应收增加/减少'账户<br\>";
 			}  
 		}
 	}
@@ -145,7 +155,7 @@ function validateForm(){
 		    var acctType = $("#acctType" + i).val();
 
 		    if (acctType == increaseDecreaseAcctType && $("#financeBillItem"+i).numberbox('getValue')!=0){
-		    	error += "付款单/收款单  - 不能选择'应收增加/减少'账户\n";
+		    	error += "付款单/收款单  - 不能选择'应收增加/减少'账户<br\>";
 			}  
 		}
 	}	
@@ -156,13 +166,13 @@ function validateForm(){
 		    var acctType = $("#acctType" + i).val();
 
 		    if (acctType == prepayAcctType && $("#financeBillItem"+i).numberbox('getValue') !=0){
-		    	error += "付款单  - 不能选择'预收款'账户\n";
+		    	error += "付款单  - 不能选择'预收款'账户<br\>";
 			}  
 		}
 	}	
 
 	if (error != ""){
-       alert(error);
+       $.messager.alert('验证错误', error, 'error');
        return false;
 	} else
 		return true;
@@ -181,7 +191,7 @@ function getChainCurrFinanceBackProcess(data){
 	var response = data.response;
 	if (response.returnCode != SUCCESS){
 		$("#currentFinance").html("");
-		alert(response.message);
+		$.messager.alert('错误', response.message, 'error');
 	} else {
 		var dataMap = response.returnValue
 		$("#currentFinance").html("当前欠款 : " + dataMap.cf + ", 剩余预存款 : " + dataMap.pp);

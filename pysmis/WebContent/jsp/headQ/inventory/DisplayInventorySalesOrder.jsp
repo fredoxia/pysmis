@@ -26,11 +26,14 @@ function exportBarcodeToExcel(){
 
 function completeAuditOrder(){
 	var info = "你确定完成了单据的审核?";
-	if (confirm(info)){	
-		var url = "<%=request.getContextPath()%>/action/inventoryOrder!acctAuditOrder";
-		document.inventoryOrderForm.action = url;
-		document.inventoryOrderForm.submit();	
-	}
+	$.messager.confirm('单据审核确认', info, function(r){
+		if (r){
+			var url = "<%=request.getContextPath()%>/action/inventoryOrder!acctAuditOrder";
+			document.inventoryOrderForm.action = url;
+			document.inventoryOrderForm.submit();	
+		}
+	});
+
 }
 function edit(){
 	var url = "<%=request.getContextPath()%>/action/inventoryOrder!acctUpdate";
@@ -39,11 +42,13 @@ function edit(){
 }
 function cancelOrder(){
 	var info = "你确定红冲此单据?";
-	if (confirm(info)){	
-	    var url = "<%=request.getContextPath()%>/action/inventoryOrder!cancelOrder";
-	    document.inventoryOrderForm.action = url;
-	    document.inventoryOrderForm.submit();	
-	}	
+	$.messager.confirm('单据红冲确认', info, function(r){
+		if (r){
+		    var url = "<%=request.getContextPath()%>/action/inventoryOrder!cancelOrder";
+		    document.inventoryOrderForm.action = url;
+		    document.inventoryOrderForm.submit();	
+		}
+	});
 }
 function updateOrderComment(){
     var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!updateOrderComment";

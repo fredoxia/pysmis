@@ -70,5 +70,39 @@ function printOut(data){
 
 	PAZU.print("<br/>" + data);
 }
+/**
+ * 打印小票配货单
+ */
+function printPOSOrderToPrinter(){
+	    pageSetup();
+	    var s = "<br\>";
+		try {
+			var clientName = $("#clientName").val();
+			var orderId = $("#orderId").val();
+			s += clientName + "<br/>";
+			s += "配货单据号: " + orderId + "<br/>";
 
+		  	for (var i = 0; i < index; i++){
+			   	var quantityInput =  $("#quantity"+i); 
+				var colorInput = $("#color"+i); 
+				var brandInput = $("#brand"+i); 
+				var productCodeInput = $("#productCode"+i); 
+				
+				var colorS = colorInput.val();
+				if (colorS == "")
+					colorS = "-";
+		
+				var j = i +1;
+		        if (quantityInput.val()!= undefined && brandInput.val()!=undefined && productCodeInput.val()!=undefined){
+		        	s += j + "   "  +  brandInput.val()  + " " + productCodeInput.val() + colorS + " " + quantityInput.val() + "<br/>";  
+		        }
+			}
+		  	var totalInput = $("#totalQuantity");
+		  	s += "<b>总数 : " + totalInput.val() + "</b><br/>";   
+
+		  	printOut(s);
+	    } catch (e){
+		    alert("小票打印有问题,请检查 : " + e.name + "\n" + e.message);
+		}
+}
 

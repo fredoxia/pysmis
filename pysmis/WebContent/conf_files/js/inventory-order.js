@@ -65,7 +65,7 @@ function searchProductsProductCode(index_trigger){
  */
 function validateProductCodeInput(productCode){
 	if (productCode.length <= 1){
-       alert("输入的货号太短");
+		$.messager.alert('错误', '输入的货号太短', 'error');
        return false;
 	}
 	return true;
@@ -380,13 +380,16 @@ function deleteRow(rowID, delIndex){
 	var msg = "你确定要删除第" + (delIndex + 1) + "行 : " + brand + " " + productCode;
 	
 	$("#row" + delIndex).css('background-color', '#99CC00');
-	if (confirm(msg)){	
-		$("#"+rowID).remove(); 
-		
-		calculateTotal(); 
-	} else {
-		$("#row" + delIndex).css('background-color', '');
-	}
+	$.messager.confirm('删除货品确认', msg, function(r){
+		if (r){
+			$("#"+rowID).remove(); 
+			
+			calculateTotal(); 
+		} else {
+			$("#row" + delIndex).css('background-color', '');
+		}
+	});
+
 }
 
 function addNewRow(){
@@ -425,91 +428,81 @@ function addNewRow(){
 }
 
 function validateForm(){
+	var error ="";
+	for (var i =0; i < index; i++)
+		$("#row" + i).css('background-color', '');
+	
+	var error = "";
+	if ($("#clientName").val() == "" || $("#clientID").val() == 0){
+		error += "客户名字 - 必须填!<br\>";
+		$("#clientName").focus();
+	}
 
-    if (confirm("你确认提交仓库订单?")){
-    	for (var i =0; i < index; i++)
-    		$("#row" + i).css('background-color', '');
-    	
-		var error = "";
-		if ($("#clientName").val() == "" || $("#clientID").val() == 0){
-			error += "客户名字 - 必须填!\n";
-			$("#clientName").focus();
-		}
+	if ($("#keeper_id").val() == 0){
+		error += "单据输入人员 - 必须选!<br\>";
+		$("#keeper_id").focus();
+	}
+	if ($("#scanner_id").val() == 0){
+		error += "扫描人员 - 必须选!<br\>";
+		$("#scanner_id").focus();
+	}
+	if ($("#counter_id").val() == 0){
+		error += "点数人员 - 必须选!<br\>";
+		$("#counter_id").focus();
+	}
 
-		if ($("#keeper_id").val() == 0){
-			error += "单据输入人员 - 必须选!\n";
-			$("#keeper_id").focus();
-		}
-		if ($("#scanner_id").val() == 0){
-			error += "扫描人员 - 必须选!\n";
-			$("#scanner_id").focus();
-		}
-		if ($("#counter_id").val() == 0){
-			error += "点数人员 - 必须选!\n";
-			$("#counter_id").focus();
-		}
+	if ($("#totalQuantity").val() <= 0){
+		error += "必须录入数据后才能输入<br\>";
+	}
 
-		if ($("#totalQuantity").val() <= 0){
-			error += "必须录入数据后才能输入\n";
-		}
+	var hasChar = false;
+	var hasChar_w = false;
+	var invalid_d = false;
+	var invalid_barcode = false;
+	for (var i =0; i < index; i++){
 
-		var hasChar = false;
-		var hasChar_w = false;
-		var invalid_d = false;
-		var invalid_barcode = false;
-		for (var i =0; i < index; i++){
+		var q = $("#quantity" + i).val();
+		var w = $("#wholeSalePrice" + i).val();
+		var d = $("#discount" + i).val();
+		var pbId = $("#productId" + i).val();
 
-			var q = $("#quantity" + i).val();
-			var w = $("#wholeSalePrice" + i).val();
-			var d = $("#discount" + i).val();
-			var pbId = $("#productId" + i).val();
-
-			if (q != undefined){
-				if (isNaN(q) || q<=0){
-					$("#row" + i).css('background-color', '#EE8553');
-					hasChar = true;
-				}
-			}
-			if (w != undefined){
-				if (isNaN(w) || w<=0 || w=='Infinity'){
-					$("#row" + i).css('background-color', '#EE8553');
-					hasChar_w = true;
-				}
-			}
-			if (d != undefined){
-				if (isNaN(d) || d<=0 || d=='Infinity'){
-					$("#row" + i).css('background-color', '#EE8553');
-					invalid_d = true;
-				}
-			}
-			if (pbId != undefined){
-				if (isEmpty(pbId) || pbId == 0){
-					$("#row" + i).css('background-color', '#EE8553');
-					invalid_barcode = true;
-				}
+		if (q != undefined){
+			if (isNaN(q) || q<=0){
+				$("#row" + i).css('background-color', '#EE8553');
+				hasChar = true;
 			}
 		}
-		
-		if (hasChar)
-			error += "数量 - 必须为大于0数字!\n";
-		if (hasChar_w)
-			error += "批发价格 - 必须为大于0数字!\n";	
-		if (invalid_d)
-			error += "折扣 - 必须为大于0的数字!\n";	
-		if (invalid_barcode)
-			error += "条码错误 - 货品条码无法找到,请删除再从新扫描!\n";	
-		
-		if (error != ""){
-			alert(error);
-			return false;
-		}else{
-			$("#barcode" + index).val("");
-		    recordSubmit();
-			return true;
+		if (w != undefined){
+			if (isNaN(w) || w<=0 || w=='Infinity'){
+				$("#row" + i).css('background-color', '#EE8553');
+				hasChar_w = true;
+			}
 		}
-    } else {
-    	return false;
-    }
+		if (d != undefined){
+			if (isNaN(d) || d<=0 || d=='Infinity'){
+				$("#row" + i).css('background-color', '#EE8553');
+				invalid_d = true;
+			}
+		}
+		if (pbId != undefined){
+			if (isEmpty(pbId) || pbId == 0){
+				$("#row" + i).css('background-color', '#EE8553');
+				invalid_barcode = true;
+			}
+		}
+	}
+	
+	if (hasChar)
+		error += "数量 - 必须为大于0数字!<br\>";
+	if (hasChar_w)
+		error += "批发价格 - 必须为大于0数字!<br\>";	
+	if (invalid_d)
+		error += "折扣 - 必须为大于0的数字!<br\>";	
+	if (invalid_barcode)
+		error += "条码错误 - 货品条码无法找到,请删除再从新扫描!<br\>";	
+	
+	return error;
+
 }
 
 function changeTotalWholePriceRow(triggerIndex){
@@ -582,7 +575,8 @@ function onWholeSalePriceChange(triggerSource,triggerIndex){
 		 
 	if (!consistent){
 		var productCode = $("#productCode" + triggerIndex).val();
-		alert(productCode + " 该商品出现批发价不一致情况，请检查");
+		$.messager.alert('失败', productCode + ' 该商品出现批发价不一致情况，请检查', 'error');
+
 	}
 
 }
@@ -681,42 +675,7 @@ function retrieveProductByExcel(products){
     alert("完成导入，请检查");
 }
 
-/**
- * 打印小票配货单
- */
-function printPOSOrderToPrinter(){
-	    var s = "<p>";
-	    PAZU.TPrinter.fontCSS = "font-size:12px;";
-		try {
-			var clientName = $("#clientName").val();
-			var orderId = $("#orderId").val();
-			s += clientName + "<br/>";
-			s += "单据号: " + orderId + "<br/>";
 
-		  	for (var i = 0; i < index; i++){
-			   	var quantityInput =  $("#quantity"+i); 
-				var colorInput = $("#color"+i); 
-				var brandInput = $("#brand"+i); 
-				var productCodeInput = $("#productCode"+i); 
-				
-				var colorS = colorInput.val();
-				if (colorS == "")
-					colorS = "-";
-		
-				var j = i +1;
-		        if (quantityInput.val()!= undefined && brandInput.val()!=undefined && productCodeInput.val()!=undefined){
-		        	s += j + "   "  +  brandInput.val()  + " " + productCodeInput.val() + colorS + " " + quantityInput.val() + "<br/>";  
-		        }
-			}
-		  	var totalInput = $("#totalQuantity");
-		  	s += "     总数 : " + totalInput.val() + "<br/>";   
-
-		  	printOut(s);
-	    } catch (e){
-		    alert("小票打印有问题,请检查 : " + e.name + "\n" + e.message);
-		    pazu.TPrinter.setDefaultPrinter("TSC TTP-244 Plus") ;
-		}
-}
 function deleteOrder(){
 	$.modalDialog({
 		title : '授权删除单据',

@@ -10,7 +10,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-25"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/HtmlTable.js"></script>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
-<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-26></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-27></script>
 <script type="text/javascript">
 var baseurl = "<%=request.getContextPath()%>";
 
@@ -25,14 +25,25 @@ index = parseInt("<s:property value='formBean.order.product_Set.size()'/>");
 function saveToDraft(){
 	calculateTotal();
 	
-	if (validateForm()){
-		$.messager.progress({
-			title : '提示',
-			text : '数据处理中，请稍后....'
-		});
-	   document.inventoryOrderForm.action = "<%=request.getContextPath()%>/action/inventoryOrder!saveToDraft";
-	   document.inventoryOrderForm.submit();
-	}
+	$.messager.confirm('保存草稿', '你确认保存仓库订单?', function(r){
+		if (r){
+            var error = validateForm();
+			
+			if (error != ""){
+				$.messager.alert('错误', error, 'error');
+			}else{
+				$("#barcode" + index).val("");
+			    recordSubmit();
+				$.messager.progress({
+					title : '提示',
+					text : '数据处理中，请稍后....'
+				});
+			   document.inventoryOrderForm.action = "inventoryOrder!saveToDraft";
+			   document.inventoryOrderForm.submit();
+			}
+		}
+	});
+
 }
 
 /**
@@ -40,14 +51,26 @@ function saveToDraft(){
  */
 function save(){
 	calculateTotal();
-	if (validateForm()){
-		$.messager.progress({
-			title : '提示',
-			text : '数据处理中，请稍后....'
-		});
-	   document.inventoryOrderForm.action = "<%=request.getContextPath()%>/action/inventoryOrder!acctSave";
-	   document.inventoryOrderForm.submit();
-	}
+	
+	$.messager.confirm('单据提交确认', '你确认提交订单修改?', function(r){
+		if (r){
+            var error = validateForm();
+			
+			if (error != ""){
+				$.messager.alert('错误', error, 'error');
+			}else{
+				$("#barcode" + index).val("");
+			    recordSubmit();
+				$.messager.progress({
+					title : '提示',
+					text : '数据处理中，请稍后....'
+				});
+				document.inventoryOrderForm.action = "<%=request.getContextPath()%>/action/inventoryOrder!acctSave";
+				document.inventoryOrderForm.submit();
+			}
+		}
+	});
+
 }
 
 /**
@@ -70,23 +93,35 @@ function preview(){
  */
 function submitOrder(){
 	calculateTotal();
-	if (validateForm()){
-		$.messager.progress({
-			title : '提示',
-			text : '数据处理中，请稍后....'
-		});
-		
-		 var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!save";
-		 var params=$("#inventoryOrderForm").serialize();  
-		 $.post(url,params, saveOrderBackProcess,"json");	
-	}
+	
+	$.messager.confirm('单据提交确认', '你确认提交仓库订单?', function(r){
+		if (r){
+            var error = validateForm();
+			
+			if (error != ""){
+				$.messager.alert('错误', error, 'error');
+			}else{
+				$("#barcode" + index).val("");
+			    recordSubmit();
+				$.messager.progress({
+					title : '提示',
+					text : '数据处理中，请稍后....'
+				});
+				 
+				var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!save";
+				 var params=$("#inventoryOrderForm").serialize();  
+				 $.post(url,params, saveOrderBackProcess,"json");	
+			}
+		}
+	});
+
 }
 function saveOrderBackProcess(data){
     var response = data;
 	var returnCode = response.returnCode;
 
 	if (returnCode != SUCCESS)
-		alert("获取单据失败 ： " + response.message);
+		$.messager.alert('获取单据失败', response.message, 'error');
 	else {
         var returnValue = response.returnValue;
         var inventoryOrder = returnValue.inventoryOrder;
@@ -101,6 +136,10 @@ function saveOrderBackProcess(data){
  }
 
 function printPOSOrder(){
+	var orderId = $("#orderId").val()
+	if (orderId == 0){
+		$.messager.alert('操作失败', '请保存单据之后再打印配货单', 'error');
+	}
 	var msg = "请确认，你在打印pos小票配货单前 没有修改单据 或者已经保存了修改项目";
 	if (confirm(msg)){
 		    printPOSOrderToPrinter();	

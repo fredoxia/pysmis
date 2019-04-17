@@ -146,11 +146,7 @@ function changeChainStore(chainId){
 						 	  <th width="120">过账日期</th>
 						      <th width="60">金额</th>
 						      <th width="60">状态</th>
-<<<<<<< HEAD
 						      <th width="200">备注</th>
-=======
-						      <th width="160">备注</th>
->>>>>>> 1d9d488b679146f1dc29c49cdc3faf7b573e5b88
 						      <th width="60"></th>
 						    </tr>
 						    <tbody id="bills">

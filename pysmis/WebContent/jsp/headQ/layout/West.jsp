@@ -170,7 +170,7 @@ $(function() {
 			    <li  data-options="iconCls:'icon-status_online',state:'open',border:false">
 			    	<span>我的系统</span>
 				  	<ul style="width: 150%">
-			    		<li data-options="iconCls:'icon-status_online',attributes:{url:'hrEvalJSP!preEvaluationSummaryPersonalSearch'}">我的考核月报表</A></li>
+			    		<!--  <li data-options="iconCls:'icon-status_online',attributes:{url:'hrEvalJSP!preEvaluationSummaryPersonalSearch'}">我的考核月报表</A></li>-->
 			    		<li data-options="iconCls:'icon-status_online',attributes:{url:'userJSP!preUpdateMyAcct'}">我的账户</A></li>
 					</ul>
 			 	</li>

@@ -38,7 +38,7 @@ function printContent(io){
 	  		  s += " 刷卡 :" +io.card;
 		    if (io.alipay != 0)
 			  s += "支付宝 :" + io.alipay;
-		  	if (io.card != 0)
+		  	if (io.wechat != 0)
 			  s += " 微信 :" + io.wechat;
 		  	s +=  "<br/><br/>展厅电话 : 028-65775588"+ "<br/>"; 
 		  	s +=  "加盟热线 : 13880949886/18981987974"+ "<br/>";

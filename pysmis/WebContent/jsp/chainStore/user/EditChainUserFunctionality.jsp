@@ -17,13 +17,21 @@ var functionPrefix = "function";
 function saveOrUpdateFunction(){
 	var userType = $("#userType").val();
 	if (userType == 0){
-		alert("请先选择用户类别");
+		$.messager.alert('错误', "请先选择用户类别", 'info');
 		$("#userType").focus();
 	} else {
 		var value = $("#function10").is(':checked');
-		if (!value || (value && confirm("你赋予了此用户类别<权限管理>，请确认!")) ){
+		if (!value){
 		    var params=$("#userFunctionForm").serialize();  
 		    $.post("chainUserJSON!saveRoleTypeFunctions",params, updateFunctionBackProcess,"json");	   
+		} else {
+			var info ="你赋予了此用户类别<权限管理>，请确认!";
+			$.messager.confirm('权限修改确认', info, function(r){
+				if (r){
+				    var params=$("#userFunctionForm").serialize();  
+				    $.post("chainUserJSON!saveRoleTypeFunctions",params, updateFunctionBackProcess,"json");	   
+				}
+			});
 		}
 	}
     
@@ -32,9 +40,9 @@ function saveOrUpdateFunction(){
 function updateFunctionBackProcess(data){
 	var user = data.isSuccess;
 	if (user == true)
-		alert("更新成功");
+	    $.messager.alert('错误', "更新成功", 'info');
 	else
-		alert("更新失败");	
+		$.messager.alert('错误', "更新失败", 'error');
 }
 
 function changeUserType(){
@@ -56,12 +64,12 @@ function getRoleTypeBackProcess(data){
 		    for (var i = 0; i < functions.length; i++){
 		        var fun = functions[i].functionId;
 
-		        $("#"+functionPrefix+fun).attr("checked",true);
+		        $("#"+functionPrefix+fun).prop("checked",true);
 		    }
     }
 }
 function clearAllData(){
-	$("input[name='formBean.functions']").attr("checked",false);
+	$("input[name='formBean.functions']").prop("checked",false);
 }
 
 

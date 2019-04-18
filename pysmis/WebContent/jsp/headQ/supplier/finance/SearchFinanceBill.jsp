@@ -86,7 +86,7 @@ $(document).ready(function(){
 						    </tr>
 						    <tr class="InnerTableContent">
 						      <td width="50" height="25">&nbsp;</td>
-						      <td width="78"><strong>单据日期</strong></td>
+						      <td width="78"><strong>开单日期</strong></td>
 						      <td width="267">开始日期 ：
 						      	<s:textfield id="startDate" name="formBean.searchStartTime" cssClass="easyui-datebox" data-options="width:100,editable:false"/>
 						      <td width="72"><strong>供应商</strong></td>

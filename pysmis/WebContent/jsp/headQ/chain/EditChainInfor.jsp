@@ -15,24 +15,25 @@ $(document).ready(function(){
 });
 function editChainStore(){
 	var params=$("#EditChainInforForm").serialize(); 
-	if (validateChainStore()) 
+	if (validateChainStore()) {
 	    $.post("<%=request.getContextPath()%>/action/chainSMgmtJSON!saveChainStore",params, backProcessEditChainStore,"json");
+	}
 }
 function backProcessEditChainStore(data){
 	var error = data.error;
-
+	JSON.stringify(data);
     if (error == true){
        var msg = data.msg;
-       alert("更新失败 : " + msg);
+       $.messager.alert('错误', "更新失败 : " + msg, 'error');
     } else {
     	var chainStore =  data.chainStore;
 		if (chainStore != undefined){
-			$("#chainName").attr("value", chainStore.chain_name);
-			$("#chainId").attr("value", chainStore.chain_id);
-			$("#chainStoreId").attr("value", chainStore.chain_id);
-			alert("成功更新");
+			$("#chainName").val(chainStore.chain_name);
+			$("#chainId").val(chainStore.chain_id);
+			$("#chainStoreId").val(chainStore.chain_id);
+			$.messager.alert('消息', "成功更新", 'info');
 		} else 
-			alert("更新失败");
+		    $.messager.alert("更新失败", "更新失败 ", 'error');
     }
 }
 function deleteChainStore(){
@@ -41,7 +42,7 @@ function deleteChainStore(){
 			var params="formBean.chainStore.chain_id=" + $("#chainStoreId").val();
 			$.post("<%=request.getContextPath()%>/action/chainSMgmtJSON!deleteChainStore",params, backProcessDeleteChainStore,"json");
 		} else {
-			alert("密码错误");
+			$.messager.alert('错误', "密码错误", 'error');
 		}	   
 	});
 
@@ -50,7 +51,8 @@ function backProcessDeleteChainStore(data){
 	if (data.returnCode == SUCCESS){
 		window.location.reload();
 	} else {
-		alert("删除失败 : " + data.message);
+		$.messager.alert('错误', "删除失败 : " + data.message, 'error');
+		
 	}
 		
 }
@@ -67,56 +69,56 @@ function backProcessGetChainStore(data){
 
 	if (chainStore != undefined){
 		$("#chainId").attr("value", chainStore.chain_id);
-		$("#chainStoreId").attr("value", chainStore.chain_id);
-		$("#chainOwner").attr("value", chainStore.owner_name);
-		$("#chainNameS").attr("value", chainStore.chain_name);
-		$("#clientId").attr("value", chainStore.client_id);
-		$("#initialAcctAmt").attr("value",chainStore.initialAcctAmt);
-		$("#status").attr("value",chainStore.status);
-		$("#allowEdit").attr("value", chainStore.allowChangeSalesPrice);
+		$("#chainStoreId").val(chainStore.chain_id);
+		$("#chainOwner").val(chainStore.owner_name);
+		$("#chainNameS").val(chainStore.chain_name);
+		$("#clientId").val(chainStore.client_id);
+		$("#initialAcctAmt").val(chainStore.initialAcctAmt);
+		$("#status").val(chainStore.status);
+		$("#allowEdit").val(chainStore.allowChangeSalesPrice);
 		$("#initialAcctAmt").attr("readonly", "readonly");
         $("#clientId").attr("readonly", "readonly");
-        $("#printHeader").attr("value", chainStore.printHeader);
+        $("#printHeader").val(chainStore.printHeader);
 
         var priceIncrement = chainStore.priceIncrement;
         var priceIncreTF = $("#priceIncrement");
         if (priceIncrement == null || priceIncrement.id == undefined){
-            priceIncreTF.attr("value", 0);
+            priceIncreTF.val(0);
         } else {
-        	priceIncreTF.attr("value", priceIncrement.id);
+        	priceIncreTF.val(priceIncrement.id);
         }
-        $("#allowAddBarcode").attr("value", chainStore.allowAddBarcode);
+        $("#allowAddBarcode").val(chainStore.allowAddBarcode);
         
         var parentStore = chainStore.parentStore;
 
         if (parentStore != undefined && parentStore.chain_id != undefined){
-        	$("#parentChainName").attr("value", parentStore.chain_name);
-        	$("#parentChainId").attr("value", parentStore.chain_id);
+        	$("#parentChainName").val(parentStore.chain_name);
+        	$("#parentChainId").val(parentStore.chain_id);
         } else {
-        	$("#parentChainName").attr("value","");
-        	$("#parentChainId").attr("value", 0);
+        	$("#parentChainName").val("");
+        	$("#parentChainId").val(0);
         }
 	}
 
 }
 function clearChainStore(){
-	$("#chainId").attr("value", 0);
-	$("#chainStoreId").attr("value", 0);
-	$("#chainOwner").attr("value", "");
-	$("#chainNameS").attr("value", "");
-	$("#chainName").attr("value", "");
+	$("#chainId").val(0);
+	$("#chainStoreId").val(0);
+	$("#chainOwner").val("");
+	$("#chainNameS").val("");
+	$("#chainName").val("");
 	
-	$("#initialAcctAmt").attr("value","");
-	$("#clientId").attr("value","");
-	$("#allowEdit").attr("value", "0");
+	$("#initialAcctAmt").val("");
+	$("#clientId").val("");
+	$("#allowEdit").val("0");
 	$("#initialAcctAmt").removeAttr("readonly");
 	$("#clientId").removeAttr("readonly");
-	$("#priceIncrement").attr("value", 0);
-	$("#allowAddBarcode").attr("value", 0);
+	$("#priceIncrement").val(0);
+	$("#allowAddBarcode").val(0);
 	
-	$("#parentChainName").attr("value", "");
-	$("#parentChainId").attr("value", 0);
-	$("#printHeader").attr("value", "");
+	$("#parentChainName").val("");
+	$("#parentChainId").val(0);
+	$("#printHeader").val("");
 }
 
 
@@ -126,15 +128,15 @@ function validateChainStore(){
 	var chainNm = $("#chainNameS").val();
 
 	if (chainNm == "")
-		error += "连锁店名字 - 不能为空.\n";
+		error += "连锁店名字 - 不能为空.<br\>";
 	else if (chainNm.length > 20)
-		error += "连锁店名字 - 超过最长20字.\n";
+		error += "连锁店名字 - 超过最长20字.<br\>";
 
 	if (chainOwner =="")
-		error += "客户名字 - 不能为空.\n";
+		error += "客户名字 - 不能为空.<br\>";
 
 	if (error != ""){
-		alert(error);
+		$.messager.alert('错误', error, 'error');
 		return false;
 	} else
 		return true;
@@ -260,13 +262,13 @@ function validateChainStore(){
 			}
 			 
 			function clearParentStore(){
-				$("#parentChainId").attr("value", 0);
-				$("#parentChainName").attr("value", "");
+				$("#parentChainId").val(0);
+				$("#parentChainName").val("");
 			}
 			
 			function selectParentStore(chainId, chainName){
-				$("#parentChainId").attr("value", chainId);
-				$("#parentChainName").attr("value", chainName);
+				$("#parentChainId").val(chainId);
+				$("#parentChainName").val(chainName);
 			}
 			</script>
 			<s:hidden name="formBean.chainStore.parentStore.chain_id" id="parentChainId"/>

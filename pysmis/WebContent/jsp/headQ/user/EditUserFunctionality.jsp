@@ -19,9 +19,17 @@ function saveOrUpdateFunction(){
 		$("#user_id").focus();
 	} else {
 		var value = $("#function90").is(':checked');
-		if (!value || (value && confirm("你赋予了此员工<权限管理>，请确认!")) ){
+		if (!value){
 		    var params=$("#userInforForm").serialize();  
 		    $.post("userJSON!saveUserFunctions",params, updateFunctionBackProcess,"json");	   
+		} else {
+			 var info ="你赋予了此员工<权限管理>，请确认!";
+			$.messager.confirm('权限修改确认', info, function(r){
+					if (r){
+					    var params=$("#userInforForm").serialize();  
+					    $.post("userJSON!saveUserFunctions",params, updateFunctionBackProcess,"json");	   
+					}
+				});
 		}
 	}
     
@@ -30,9 +38,9 @@ function saveOrUpdateFunction(){
 function updateFunctionBackProcess(data){
 	var user = data.isSuccess;
 	if (user == true)
-		alert("更新成功");
+	    $.messager.alert('错误', "更新成功", 'info');
 	else
-		alert("更新失败");	
+		$.messager.alert('错误', "更新失败", 'error');
 }
 
 function submitUser(){
@@ -71,7 +79,7 @@ function getUserBackProcess(data){
 		        $("#"+functionPrefix+fun).prop("checked",true);
 		    }
     }else {
-    	alert("获取信息发生错误!");
+    	$.messager.alert('错误', "获取信息发生错误!", 'error');
     }
 }
 function clearAllData(){

@@ -100,6 +100,7 @@ function deleteOrder(){
 }
 
 function printOrder(wholePrice){
+
 	 var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!printOrder";
 	 var params=$("#inventoryOrderForm").serialize();  
 	 if (wholePrice)
@@ -293,7 +294,7 @@ $(document).ready(function(){
 				 </s:if>
 				 
 
-				 <a href="javascript:void(0)" id="mb1" class="easyui-menubutton" data-options="iconCls:'icon-print',menu:'#mm',plain:false">打印单据</a>
+				 <a href="javascript:void(0)" id="mb1" class="easyui-menubutton" data-options="iconCls:'icon-print',menu:'#mm',plain:false" onclick="javascript:printOrder(true)">打印单据</a>
 					<div id="mm" style="width:150px;">
 					    <div data-options="iconCls:'icon-print',name:'price'" onclick="javascript:printOrder(true)">打印价格单</div>
 					    <div data-options="iconCls:'icon-print',name:'quantity'" onclick="javascript:printOrder(false)">打印数量单</div>

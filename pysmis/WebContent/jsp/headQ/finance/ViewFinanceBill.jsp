@@ -111,12 +111,12 @@ function printOrderBackProcess(data){
 				<tr class="InnerTableContent">
 			      <td height="4" colspan="7">
 			          <s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!editFHQBill') && formBean.canEdit"> 
-			                 <input type="button" value="修改单据" onclick="editBill();"/>
+			                 <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editBill();">修改单据</a>
 			          </s:if>
 			          <s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!cancelFHQBill') && formBean.canCancel"> 
-			                 <input type="button" value="红冲单据"  onclick="cancelBill();"/> 
+			                 <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="cancelBill();">红冲单据</a>
 			          </s:if>
-			          <input type="button" value="打印单据"  onclick="printBill();"/> 
+			          <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="printBill();">打印单据</a>
 			      </td>
 			    </tr>
 			  </table>

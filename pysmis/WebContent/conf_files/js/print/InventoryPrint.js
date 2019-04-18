@@ -20,7 +20,10 @@ function printContent(io, wholeSalePrice){
         s += "单据号 : " + io.id + space + "<br/>客户名字 : " + io.clientName  + "<br/>地区: " + io.clientArea + "<br/>"; 
         s += "单据日期  : " + io.orderTime + "<br/>";
     	s += "单据种类 : " + io.orderType + "<br/>";
-    	s += "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
+    	if (wholeSalePrice == true)
+    	    s += "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
+    	else
+    		s += "下欠  : " + io.postAcctAmt + "<br/>";
 		s += "-----------------单据明细 ---------------<br/>";
 	var products = io.products;
 

@@ -88,10 +88,10 @@ function cancelBill(){
 				<tr class="InnerTableContent">
 			      <td height="4" colspan="7">
 			          <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!editFB') && formBean.canEdit"> 
-			                 <input type="button" value="修改单据" onclick="editBill();"/>
+			                 <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editBill();">修改单据</a>
 			          </s:if>
 			          <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!cancelFB') && formBean.canCancel"> 
-			                 <input type="button" value="红冲单据"  onclick="cancelBill();"/> 
+			                 <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="cancelBill();">红冲单据</a> 
 			          </s:if>
 			      </td>
 			    </tr>

@@ -248,13 +248,13 @@ function chooseSupplier(supplierId){
 				<tr class="InnerTableContent">
 			      <td height="4" colspan="7">
 			          <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSON!saveFBToDraft')  && formBean.canSaveDraft">
-			                 <input type="button" value="保存草稿" onclick="saveToDraft();"/> 
+			                 <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveToDraft();">保存草稿</a>
 			          </s:if>
 			          <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSON!postFB') && formBean.canPost">
-			                 <input type="button" value="单据过账" onclick="postBill();"/> 
+			                  <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="postBill();">单据过账</a>
 			          </s:if>
 			          <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!deleteFB') && formBean.canDelete"> 
-			               <input type="button" value="删除单据" onclick="deleteBill();"/>
+			               <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="deleteBill();">删除单据</a>
 			          </s:if>
 			    </tr>
 			  </table>

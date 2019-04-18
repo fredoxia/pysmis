@@ -26,11 +26,17 @@ function cancelOrderBKProcess(data){
 	var returnCode = response.returnCode;
 	var returnMsg = response.message;
 	if (returnCode == SUCCESS){		   
-		alert("成功红冲单据");
-		window.location.href = "supplierPurchaseJSP!preEditPurchase";
+		
+		$.messager.alert({
+			title: '消息',
+			msg: "成功红冲单据",
+			fn: function(){
+				window.location.href = "supplierPurchaseJSP!preEditPurchase";
+			}
+		});
 	} else {
 		$.messager.progress('close'); 
-        alert(returnMsg);
+        $.messager.alert('错误', returnMsg, 'error');
     }
 }
 
@@ -160,7 +166,7 @@ $(document).ready(function(){
 	  	     <td>&nbsp;</td>
 			 <td></td>			 					 		
 			 <td></td>
-			 <td><input type="button" value="红冲单据" onclick="cancelOrder();"/></td>			 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="cancelOrder();">红冲单据</a></td>			 					 		
 			 <td></td>
 			 <td></td>			 					 		
 			 <td></td>	

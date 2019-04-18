@@ -217,7 +217,7 @@ function validateChainStore(){
 	    </tr>-->
 	    <tr class="InnerTableContent">
 	      <td height="25"><strong>客户账号</strong></td>
-	      <td colspan="3"><s:textfield id="clientId" name="formBean.chainStore.client_id" size="15" onkeypress="return is_number(event);"/> *这个账号必须与精算客户账号对应，否则系统将无法匹配</td>
+	      <td colspan="3"><s:textfield id="clientId" name="formBean.chainStore.client_id" size="15" onkeypress="return is_number(event);"/> *这个账号必须与客户开户账号一致</td>
 	      <td>&nbsp;</td>
 	      <td>&nbsp;</td>
 	    </tr>

@@ -10,8 +10,6 @@
 <%@ include file="../../common/Style.jsp"%>
 <script>
 
-
-
 var dataGrid ;
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
@@ -54,7 +52,11 @@ $(document).ready(function(){
 			return style;
 		},
 		columns : [ [
-		    {
+ 		    {
+				field : 'id',
+				title : '客户账号',
+				width : 70
+			},{	
 				field : 'name',
 				title : '客户名字',
 				width : 150,

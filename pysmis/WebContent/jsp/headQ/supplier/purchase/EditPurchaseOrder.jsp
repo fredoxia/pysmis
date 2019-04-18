@@ -68,7 +68,7 @@ function searchProductsProductCode(index_trigger){
  */
 function validateProductCodeInput(productCode){
 	if (productCode.length <= 1){
-       alert("输入的货号太短");
+       $.messager.alert('错误', "输入的货号太短", 'warning');
        return false;
 	}
 	return true;
@@ -114,7 +114,7 @@ function backProcess(data){
 			$("#barcodeInput").focus();
 		}
 	} else {
-		alert(data.msg);
+		$.messager.alert('错误', data.msg, 'error');
 		$("#barcodeInput").attr("value","");
 		$("#barcodeInput").focus();
 	}
@@ -153,13 +153,15 @@ function deleteRow(rowID, delIndex){
 	var msg = "你确定要删除第" + (delIndex + 1) + "行 ";
 	
 	$("#row" + delIndex).css('background-color', '#99CC00');
-	if (confirm(msg)){	
-		$("#"+rowID).remove(); 
-		
-		calculateTotal(); 
-	} else {
-		$("#row" + delIndex).css('background-color', '');
-	}
+	$.messager.confirm('删除货品确认', msg, function(r){
+		if (r){
+			$("#"+rowID).remove(); 
+			
+			calculateTotal(); 
+		} else {
+			$("#row" + delIndex).css('background-color', '');
+		}
+	});
 	
 	$("#productCodeInput").focus();
 }
@@ -206,22 +208,22 @@ function validateForm(){
    	
 	var error = "";
 	if ($("#supplierName").val() == "" || $("#supplierId").val() == 0){
-		error += "供应商名字 - 必须填!\n";
+		error += "供应商名字 - 必须填!<br\>";
 		$("#supplierName").focus();
 	}
 
 
 	if ($("#counterId").val() == 0){
-		error += "点数人员 - 必须选!\n";
+		error += "点数人员 - 必须选!<br\>";
 		$("#counterId").focus();
 	}
 
 	if ($("#totalQuantity").val() <= 0){
-		error += "必须录入数据后才能提交\n";
+		error += "必须录入数据后才能提交<br\>";
 	}
 	var totalDiscount = $("#totalDiscount").val();
 	if (isNaN(totalDiscount) || totalDiscount < 0){
-		error += "优惠 - 必须是大于或者等于0的数字!\n";
+		error += "优惠 - 必须是大于或者等于0的数字!<br\>";
 	}
 
 	var hasChar = false;
@@ -255,19 +257,14 @@ function validateForm(){
 	}
 
 	if (hasChar)
-		error += "数量 - 必须为大于0数字!\n";
+		error += "数量 - 必须为大于0数字!<br\>";
 	if (hasChar_r)
-		error += "采购进价 - 必须为大于0数字!\n";	
+		error += "采购进价 - 必须为大于0数字!<br\>";	
 
 	if (invalid_barcode)
-		error += "条码错误 - 货品条码无法找到,请删除再从新扫描!\n";	
+		error += "条码错误 - 货品条码无法找到,请删除再从新扫描!<br\>";	
 	
-	if (error != ""){
-		alert(error);
-		return false;
-	}else{
-		return true;
-	}
+	return error;
 }
 
 /**
@@ -299,7 +296,11 @@ index = parseInt("<s:property value='formBean.order.productList.size()'/>");
 function saveToDraft(){
 	calculateTotal();
 	
-	if (validateForm()){
+	var error = validateForm();
+	
+	if (error != ""){
+		$.messager.alert('错误', error, 'error');
+	} else {
 		$.messager.progress({
 			title : '提示',
 			text : '数据处理中，请稍后....'
@@ -314,8 +315,13 @@ function draftOrderBKProcess(data){
 	var returnCode = response.returnCode;
 	var returnMsg = response.message;
 	if (returnCode == SUCCESS){		   
-		alert("成功保存草稿");
-		window.location.href = "supplierPurchaseJSP!preEditPurchase";
+		$.messager.alert({
+			title: '保存成功',
+			msg: "成功保存草稿",
+			fn: function(){
+				window.location.href = "supplierPurchaseJSP!preEditPurchase";
+			}
+		});
 	} else {
 		$.messager.progress('close'); 
         alert(returnMsg);
@@ -328,7 +334,11 @@ function draftOrderBKProcess(data){
  */
 function submitOrder(){
 	calculateTotal();
-	if (validateForm()){
+	var error = validateForm();
+	
+	if (error != ""){
+		$.messager.alert('错误', error, 'error');
+	} else {
 		$.messager.progress({
 			title : '提示',
 			text : '数据处理中，请稍后....'
@@ -343,11 +353,17 @@ function submitOrderBKProcess(data){
 	var returnCode = response.returnCode;
 	var returnMsg = response.message;
 	if (returnCode == SUCCESS){		   
-		alert("单据成功过账");
-		window.location.href = "supplierPurchaseJSP!preEditPurchase";
+		$.messager.alert({
+			title: '保存成功',
+			msg: "单据成功过账",
+			fn: function(){
+				window.location.href = "supplierPurchaseJSP!preEditPurchase";
+			}
+		});
+		
 	} else {
 		$.messager.progress('close'); 
-        alert(returnMsg);
+        $.messager.alert('错误', returnMsg, 'error');
     }
 }
 
@@ -481,11 +497,11 @@ $(document).ready(function(){
 	  </tr>
       <tr height="10">
 	  	     <td>&nbsp;</td>
-			 <td><input type="button" onclick="submitOrder();" value="单据提交"/></td>			 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="submitOrder();">单据提交</a></td>			 					 		
 			 <td></td>
-			 <td><input type="button" value="存入草稿" onclick="saveToDraft();"/></td>			 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveToDraft();">存入草稿</a></td>			 					 		
 			 <td></td>
-			 <td><input type="button" value="删除订单" onclick="deleteOrder();"/></td>			 					 		
+			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="deleteOrder();">删除单据</a></td>			 					 		
 			 <td></td>	
 	  </tr>
 

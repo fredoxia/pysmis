@@ -65,11 +65,13 @@ function updateOrderCommentBackProcess(data){
 
 function copyOrder(){
 	var info = "你确定复制此单据?";
-	if (confirm(info)){	
-	    var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!copyOrder";
-	    var params=$("#inventoryOrderForm").serialize();  
-	    $.post(url,params, copyOrderBackProcess,"json");	
-	}	
+	$.messager.confirm('复制单据', info, function(r){
+		if (r){
+	    	var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!copyOrder";
+	    	var params=$("#inventoryOrderForm").serialize();  
+	    	$.post(url,params, copyOrderBackProcess,"json");	
+	    }
+	});
 }
 function copyOrderBackProcess(data){
     var response = data.response;

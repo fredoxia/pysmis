@@ -137,7 +137,8 @@ $(document).ready(function(){
 				
 				return str;}
 		}
-		]]
+		]],
+		toolbar : '#toolbar',
 	});
 });
 function transferOrderToOther(orderId){
@@ -166,7 +167,7 @@ function searchOrder(){
 </head>
 <body>
  	<div class="easyui-layout"  data-options="fit : true,border : false">
-		<div data-options="region:'north',border:false" style="height: 155px;">
+		<div data-options="region:'north',border:false" style="height: 105px;">
 		<s:form id="inventorySearchForm" action="/action/inventoryOrder!search" theme="simple" method="POST">
 		 <table width="100%" border="0">
 		    <tr class="InnerTableContent">
@@ -198,26 +199,15 @@ function searchOrder(){
 		        <s:textfield id="endDate" name="formBean.search_End_Time" cssClass="easyui-datebox"  data-options="width:100,editable:false"/></td>
 
       	    </tr>
-
-		    <tr class="InnerTableContent">
-		      <td height="5" colspan="8"><hr width="100%" color="#FFCC00"/></td>
-		    </tr>
-		    <tr class="InnerTableContent">
-		      <td height="30">&nbsp;</td>
-		      <td><input type="button" onclick="searchOrder();" value="查询销售单据"/> </td>
-		      <td>&nbsp;</td>
-		      <td>&nbsp;</td>
-		      <td>&nbsp;</td>
-		      <td>&nbsp;</td>
-		      <td>&nbsp;</td>
-		      <td>&nbsp;</td>
-		    </tr>
   			</table>
 		</s:form>
 		</div>
 		<div data-options="region:'center',border:false">
 			<table id="dataGrid" border="0">			       
 		    </table>
+		    <div id="toolbar" style="display: none;">
+			         <a onclick="searchOrder();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询销售单据</a>
+	        </div>
 		</div>
 	</div>
 

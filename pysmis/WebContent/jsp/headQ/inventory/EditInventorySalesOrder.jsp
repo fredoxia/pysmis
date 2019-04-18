@@ -25,25 +25,20 @@ index = parseInt("<s:property value='formBean.order.product_Set.size()'/>");
 function saveToDraft(){
 	calculateTotal();
 	
-	$.messager.confirm('保存草稿', '你确认保存仓库订单?', function(r){
-		if (r){
-            var error = validateForm();
+	var error = validateForm();
 			
-			if (error != ""){
-				$.messager.alert('错误', error, 'error');
-			}else{
-				$("#barcode" + index).val("");
-			    recordSubmit();
-				$.messager.progress({
-					title : '提示',
-					text : '数据处理中，请稍后....'
-				});
-			   document.inventoryOrderForm.action = "inventoryOrder!saveToDraft";
-			   document.inventoryOrderForm.submit();
-			}
-		}
-	});
-
+	if (error != ""){
+		$.messager.alert('错误', error, 'error');
+	}else{
+		$("#barcode" + index).val("");
+	    recordSubmit();
+		$.messager.progress({
+			title : '提示',
+			text : '数据处理中，请稍后....'
+		});
+	   document.inventoryOrderForm.action = "inventoryOrder!saveToDraft";
+	   document.inventoryOrderForm.submit();
+	}
 }
 
 /**
@@ -52,25 +47,20 @@ function saveToDraft(){
 function save(){
 	calculateTotal();
 	
-	$.messager.confirm('单据提交确认', '你确认提交订单修改?', function(r){
-		if (r){
-            var error = validateForm();
-			
-			if (error != ""){
-				$.messager.alert('错误', error, 'error');
-			}else{
-				$("#barcode" + index).val("");
-			    recordSubmit();
-				$.messager.progress({
-					title : '提示',
-					text : '数据处理中，请稍后....'
-				});
-				document.inventoryOrderForm.action = "<%=request.getContextPath()%>/action/inventoryOrder!acctSave";
-				document.inventoryOrderForm.submit();
-			}
-		}
-	});
-
+	 var error = validateForm();
+	
+	if (error != ""){
+		$.messager.alert('错误', error, 'error');
+	}else{
+		$("#barcode" + index).val("");
+	    recordSubmit();
+		$.messager.progress({
+			title : '提示',
+			text : '数据处理中，请稍后....'
+		});
+		document.inventoryOrderForm.action = "<%=request.getContextPath()%>/action/inventoryOrder!acctSave";
+		document.inventoryOrderForm.submit();
+	}
 }
 
 /**
@@ -94,26 +84,22 @@ function preview(){
 function submitOrder(){
 	calculateTotal();
 	
-	$.messager.confirm('单据提交确认', '你确认提交仓库订单?', function(r){
-		if (r){
-            var error = validateForm();
+	var error = validateForm();
 			
-			if (error != ""){
-				$.messager.alert('错误', error, 'error');
-			}else{
-				$("#barcode" + index).val("");
-			    recordSubmit();
-				$.messager.progress({
-					title : '提示',
-					text : '数据处理中，请稍后....'
-				});
-				 
-				var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!save";
-				 var params=$("#inventoryOrderForm").serialize();  
-				 $.post(url,params, saveOrderBackProcess,"json");	
-			}
-		}
-	});
+	if (error != ""){
+		$.messager.alert('错误', error, 'error');
+	}else{
+		$("#barcode" + index).val("");
+	    recordSubmit();
+		$.messager.progress({
+			title : '提示',
+			text : '数据处理中，请稍后....'
+		});
+		 
+		var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!save";
+		 var params=$("#inventoryOrderForm").serialize();  
+		 $.post(url,params, saveOrderBackProcess,"json");	
+	}
 
 }
 function saveOrderBackProcess(data){
@@ -141,26 +127,23 @@ function saveOrderBackProcess(data){
 function submitOrderQ(){
 	calculateTotal();
 	
-	$.messager.confirm('单据提交确认', '你确认提交仓库订单?', function(r){
-		if (r){
-            var error = validateForm();
+	var error = validateForm();
 			
-			if (error != ""){
-				$.messager.alert('错误', error, 'error');
-			}else{
-				$("#barcode" + index).val("");
-			    recordSubmit();
-				$.messager.progress({
-					title : '提示',
-					text : '数据处理中，请稍后....'
-				});
-				 
-				var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!save";
-				 var params=$("#inventoryOrderForm").serialize();  
-				 $.post(url,params, saveOrderBackProcessQ,"json");	
-			}
-		}
-	});
+	if (error != ""){
+		$.messager.alert('错误', error, 'error');
+	}else{
+		$("#barcode" + index).val("");
+	    recordSubmit();
+		$.messager.progress({
+			title : '提示',
+			text : '数据处理中，请稍后....'
+		});
+		 
+		var url = "<%=request.getContextPath()%>/action/inventoryOrderJSON!save";
+		 var params=$("#inventoryOrderForm").serialize();  
+		 $.post(url,params, saveOrderBackProcessQ,"json");	
+	}
+
 }
 function saveOrderBackProcessQ(data){
     var response = data;
@@ -227,6 +210,18 @@ function chooseClient(clientId, preAcct){
 }
 
 $(document).ready(function(){
+	var id = "";
+	var orderId = $("#orderId").val();
+	if (orderId != 0)
+		id = orderId;
+	else {
+	var clientId = $("#clientID").val();
+    if (clientId != 0)
+    	id= clientId;
+	}
+	self.parent.updateTabName("批发销售单据 " + id);
+	
+	
 	$("#clientName").focus();
 	parent.$.messager.progress('close'); 
 	jQuery.excel('excelTable');

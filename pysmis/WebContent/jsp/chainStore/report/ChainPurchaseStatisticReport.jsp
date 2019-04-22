@@ -27,10 +27,10 @@ $(document).ready(function(){
 			$.messager.progress('close'); 
 		},
 		onBeforeExpand : function(node) {
-			$("#parentId").attr("value", node.parentId);
-		    $("#yearId").attr("value", node.yearId);
-			$("#quarterId").attr("value", node.quarterId);
-			$("#brandId").attr("value", node.brandId);
+			$("#parentId").val(node.parentId);
+		    $("#yearId").val(node.yearId);
+			$("#quarterId").val(node.quarterId);
+			$("#brandId").val(node.brandId);
 			var params = $('#preGenReportForm').serialize();
 			$('#dataGrid').treegrid('options').url = 'chainReportJSON!getPurchaseStatisticReptEles?' + params;
 		},	
@@ -65,10 +65,10 @@ $(document).ready(function(){
 });
 
 function refresh(){
-	$("#parentId").attr("value", 0);
-    $("#yearId").attr("value", 0);
-	$("#quarterId").attr("value", 0);
-	$("#brandId").attr("value", 0);
+	$("#parentId").val(0);
+    $("#yearId").val(0);
+	$("#quarterId").val(0);
+	$("#brandId").val(0);
     document.preGenReportForm.action="chainReportJSPAction!generatePurchaseStatisticReport";
     document.preGenReportForm.submit();
 }

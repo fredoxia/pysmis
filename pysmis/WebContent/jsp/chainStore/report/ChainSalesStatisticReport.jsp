@@ -31,10 +31,10 @@ $(document).ready(function(){
 			$.messager.progress('close'); 
 		},
 		onBeforeExpand : function(node) {
-			$("#parentId").attr("value", node.parentId);
-		    $("#yearId").attr("value", node.yearId);
-			$("#quarterId").attr("value", node.quarterId);
-			$("#brandId").attr("value", node.brandId);
+			$("#parentId").val(node.parentId);
+		    $("#yearId").val(node.yearId);
+			$("#quarterId").val(node.quarterId);
+			$("#brandId").val(node.brandId);
 			var params = $('#preGenReportForm').serialize();
 			$('#dataGrid').treegrid('options').url = 'chainReportJSON!getSalesStatisticReptEles?' + params;
 		},	
@@ -109,10 +109,10 @@ $(document).ready(function(){
 });
 
 function refresh(){
-	$("#parentId").attr("value", 0);
-    $("#yearId").attr("value", 0);
-	$("#quarterId").attr("value", 0);
-	$("#brandId").attr("value", 0);
+	$("#parentId").val(0);
+    $("#yearId").val(0);
+	$("#quarterId").val(0);
+	$("#brandId").val(0);
     document.preGenReportForm.action="chainReportJSPAction!generateSalesStatisticReport";
     document.preGenReportForm.submit();
 }
@@ -128,10 +128,10 @@ function exportFile(){
 		$.messager.alert('错误', '请先选中一行再继续操作', 'error');
 	} else {
 		
-		$("#chainId").attr("value", node.chainId);
-	    $("#yearId").attr("value", node.yearId);
-		$("#quarterId").attr("value", node.quarterId);
-		$("#brandId").attr("value", node.brandId);
+		$("#chainId").val(node.chainId);
+	    $("#yearId").val(node.yearId);
+		$("#quarterId").val(node.quarterId);
+		$("#brandId").val(node.brandId);
         document.preGenReportForm.action="chainReportJSPAction!generateChainSalesStatisticExcelReport";
         document.preGenReportForm.submit();
 	}

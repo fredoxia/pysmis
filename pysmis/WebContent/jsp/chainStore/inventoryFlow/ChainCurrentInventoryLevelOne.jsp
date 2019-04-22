@@ -36,11 +36,11 @@ $(document).ready(function(){
 			return style;
 		},
 		onBeforeExpand : function(node) {
-			$("#parentId").attr("value", node.parentId);
-			$("#chainId").attr("value", node.chainId);
-		    $("#yearId").attr("value", node.yearId);
-			$("#quarterId").attr("value", node.quarterId);
-			$("#brandId").attr("value", node.brandId);
+			$("#parentId").val(node.parentId);
+			$("#chainId").val(node.chainId);
+		    $("#yearId").val(node.yearId);
+			$("#quarterId").val(node.quarterId);
+			$("#brandId").val(node.brandId);
 			var params = $('#preGenReportForm').serialize();
 			$('#dataGrid').treegrid('options').url = 'inventoryFlowJSONAction!getInventoryFlowEles?' + params;
 		},
@@ -75,10 +75,10 @@ $(document).ready(function(){
 });
 
 function refresh(){
-	$("#parentId").attr("value", 0);
-    $("#yearId").attr("value", 0);
-	$("#quarterId").attr("value", 0);
-	$("#brandId").attr("value", 0);
+	$("#parentId").val(0);
+    $("#yearId").val(0);
+	$("#quarterId").val(0);
+	$("#brandId").val(0);
     document.preGenReportForm.action="inventoryFlowJSPAction!getLevelOneCurrentInventory";
     document.preGenReportForm.submit();
 }
@@ -93,10 +93,10 @@ function downloadInventory(){
 		$.messager.alert('错误', '请先选中一行再继续操作', 'error');
 	} else {
 		
-		$("#chainId").attr("value", node.chainId);
-	    $("#yearId").attr("value", node.yearId);
-		$("#quarterId").attr("value", node.quarterId);
-		$("#brandId").attr("value", node.brandId);
+		$("#chainId").val(node.chainId);
+	    $("#yearId").val(node.yearId);
+		$("#quarterId").val(node.quarterId);
+		$("#brandId").val(node.brandId);
         document.preGenReportForm.action="inventoryFlowJSPAction!generateChainInventoryExcelReport";
         document.preGenReportForm.submit();
 	}
@@ -116,10 +116,10 @@ function deleteInventory(){
 						text : '数据处理中，请稍后....'
 					});
 					
-					$("#chainId").attr("value", node.chainId);
-				    $("#yearId").attr("value", node.yearId);
-					$("#quarterId").attr("value", node.quarterId);
-					$("#brandId").attr("value", node.brandId);
+					$("#chainId").val(node.chainId);
+				    $("#yearId").val(node.yearId);
+					$("#quarterId").val(node.quarterId);
+					$("#brandId").val(node.brandId);
 			        
 					var params = $('#preGenReportForm').serialize();
 					$.post('inventoryFlowJSONAction!deleteInventory', params, 

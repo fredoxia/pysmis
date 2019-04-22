@@ -18,11 +18,12 @@ $(document).ready(function(){
 		idField: 'id',
 		treeField : 'name',
 		onBeforeExpand : function(node) {
-		    $("#yearId").attr("value", node.yearId);
-			$("#quarterId").attr("value", node.quarterId);
-			$("#brandId").attr("value", node.brandId);
+		    $("#yearId").val(node.yearId);
+			$("#quarterId").val(node.quarterId);
+			$("#brandId").val(node.brandId);
 			var params = $('#preGenReportForm').serialize();
 			$('#dataGrid').treegrid('options').url = 'headqInventoryFlowJSONAction!getInventoryFlowEles?' + params;
+
 		},
 		columns : [ [
 					{field:'name', width:250,title:'库存列表',
@@ -46,7 +47,14 @@ $(document).ready(function(){
 });
 
 function refresh(){
-	location.reload();
+	//location.reload();
+	$("#yearId").val(0);
+	$("#quarterId").val(0);
+	$("#brandId").val(0);
+	//$('#dataGrid').treegrid('loadData',{ total: 0, rows: [] });
+	var params = $('#preGenReportForm').serialize();
+	$('#dataGrid').treegrid('options').url = 'headqInventoryFlowJSONAction!getInventoryFlowEles?' + params;
+	$('#dataGrid').treegrid('reload');
 }
 function downloadInventory(){
 	var node = $('#dataGrid').treegrid('getSelected');
@@ -54,9 +62,9 @@ function downloadInventory(){
 	if (node == null){
 		$.messager.alert('错误', '请先选中一行再继续操作', 'error');
 	} else {
-	    $("#yearId").attr("value", node.yearId);
-		$("#quarterId").attr("value", node.quarterId);
-		$("#brandId").attr("value", node.brandId);
+	    $("#yearId").val(node.yearId);
+		$("#quarterId").val(node.quarterId);
+		$("#brandId").val(node.brandId);
         document.preGenReportForm.action="headqInventoryFlowJSPAction!downloadHeadqInventory";
         document.preGenReportForm.submit();
 	}

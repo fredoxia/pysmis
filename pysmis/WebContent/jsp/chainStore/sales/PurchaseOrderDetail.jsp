@@ -48,7 +48,7 @@ function updatePurchaseStatusBKProcess(data){
 				         <td width="85" height="25"><strong>编号/种类</strong></td>
 				         <td><s:property value="uiBean.order.order_ID"/>/<s:property value="uiBean.order_type"/></td>
 				         <td><strong>客户名字</strong></td>
-				         <td><s:property value="uiBean.order.client_name"/></td>
+				         <td><s:property value="uiBean.order.cust.name"/></td>
 				       </tr>
 				       <tr class="InnerTableContent">
 				         <td height="25"><strong>上欠 / 下欠</strong></td>

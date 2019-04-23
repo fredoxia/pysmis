@@ -225,6 +225,17 @@ function changeFunction14(){
       <td height="4" colspan="6"><hr width="100%" color="#FFCC00"/></td>
     </tr>
     <tr class="InnerTableContent">
+      <td height="19"><strong>总部报表管理</strong></td>
+      <td>采购统计报表:<input type="checkbox" name="functionalities" id="function51" value="51"/></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>      
+    <tr class="InnerTableContent">
+      <td height="4" colspan="6"><hr width="100%" color="#FFCC00"/></td>
+    </tr>    
+    <tr class="InnerTableContent">
       <td height="19"><strong>管理员权限</strong></td>
       <td>总部用户权限管理:<input type="checkbox" name="functionalities" id="function90" value="90"/></td>
       <td>连锁系统管理员:<input type="checkbox" name="functionalities" id="function91" value="91"/></td>

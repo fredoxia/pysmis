@@ -226,7 +226,7 @@ function changeFunction14(){
     </tr>
     <tr class="InnerTableContent">
       <td height="19"><strong>总部报表管理</strong></td>
-      <td>采购统计报表:<input type="checkbox" name="functionalities" id="function51" value="51"/></td>
+      <td>销售/采购统计报表:<input type="checkbox" name="functionalities" id="function51" value="51"/></td>
       <td></td>
       <td></td>
       <td></td>

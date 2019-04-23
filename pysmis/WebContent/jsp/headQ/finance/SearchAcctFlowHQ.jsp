@@ -66,7 +66,8 @@ $(document).ready(function(){
 							    str += $.formatString('<a href="#" onclick="addTab3(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="查看"/></a>', url, row.itemTypeName + id, '<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png' );
 							return str;
 						}}
-			     ]]
+			     ]],
+					toolbar : '#toolbar',
 		});
 	});
 
@@ -74,7 +75,7 @@ function searchAcctFlow(){
 	var financeBillChainStore = $("#clientID").val();
 
 	if (financeBillChainStore == 0){
-		alert("客户  - 不能为空\n");
+		$.messager.alert('警告', '客户  - 不能为空', 'warning');
 		return ;
 	}
 	var params= $.serializeObject($('#SalesOrderSearchForm'));
@@ -87,7 +88,7 @@ function changeChainStore(chainId){
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit : true,border : false">
-		<div data-options="region:'north',border:false" style="height: 115px;">
+		<div data-options="region:'north',border:false" style="height: 90px;">
                <s:form id="SalesOrderSearchForm" action="/actionChain/salesAction!searchOrders" theme="simple" method="POST"> 
                 <table width="100%" border="0">
 			    <tr class="InnerTableContent">
@@ -111,20 +112,15 @@ function changeChainStore(chainId){
 			      <td></td>
 			      <td></td>
 			      <td></td>
-			    </tr>
-                   <tr class="InnerTableContent">
-			      <td height="25">&nbsp;</td>
-			      <td>&nbsp;</td>
-			      <td colspan="2"><input type="button" value="查询往来账目" onclick="searchAcctFlow();"/></td>
-			      <td>&nbsp;</td>
-			      <td>&nbsp;</td>
-			    </tr>
 			  </table>
              </s:form>
 		  </div>
 		  <div data-options="region:'center',border:false">
 			    <table id="dataGrid">			       
 		        </table>
+		        <div id="toolbar" style="display: none;">
+			         <a onclick="searchAcctFlow();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询往来账目</a>
+	            </div>
 		  </div>
 	</div>	
 </body>

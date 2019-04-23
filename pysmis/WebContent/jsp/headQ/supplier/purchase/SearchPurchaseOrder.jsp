@@ -40,6 +40,7 @@ $(document).ready(function(){
 		selectOnCheck : false,
 		singleSelect:true,
 		nowrap : false,
+		showFooter:true,
 		rowStyler: function(index,row){
 			var style = "";
 			if (row.status == 1)
@@ -112,9 +113,11 @@ $(document).ready(function(){
 			width : 70,
 			formatter : function(value, row, index) {
 				var str = '';
-				var url = "<%=request.getContextPath()%>/action/supplierPurchaseJSP!getPurchaseOrder?formBean.order.id=" + row.id;
-					str += $.formatString('<a href="#" onclick="addTab6(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="修改"/></a>', url, '采购单据 ' + row.id,'<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
 				
+				if (row.id != 0){
+				   var url = "<%=request.getContextPath()%>/action/supplierPurchaseJSP!getPurchaseOrder?formBean.order.id=" + row.id;
+					   str += $.formatString('<a href="#" onclick="addTab6(\'{0}\',\'{1}\');"><img border="0" src="{2}" title="修改"/></a>', url, '采购单据 ' + row.id,'<%=request.getContextPath()%>/conf_files/easyUI/themes/icons/text_1.png');
+				}
 				return str;
 			}
 		}]],

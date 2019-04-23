@@ -7,7 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="formBean.order.typeS"/> <s:property value="formBean.order.statusS"/></title>
 <%@ include file="../../../common/Style.jsp"%>
-
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/HeadqPurchaseOrderPrint.js?v=5-42></script>
 <script type="text/javascript">
 /**
  * to submit the order to account
@@ -36,6 +37,28 @@ function cancelOrderBKProcess(data){
 		});
 	} else {
 		$.messager.progress('close'); 
+        $.messager.alert('错误', returnMsg, 'error');
+    }
+}
+
+function printOrder(){
+	$.messager.progress({
+		title : '提示',
+		text : '数据处理中，请稍后....'
+	});
+    var params = $("#purchaseOrderForm").serialize();  
+    $.post("<%=request.getContextPath()%>/action/supplierPurchaseJSON!printOrder",params, printOrderBKProcess,"json");
+}
+function printOrderBKProcess(data){
+	$.messager.progress('close'); 
+	var response = data;
+
+	var returnCode = response.returnCode;
+	var returnMsg = response.message;
+	if (returnCode == SUCCESS){		   
+		printContent(response.returnValue);
+	} else {
+		
         $.messager.alert('错误', returnMsg, 'error');
     }
 }
@@ -74,6 +97,11 @@ $(document).ready(function(){
 			 		<th>供应商名字&nbsp;:&nbsp;<s:property value="formBean.order.supplier.name"/>&nbsp&nbsp&nbsp&nbsp&nbsp货品点数&nbsp; :&nbsp;<s:property value="formBean.order.orderCounter.name" />	</th>
 			 		<th>订单号&nbsp;:&nbsp;<s:property value="formBean.order.id"/> </th>	 
 			 	</tr>
+			 	<tr class="PBAOuterTableTitale" align="left">
+			 		<th>&nbsp;</th>
+			 		<th>上欠&nbsp;:&nbsp;<s:property value="formBean.order.preAcctAmt"/>&nbsp&nbsp&nbsp&nbsp&nbsp下欠&nbsp; :&nbsp;<s:property value="formBean.order.postAcctAmt"/>	</th>
+			 		<th></th>	 
+			 	</tr>			 	
 				<tr height="10">
 					<th colspan="3"></th>
 				</tr>	
@@ -166,8 +194,9 @@ $(document).ready(function(){
 	  	     <td>&nbsp;</td>
 			 <td></td>			 					 		
 			 <td></td>
-			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="cancelOrder();">红冲单据</a></td>			 					 		
-			 <td></td>
+			 <td colspan="2">
+			     <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="cancelOrder();">红冲单据</a>&nbsp;&nbsp;
+			     <a id="btn3" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="printOrder();">打印单据</a></td>			 					 		
 			 <td></td>			 					 		
 			 <td></td>	
 	  </tr>

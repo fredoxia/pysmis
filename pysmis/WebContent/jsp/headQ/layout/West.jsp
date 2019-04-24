@@ -50,7 +50,7 @@ $(function() {
 	}); 
 </script>
 <div id="menuAccordian" class="easyui-accordion" style="width:auto;height:auto;">  
-    <div title="系统菜单" data-options="selected:true" style="overflow:false">
+    <div title="系统菜单" data-options="selected:true" style="padding:5px;">
         <ul id="treeMenu" class="easyui-tree"  data-options="lines:true,animate:true">  
 		      <s:if test="#session.LOGIN_USER.containFunction('basicData!preMaintainBasic') || #session.LOGIN_USER.containFunction('productJSPAction!preCreateProduct') || #session.LOGIN_USER.containFunction('productJSPAction!preSearch')||#session.LOGIN_USER.containFunction('productJSPAction!preCreateProduct') || #session.LOGIN_USER.containFunction('productJSPAction!preBrandPriceIncrease')">
 			  	<li data-options="iconCls:'icon-text_1',state:'open',border:false">
@@ -126,7 +126,7 @@ $(function() {
 		</ul>
 
 	</div>  
-    <div title="其他功能" style="padding:10px;">  
+    <div title="报表与管理功能" style="padding:5px;">  
     	<ul id="treeMenu2" class="easyui-tree"  data-options="lines:true,animate:true" >  
         		 <li  data-options="iconCls:'icon-database',state:'open',border:false">
 			  	    <span>库存管理</span>

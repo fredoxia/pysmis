@@ -49,7 +49,7 @@ $(document).ready(function(){
 	});
 });
 function changeChainStore(chainId){}
-function genSalesReport(){
+function searchExpense(){
 
 	var params = $.serializeObject($('#preGenReportForm')); 
 	$('#dataGrid').datagrid('load',params); 
@@ -98,25 +98,17 @@ function loadExpenseForUpdate(){
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit : true,border : false">
-		<div data-options="region:'north',border:false" style="height: 85px;">
+		<div data-options="region:'north',border:false" style="height: 55px;">
 		   <s:form id="preGenReportForm" name="preGenReportForm" action="" theme="simple" method="POST">  
 			<table width="100%" border="0">
 			    <tr class="InnerTableContent">
-			      <td width="45" height="25">&nbsp;</td>
+			      <td width="45" height="35">&nbsp;</td>
 			      <td width="76"><strong>费用日期</strong></td>
 			      <td width="284" colspan="3">
 			        <s:textfield id="startDate" name="formBean.startDate" cssClass="easyui-datebox"  data-options="width:100,editable:false"/>
 			        &nbsp;至&nbsp;
 			        <s:textfield id="endDate" name="formBean.endDate" cssClass="easyui-datebox"  data-options="width:100,editable:false"/>
 			      </td>
-			    </tr>
-                   <tr class="InnerTableContent">
-			      <td height="25">&nbsp;</td>
-			      <td>&nbsp;</td>
-			      <td colspan="2">
-			           <a href="javascript:void(0)" class="easyui-linkbutton" onclick="genSalesReport();">查找费用</a>
-			      </td>
-			      <td>&nbsp;</td>
 			    </tr>
 			</table>
 			</s:form>
@@ -127,6 +119,7 @@ function loadExpenseForUpdate(){
 		</div>
 	</div>					  
 	<div id="toolbar" style="display: none;">
+	        <a onclick="searchExpense();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查找费用</a>
 			<a onclick="deleteExpense();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除费用</a>
 	        <a onclick="loadExpenseForUpdate();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改费用</a>
 	</div>

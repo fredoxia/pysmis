@@ -14,7 +14,7 @@ function pageSetup(){
 }
 
 function printContent(io){
-	//pageSetup();
+	pageSetup();
 	var space = "&nbsp;&nbsp;&nbsp;";
 	var s = "<font size='5pt'>成都朴与素</font><br/>";
         s += "单据号 : " + io.id + space + "<br/>供应商: " + io.supplier + "<br/>"; 
@@ -34,8 +34,7 @@ function printContent(io){
  	  	if (i == products.length){
  	  		s += "<b>总数 : " + io.totalQuantity + space +  "总金额 : " + io.totalRecCost + "</b><br/>";
 
-	  		alert(s);
-	  		//PAZU.print("<br/>" + s);
+	  		PAZU.print("<br/>" + s);
 	  	}
   	}
 }

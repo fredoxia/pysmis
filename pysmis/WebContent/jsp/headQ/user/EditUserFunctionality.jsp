@@ -194,10 +194,10 @@ function changeFunction14(){
     <tr class="InnerTableContent">
       <td height="19"></td>
       <td>删除单据:<input type="checkbox" name="functionalities" id="function26" value="26"/></td>
-      <td>导入精算:<input type="checkbox" name="functionalities" id="function27" value="27"/></td>
       <td>财务单据管理:<input type="checkbox" name="functionalities" id="function16" value="16"/></td>
       <td>连锁店流水:<input type="checkbox" name="functionalities" id="function17" value="17"/></td>
       <td>会计审核单据:<input type="checkbox" name="functionalities" id="function28" value="28"/></td>
+      <td></td>
     </tr>
     <tr class="InnerTableContent">
       <td height="4" colspan="6"><hr width="100%" color="#FFCC00"/></td>

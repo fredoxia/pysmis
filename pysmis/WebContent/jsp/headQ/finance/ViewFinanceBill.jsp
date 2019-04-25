@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>朴与素连锁店管理信息系统</title>
 <%@ include file="../../common/Style.jsp"%>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/HeadqFinancePrint.js?v=5-27></script>
 <script>
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
@@ -21,20 +23,20 @@ function cancelBill(){
 	document.financeBillForm.submit();
 }
 function printBill(){
-	alert("财务单据打印功能还未完善");
-	 /*var url = "<%=request.getContextPath()%>/action/financeHQJSON!printOrder";
+
+	 var url = "<%=request.getContextPath()%>/action/financeHQJSON!printOrder";
 	 var params=$("#financeBillForm").serialize();  
 	 
-	 $.post(url,params, printOrderBackProcess,"json");*/	
+	 $.post(url,params, printOrderBackProcess,"json");
 }	
 function printOrderBackProcess(data){
    var response = data;
 	var returnCode = response.returnCode;
 
 	if (returnCode != SUCCESS)
-		alert("获取单据失败 ： " + response.message);
+	    $.messager.alert('错误', "获取单据失败 ： " + response.message, 'error');
 	else {
-       alert(response.returnValue);
+		printContent(response.returnValue);
 	}
 }
 </script>

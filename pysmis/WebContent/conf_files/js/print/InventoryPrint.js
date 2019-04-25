@@ -35,28 +35,27 @@ function printContent(io, wholeSalePrice){
 	  	    s += i + space + product.productCode + product.color + space +product.quantity + space + product.wholeSales + space + product.totalWholeSales + "<br/>";
 	  	else 
 	  		 s += i + space + product.productCode + product.color + space +product.quantity + "<br/>";
-	  	
- 	  	if (i == products.length){
- 	  		if (wholeSalePrice == true)
-	  		    s += "<b>总数 : " + io.totalQ + space +  "总金额 : " + io.totalWholeSales + "</b><br/>";
- 	  		else 
- 	  			s += "<b>总数 : " + io.totalQ + "</b><br/>";
- 	  		
-	  		if (io.cash != 0)
-	  		  s += "现金 :" + io.cash;
-	  		if (io.card != 0)
-	  		  s += " 刷卡 :" +io.card;
-		    if (io.alipay != 0)
-			  s += "支付宝 :" + io.alipay;
-		  	if (io.wechat != 0)
-			  s += " 微信 :" + io.wechat;
-		  	s +=  "<br/><br/>展厅电话 : 028-65775588"+ "<br/>"; 
-		  	s +=  "加盟热线 : 13880949886/18981987974"+ "<br/>";
-		  	s +=  "展厅地址  : 大成市场2期3楼52号";
 
-	  		printOut(s);
-	  	}
   	}
+ 	
+		if (wholeSalePrice == true)
+  		    s += "<b>总数 : " + io.totalQ + space +  "总金额 : " + io.totalWholeSales + "</b><br/>";
+	  		else 
+	  			s += "<b>总数 : " + io.totalQ + "</b><br/>";
+	  		
+  		if (io.cash != 0)
+  		  s += "现金 :" + io.cash;
+  		if (io.card != 0)
+  		  s += " 刷卡 :" +io.card;
+	    if (io.alipay != 0)
+		  s += "支付宝 :" + io.alipay;
+	  	if (io.wechat != 0)
+		  s += " 微信 :" + io.wechat;
+	  	s +=  "<br/><br/>展厅电话 : 028-65775588"+ "<br/>"; 
+	  	s +=  "加盟热线 : 13880949886/18981987974"+ "<br/>";
+	  	s +=  "展厅地址  : 大成市场2期3楼52号";
+
+  		printOut(s);
 }
 function printOrderBackProcess(data){
     var response = data;

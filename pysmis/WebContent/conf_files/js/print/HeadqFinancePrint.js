@@ -15,26 +15,40 @@ function pageSetup(){
 
 function printContent(io){
 	pageSetup();
+
 	var space = "&nbsp;&nbsp;&nbsp;";
 	var s = "<font size='5pt'>成都朴与素</font><br/>";
-        s += "单据号 : " + io.id + space + "<br/>供应商: " + io.supplier + "<br/>"; 
-        s += "过账日期  : " + io.lastUpdateTime + "<br/>";
-    	s += "单据种类 : " + io.typeS + "<br/>";
+        s += "单据号 : " + io.id + space + "<br/>客户: " + io.cust  + "<br/>地区: " + io.area + "<br/>"; 
+        s += "单据日期  : " + io.createDate + "<br/>";
+    	s += "单据种类 : " + io.type + "<br/>";
+    	
+    	if (io.comment != "")
+    	   s += "备注 : " + io.comment + "<br/>";
+    	
+    	if (io.invoiceDiscount != 0)
+    	   s += "折扣 : " + io.invoiceDiscount + "<br/>";
+    	
     	s += "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
 
 		s += "-----------------单据明细 ---------------<br/>";
-	var products = io.products;
+	var items = io.items;
 
 	var j =1;
 	var k = 1; //每页多少行了
- 	for (var i = 1; i <= products.length; i++){
-	  	var product = products[i-1];
-	  	s += i + space + product.productCode + product.color + space +product.quantity + space + product.recCost + space + product.totalRecCost + "<br/>";
-
+ 	for (var i = 1; i <= items.length; i++){
+	  	var item = items[i-1];
+	  	
+	  	if (item.total == 0)
+	  		continue;
+	  	
+	  	s += item.financeCategory + space +item.total + "<br/>";
+	  	
   	}
  	
-		s += "<b>总数 : " + io.totalQuantity + space +  "总金额 : " + io.totalRecCost + "</b><br/>";
+		s += "<b>总金额 : " + io.invoiceTotal + "</b><br/>";
+	  	s +=  "<br/><br/>展厅电话 : 028-65775588"+ "<br/>"; 
+	  	s +=  "加盟热线 : 13880949886/18981987974"+ "<br/>";
+	  	s +=  "展厅地址  : 大成市场2期3楼52号";
 
   		PAZU.print("<br/>" + s);
 }
-

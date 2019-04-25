@@ -296,19 +296,23 @@ function calculateTotal(){
 	 
 	 var orderType = $("#orderType").val();
 
-	 //销售退货
-	 if (orderType == 1){
-			var floor = Math.floor(totalWholePrice);
-
-			var discount = (floor - totalWholePrice).toFixed(2);
-			$("#totalDiscount").numberbox("setValue",discount);
-	//销售出库
-	} else if (orderType == 0){
-			var floor = Math.floor(totalWholePrice);
-
-			var discount = (totalWholePrice - floor).toFixed(2);
-			$("#totalDiscount").numberbox("setValue",discount);
-	}
+	 var totalDiscount = $("#totalDiscount").numberbox("getValue");
+	 
+	 if (Math.abs(totalDiscount) <= 1){
+		 //销售退货
+		 if (orderType == 1){
+				var floor = Math.floor(totalWholePrice);
+	
+				var discount = (floor - totalWholePrice).toFixed(2);
+				$("#totalDiscount").numberbox("setValue",discount);
+		//销售出库
+		} else if (orderType == 0){
+				var floor = Math.floor(totalWholePrice);
+	
+				var discount = (totalWholePrice - floor).toFixed(2);
+				$("#totalDiscount").numberbox("setValue",discount);
+		}
+	 }
 	 
 	 calculateCasher();
 }

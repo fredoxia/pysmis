@@ -451,7 +451,7 @@ $(document).ready(function(){
 					 		<td><s:property value="#orderProduct.pb.color.name"/></td>			 		
 					 		<td><s:property value="#orderProduct.pb.product.unit"/></td>	
 					 		<td><input type="text" name="formBean.order.productList[<s:property value="#st.index"/>].quantity" id="quantity<s:property value="#st.index"/>" size='2' onchange="onQuantityChange();" onfocus="this.select();" value="<s:property value="#orderProduct.quantity"/>"/></td>
-					 		<td><input type="text" name="formBean.order.productList[<s:property value="#st.index"/>].recCost" id="recCost<s:property value="#st.index"/>" size='2' readonly onfocus="this.select();" value="<s:property value="#orderProduct.recCost"/>"/></td>		 					 		
+					 		<td><input type="text" name="formBean.order.productList[<s:property value="#st.index"/>].recCost" id="recCost<s:property value="#st.index"/>" size='4' readonly onfocus="this.select();" value="<s:property value="#orderProduct.recCost"/>"/></td>		 					 		
 					 		<td><s:property value="#orderProduct.wholeSalePrice"/></td>			 							 		
 					 		<td><div id="delIcon0" style="display:block"><img src="<%=request.getContextPath()%>/conf_files/web-image/delete.png" border="0" onclick="deleteRow('row<s:property value="#st.index"/>',<s:property value="#st.index"/>);"  style="cursor:pointer;"/></div></td>
 					 		<td></td>				

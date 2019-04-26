@@ -79,7 +79,7 @@ function copyOrderBackProcess(data){
 	if (returnCode != SUCCESS)
 	    $.messager.alert('复制单据失败', response.message, 'error');
 	else {
-        $.messager.alert('复制单据成功', "复制单据成功,单据号 " + response.returnValue, 'error');
+        $.messager.alert('复制单据成功', "复制单据成功,单据号 " + response.returnValue, 'infor');
     }
 		
 }

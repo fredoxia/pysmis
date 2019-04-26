@@ -7,34 +7,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>员工信息管理</title>
 <%@ include file="../../common/Style.jsp"%>
-<script src="<%=request.getContextPath()%>/conf_files/js/datetimepicker_css.js" type=text/javascript></script>
 <script>
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 });
-function checkUserName(){
-	
-    var params=$("#userInforForm").serialize();  
 
-    $.post("userJSON!checkUserName",params, checkUserNameBackProcess,"json");	
-}
 
-function checkUserNameBackProcess(data){
-	var result = data.result;
-	var userName = $("#user_name").val();
-	if (result == true){
-		$("#userNameDiv").html(userName + " 已经在使用");
-	    return false;
-	}else{
-		$("#userNameDiv").html(userName + " 可以使用");
-		return true;
-	}
-}
+function submitUser(userId){
+    //clearAllData();
 
-function submitUser(){
-    clearAllData();
-    var userID = $("#user_id").val();
-    if (userID != 0){
+    if (userId != 0){
 	    var params=$("#userInforForm").serialize();  
 	    $.post("userJSON!getUser",params, getUserBackProcess,"json");	
     }
@@ -43,36 +25,29 @@ function getUserBackProcess(data){
     var user = data.user;
 	
     if (user != ""){
-    	$("#name").attr("value",user.name);
-    	$("#passwordU").attr("value",user.password);
-    	$("#user_name").attr("value",user.user_name);
-    	$("#roleType").attr("value",user.roleType);
-    	$("#jinsuanID").attr("value",user.jinsuanID);
+    	$("#name").textbox("setValue",user.name);
+    	$("#passwordU").val(user.password);
+    	$("#user_name").textbox("setValue",user.user_name);
+    	$("#roleType").val(user.roleType);
+
     	var departmentCode = user.department;
     	var departSlect = $("#department");
+        departSlect.combobox("setValue",departmentCode);
 
-    	var count=$("#department option").length;
-
-    	for(var i=0;i<count;i++){     
-    	    if(departSlect.get(0).options[i].value == departmentCode)  {  
-    	    	    departSlect.get(0).options[i].selected = true;  
-    	            break;  
-    	    }  
-    	}
         if (user.onBoardDate.year == undefined)
-        	 $("#onBoardDate").attr("value","");
+        	 $("#onBoardDate").datebox("setValue","");
         else
-    	    $("#onBoardDate").attr("value",formatDay(user.onBoardDate.year,user.onBoardDate.month,user.onBoardDate.date));
-    	$("#homePhone").attr("value",user.homePhone);
-    	$("#mobilePhone").attr("value",user.mobilePhone);
+    	    $("#onBoardDate").datebox("setValue",formatDay(user.onBoardDate.year,user.onBoardDate.month,user.onBoardDate.date));
+    	$("#homePhone").textbox("setValue",user.homePhone);
+    	$("#mobilePhone").numberbox("setValue",user.mobilePhone);
     	if (user.birthday.year == undefined)
-    	    $("#birthday").attr("value","");
+    	    $("#birthday").textbox("setValue","");
     	else
-    	   $("#birthday").attr("value",formatDay(user.birthday.year,user.birthday.month,user.birthday.date));
-    	$("#jobTitle").attr("value",user.jobTitle);
-    	$("#baseSalary").attr("value",user.baseSalary);
-    	$("#baseVacation").attr("value",user.baseVacation);
-    	$("#idNumber").attr("value",user.idNumber);
+    	   $("#birthday").textbox("setValue",formatDay(user.birthday.year,user.birthday.month,user.birthday.date));
+    	$("#jobTitle").textbox("setValue",user.jobTitle);
+    	$("#baseSalary").textbox("setValue",user.baseSalary);
+    	$("#baseVacation").textbox("setValue",user.baseVacation);
+    	$("#idNumber").textbox("setValue",user.idNumber);
 
     	if (user.resign ==0)
     		$("#resign").attr("checked",false);
@@ -94,20 +69,20 @@ function formatDay(year, month, day){
 }
 
 function clearAllData(){
-	$("#name").attr("value","");
-	$("#passwordU").attr("value","");
-	$("#user_name").attr("value","");
-	$("#department").attr("value","");
-	$("#onBoardDate").attr("value","");
-	$("#homePhone").attr("value","");
-	$("#mobilePhone").attr("value","");
-	$("#birthday").attr("value","");
-	$("#jobTitle").attr("value","");
-	$("#baseSalary").attr("value","");
-	$("#baseVacation").attr("value","");
-	$("#idNumber").attr("value","");
-	$("#roleType").attr("value",0);
-	$("#jinsuanID").attr("value",0);
+	$("#name").textbox("setValue","");
+	$("#passwordU").textbox("setValue","");
+	$("#user_name").textbox("setValue","");
+	$("#department").textbox("setValue","");
+	$("#onBoardDate").datebox("setValue","");
+	$("#homePhone").textbox("setValue","");
+	$("#mobilePhone").numberbox("setValue","");
+	$("#birthday").textbox("setValue","");
+	$("#jobTitle").textbox("setValue","");
+	$("#baseSalary").textbox("setValue","");
+	$("#baseVacation").textbox("setValue","");
+	$("#idNumber").textbox("setValue","");
+	$("#roleType").val(0);
+
 	$("#userNameDiv").html("");
 	$("#resign").attr("checked",false);
 }
@@ -124,6 +99,7 @@ function submitBackProcess(data){
 	var result = data.result;
 	var userName = $("#user_name").val();
 	if (result == true){
+		$.messager.alert('错误', userName + " 已经在使用", 'error');
 		$("#userNameDiv").html(userName + " 已经在使用");
 	}else{
 		document.userInforForm.action="userJSP!saveOrUpdate";
@@ -133,73 +109,20 @@ function submitBackProcess(data){
 
 function validate(){
 	var error = "";
-	if ($("#name").val() == ""){
-		error +="姓名 - 不能为空\n";
-		$("#name").focus();
-	}
+
+    if (!$('#userInforForm').form('validate'))
+    	return false ;
+	
 	if ($("#department").val() == ""){
 		error +="部门 - 不能为空\n";
 		$("#department").focus();
 	}	
 
-	
-	var homephone = $("#homePhone").val();
-	if (homephone != "" && isNaN(homephone)){
-		error +="住宅电话 - 包含了非数字信息\n";
-	    $("#homePhone").focus();
-    }else if ($("#homePhone").val().length > 14){
-    	error +="住宅电话 - 超过最长14位\n";
-    }		
-
-	var mobilePhone = $("#mobilePhone").val();
-    if (mobilePhone == ""){
-		error +="手机 - 不能为空\n";
-		$("#mobilePhone").focus();
-    } else if (isNaN(mobilePhone)){
-		error +="手机 - 包含了非数字信息\n";
-	    $("#mobilePhone").focus();
-    } else if ($("#mobilePhone").val().length > 11){
-    	error +="手机 - 超过最长11位\n";
-    }		 
-
-	
-	var baseSalary = $("#baseSalary").val();
-	if (baseSalary != "" && isNaN(baseSalary)){
-		error +="基本工资 - 包含了非数字信息\n";
-	    $("#baseSalary").focus();
-    } else if (parseInt(baseSalary) == 0)
-    	$("#baseSalary").attr("value","");
-	
-	var baseVacation = $("#baseVacation").val();
-	if (baseVacation != "" && isNaN(baseVacation)){
-		error +="基本假期 - 包含了非数字信息\n";
-	    $("#baseVacation").focus();
-    }else if (parseInt(baseVacation) == 0)
-    	$("#baseVacation").attr("value","");	
-	
-	var idNumber = $("#idNumber").val();
-	if ($("#idNumber").val() != "" && isNaN(idNumber)){
-		error +="身份证 - 包含了非数字信息\n";
-	    $("#idNumber").focus();
-    } else if ($("#idNumber").val().length > 18){
-    	error +="身份证 - 超过最长18位\n";
-    }
-    
-	if ($("#user_name").val() == ""){
-		error +="系统用户名 - 不能为空\n";
-		$("#user_name").focus();
-	}	
-	if ($("#passwordU").val() == ""){
-		error +="系统密码 - 不能为空\n";
-		$("#passwordU").focus();
-	} else if ($("#passwordU").val().length > 8){
-    	error +="系统密码 - 超过最长8位\n";
-    }
     
 	if (error == "")
 		return true;
 	else{
-		alert(error);
+		$.messager.alert('错误', error, 'error');
 		return false;
 	}
 		
@@ -223,12 +146,8 @@ function validate(){
     <tr class="InnerTableContent">
       <td width="87" height="19"><strong>现有员工：</strong></td>
       <td width="100">
-       <select name="formBean.userInfor.user_id" size="1" id="user_id" onchange="submitUser();">
-           <option value="0">---新增---</option>
-           <s:iterator value="#request.ALL_USER" id = "user">
-             <option value="<s:property value="#user.user_id"/>"><s:property value="#user.user_name"/></option>
-           </s:iterator>
-       </select>
+       <s:select name="formBean.userInfor.user_id" id="user_id" cssClass="easyui-combobox" list="uiBean.users" listKey="user_id" listValue="name" data-options="onChange:function(current, old){submitUser(current);}" headerKey="0" headerValue="---新增---" />
+
       </td>
       <td width="88">&nbsp;</td>
       <td width="125"></td>
@@ -241,14 +160,14 @@ function validate(){
     <tr class="InnerTableContent">
       <td height="19"><strong>员工姓名：</strong></td>
       <td>
-         <input type="text" name="formBean.userInfor.name" id="name" />
+         <input type="text" name="formBean.userInfor.name" id="name" class="easyui-textbox"  data-options="required:true"/>
          <input type="hidden" name="formBean.userInfor.roleType" id="roleType" value="0"/>
          
       </td>
       <td><strong>部门：</strong></td>
       <td>
-         <select name="formBean.userInfor.department"  size="1" id="department">
-             <option value="0">---------</option>
+         <select name="formBean.userInfor.department"  size="1" id="department" class="easyui-combobox"  data-options="required:true">
+             <option value="">---------</option>
              <option value="01">会计部</option>
              <option value="02">销售部</option>
              <option value="03">物流部</option>
@@ -256,12 +175,7 @@ function validate(){
       </td>
       <td><strong>入职时间：</strong></td>
       <td>
-        <s:textfield id="onBoardDate" readonly="true" name="formBean.userInfor.onBoardDate"> 
-             <s:param name="value"><s:date name="formBean.userInfor.onBoardDate" format="yyyy-MM-dd" /></s:param>
-        </s:textfield>
-		<a href="javascript:NewCssCal('onBoardDate','yyyymmdd','arrow')">
-			<img src="<%=request.getContextPath()%>/conf_files/web-image/cal.gif" width="16" height="16" alt="Pick a date" border="0">
-		</a>
+        <s:textfield id="onBoardDate" name="formBean.userInfor.onBoardDate"  cssClass="easyui-datebox"/>
       </td>
     </tr>
    <tr class="InnerTableContent">
@@ -270,21 +184,16 @@ function validate(){
     <tr class="InnerTableContent">
       <td height="19"><strong>住宅电话：</strong></td>
       <td>
-      <input type="text" name="formBean.userInfor.homePhone" id="homePhone" />
+      <input type="text" name="formBean.userInfor.homePhone" id="homePhone" class="easyui-textbox"  data-options="validType:'length[0,14]'"/>
 
       </td>
       <td><strong>手机号：</strong></td>
       <td> 
-         <input type="text" name="formBean.userInfor.mobilePhone" id="mobilePhone" />
+         <input type="text" name="formBean.userInfor.mobilePhone" id="mobilePhone" class="easyui-numberbox"  data-options="required:true,precision:0,validType:'length[11,11]'"/>
       </td>
       <td><strong>生日：</strong></td>
       <td>
-        <s:textfield id="birthday" readonly="true" name="formBean.userInfor.birthday"> 
-                <s:param name="value"><s:date name="formBean.userInfor.birthday" format="yyyy-MM-dd" /></s:param>
-        </s:textfield>
-		<a href="javascript:NewCssCal('birthday','yyyymmdd','arrow')">
-			<img src="<%=request.getContextPath()%>/conf_files/web-image/cal.gif" width="16" height="16" alt="Pick a date" border="0">
-		</a>       
+        <s:textfield id="birthday"  name="formBean.userInfor.birthday"  cssClass="easyui-datebox"/>   
       </td>
     </tr>
 
@@ -294,15 +203,15 @@ function validate(){
         <tr class="InnerTableContent">
       <td height="19"><strong>职位：</strong></td>
       <td>
-        <input type="text" name="formBean.userInfor.jobTitle" id="jobTitle" />
+        <input type="text" name="formBean.userInfor.jobTitle" id="jobTitle"  class="easyui-textbox"/>
       </td>
       <td><strong>基本工资：</strong></td>
       <td>
-        <input type="text" name="formBean.userInfor.baseSalary" id="baseSalary" /> 
+        <input type="text" name="formBean.userInfor.baseSalary" id="baseSalary"  class="easyui-numberbox"/> 
       </td>
       <td><strong>基本假期：</strong></td>
       <td>
-        <input type="text" name="formBean.userInfor.baseVacation" id="baseVacation" />
+        <input type="text" name="formBean.userInfor.baseVacation" id="baseVacation"  class="easyui-numberbox" data-options="precision:0"/>
       </td>
     </tr>
 
@@ -312,16 +221,16 @@ function validate(){
         <tr class="InnerTableContent">
       <td height="19"><strong>身份证：</strong></td>
       <td>
-        <input type="text" name="formBean.userInfor.idNumber" id="idNumber" />
+        <input type="text" name="formBean.userInfor.idNumber" id="idNumber"  class="easyui-textbox"  data-options="validType:'length[0,18]'"/>
       </td>
       <td><strong>用户名：</strong> 
       </td>
       <td>
-         <input type="text" name="formBean.userInfor.user_name" id="user_name"  onchange="checkUserName();"/><div id="userNameDiv"></div> 
+         <input type="text" name="formBean.userInfor.user_name" id="user_name"  onchange="checkUserName();" class="easyui-textbox"  data-options="required:true"/><div id="userNameDiv"></div> 
       </td>
       <td><strong>系统密码：</strong> </td>
       <td>
-         <input type="text" name="formBean.userInfor.password" id="passwordU" /> 
+         <input type="text" name="formBean.userInfor.password" id="passwordU"  class="easyui-textbox"  data-options="required:true,validType:'length[4,8]'"/> 
       </td>
     </tr>
     <tr class="InnerTableContent">
@@ -340,7 +249,7 @@ function validate(){
     </tr>
     <tr class="InnerTableContent">
       <td height="30">&nbsp;</td>
-      <td><input type="button" value="更新" onclick="saveOrUpdate();"/></td>
+      <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveOrUpdate();">保存更新</a></td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>

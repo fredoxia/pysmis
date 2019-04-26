@@ -62,7 +62,27 @@ function printOrderBKProcess(data){
         $.messager.alert('错误', returnMsg, 'error');
     }
 }
+function copyOrder(){
+	var info = "你确定复制此单据?";
+	$.messager.confirm('复制单据', info, function(r){
+		if (r){
+	    	var url = "<%=request.getContextPath()%>/action/supplierPurchaseJSON!copyPurchaseOrder";
+	    	var params=$("#purchaseOrderForm").serialize();  
+	    	$.post(url,params, copyOrderBackProcess,"json");	
+	    }
+	});
+}
+function copyOrderBackProcess(data){
+    var response = data;
+	var returnCode = response.returnCode;
 
+	if (returnCode != SUCCESS)
+	    $.messager.alert('复制单据失败', response.message, 'error');
+	else {
+        $.messager.alert('复制单据成功', "复制单据成功,单据号 " + response.returnValue, 'info');
+    }
+		
+}
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 });
@@ -196,7 +216,8 @@ $(document).ready(function(){
 			 <td></td>
 			 <td colspan="2">
 			     <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="cancelOrder();">红冲单据</a>&nbsp;&nbsp;
-			     <a id="btn3" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="printOrder();">打印单据</a></td>			 					 		
+			     <a id="btn3" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="printOrder();">打印单据</a>&nbsp;&nbsp;
+			     <a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="copyOrder();">复制单据</a></td>			 					 		
 			 <td></td>			 					 		
 			 <td></td>	
 	  </tr>

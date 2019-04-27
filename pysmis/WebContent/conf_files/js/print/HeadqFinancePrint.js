@@ -18,10 +18,10 @@ function printContent(io){
 
 	var space = "&nbsp;&nbsp;&nbsp;";
 	var s = "<font size='5pt'>成都朴与素</font><br/>";
+		s += "单据种类 : " + io.type + "<br/>";
         s += "单据号 : " + io.id + space + "<br/>客户: " + io.cust  + "<br/>地区: " + io.area + "<br/>"; 
         s += "单据日期  : " + io.createDate + "<br/>";
-    	s += "单据种类 : " + io.type + "<br/>";
-    	
+ 
     	if (io.comment != "")
     	   s += "备注 : " + io.comment + "<br/>";
     	

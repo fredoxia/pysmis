@@ -17,9 +17,10 @@ function printContent(io){
 	pageSetup();
 	var space = "&nbsp;&nbsp;&nbsp;";
 	var s = "<font size='5pt'>成都朴与素</font><br/>";
-        s += "单据号 : " + io.id + space + "<br/>供应商: " + io.supplier + "<br/>"; 
+		s += "单据种类 : " + io.typeS + "<br/>";
+		s += "单据号 : " + io.id + space + "<br/>供应商: " + io.supplier + "<br/>"; 
         s += "过账日期  : " + io.lastUpdateTime + "<br/>";
-    	s += "单据种类 : " + io.typeS + "<br/>";
+    	
     	s += "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
 
 		s += "-----------------单据明细 ---------------<br/>";

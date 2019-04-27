@@ -15,10 +15,10 @@ function callP(){
 				        <table cellpadding="0" cellspacing="0" style="width: 95%" border="0">	 	
 						 	<tr height="22">
 						 		<td colspan="9">
-						 		<p>2019-4-23更新:</p>
-						 		1. 采购单据打印功能<p/>
-						 		2. 销售统计报表<p/>
-						 		3. 搜索采购报表时汇总<p/>
+						 		<p>2019-4-26更新:</p>
+						 		1. 销售统计报表导出<p/>
+						 		2. 财务单据打印<p/>
+						 		3. 优惠人工介入后不再自动计算<p/>
 						 		</td>
 						 	</tr>
 						</table>

@@ -17,9 +17,10 @@ function printContent(io, wholeSalePrice){
 	pageSetup();
 	var space = "&nbsp;&nbsp;&nbsp;";
 	var s = "<font size='5pt'>成都朴与素</font><br/>";
-        s += "单据号 : " + io.id + space + "<br/>客户: " + io.clientName  + "<br/>地区: " + io.clientArea + "<br/>"; 
+		s += "单据种类 : " + io.orderType + "<br/>";
+		s += "单据号 : " + io.id + space + "<br/>客户: " + io.clientName  + "<br/>地区: " + io.clientArea + "<br/>"; 
         s += "单据日期  : " + io.orderTime + "<br/>";
-    	s += "单据种类 : " + io.orderType + "<br/>";
+    	
     	if (wholeSalePrice == true)
     	    s += "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
     	else

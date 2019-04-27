@@ -182,8 +182,14 @@ $(document).ready(function(){
 					 		<td></td>		 					 		
 					 		<td></td>			 					 		
 					 		<td><s:property value="formBean.order.totalQuantity"/></td>
-					 		<td><s:property value="formBean.order.totalRecCost"/></td>
-					 		<td><s:property value="formBean.order.totalWholePrice"/></td>	
+					 		<td><s:text name="format.totalPrice">
+								       			<s:param value="formBean.order.totalRecCost"/>
+								       	  </s:text>
+							</td>
+					 		<td>		<s:text name="format.totalPrice">
+								       			<s:param value="formBean.order.totalWholePrice"/>
+								       	  </s:text>
+						    </td>	
 					 		<td>&nbsp;</td>	
 					 		<td>&nbsp;</td>		 		
 		                </tr>

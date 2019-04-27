@@ -146,7 +146,7 @@ function validate(){
     <tr class="InnerTableContent">
       <td width="87" height="19"><strong>现有员工：</strong></td>
       <td width="100">
-       <s:select name="formBean.userInfor.user_id" id="user_id" cssClass="easyui-combobox" list="uiBean.users" listKey="user_id" listValue="name" data-options="onChange:function(current, old){submitUser(current);}" headerKey="0" headerValue="---新增---" />
+       <s:select name="formBean.userInfor.user_id" id="user_id" cssClass="easyui-combobox"  style="width:100px;"  list="uiBean.users" listKey="user_id" listValue="name" data-options="onChange:function(current, old){submitUser(current);}" headerKey="0" headerValue="---新增---" />
 
       </td>
       <td width="88">&nbsp;</td>
@@ -166,7 +166,7 @@ function validate(){
       </td>
       <td><strong>部门：</strong></td>
       <td>
-         <select name="formBean.userInfor.department"  size="1" id="department" class="easyui-combobox"  data-options="required:true">
+         <select name="formBean.userInfor.department"  size="1" id="department"  style="width:100px;" class="easyui-combobox"  data-options="required:true">
              <option value="">---------</option>
              <option value="01">会计部</option>
              <option value="02">销售部</option>

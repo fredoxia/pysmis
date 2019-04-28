@@ -32,7 +32,7 @@ function validateSearch(){
 	var barcode = $("#barcode").val();
 	var time = $("#needCreateDate").is(':checked');
 	if (year==0 && quarter==0 && brand==null && category==0 && productCode == "" && barcode=="" && time==false){
-		alert("请在选项（年份，季度，品牌，货品，货号，条形码，录入时间）中选出你的条码范围，否则数据量太庞大!");
+		$.messager.alert('失败信息', "请在选项（年份，季度，品牌，货品，货号，条形码，录入时间）中选出你的条码范围，否则数据量太庞大!",'error');
 		return false;
 	} else
 		return true;
@@ -54,48 +54,11 @@ function exportToPrintBarcode(){
 	}
 }
 
-function synchronizePrice(){
-	if (validateCheckbox()){
-		parent.$.messager.progress({
-			text : '数据更新中，请稍后....'
-		});
-		$("#error").html("");
-	    var params=$("#searchedBarcodeForm").serialize();  
-	    $.post("action/productJSONAction!synchronizePrice",params, backProcessS,"json");
-	}
-}
-
-function backProcessS(data){
-	parent.$.messager.progress('close');
-	
-	var ERROR_NOT_FOUND = data.ERROR_NOT_FOUND;
-	var ERROR_PRICE_INCONSISTANT = data.ERROR_PRICE_INCONSISTANT;
-	var ERROR_PRODUCT_CODE_INCONSISTANT = data.ERROR_PRODUCT_CODE_INCONSISTANT;
-	var error = "";
-	
-	if (ERROR_NOT_FOUND == "" && ERROR_PRICE_INCONSISTANT== "" && ERROR_PRODUCT_CODE_INCONSISTANT== "")
-		alert("价格同步成功，请重新查询刷新!");
-	else {
-		if (ERROR_NOT_FOUND != "")
-			error += "以下条码未在精算中找到 ： " + ERROR_NOT_FOUND;
-		
-		if (ERROR_PRICE_INCONSISTANT != "")
-			error += "<br/>以下货品价格与精算不一致 ： " + ERROR_PRICE_INCONSISTANT;
-		
-		if (ERROR_PRODUCT_CODE_INCONSISTANT != "")
-			error += "<br/>以下货品的货号与精算不一致 ： " + ERROR_PRODUCT_CODE_INCONSISTANT;
-		
-		$("#error").html(error);
-		
-		if (error != "")
-			alert("请核对错误信息!\n部分货品价格同步成功，请重新查询刷新!");
-	}
-}
 
 function searchBarcode(){
 	var categoryId = $("#category_ID").combo("getValue");
 	if (categoryId != "0" && !isValidPositiveInteger(categoryId)){
-		alert("货品类别不是一个正确的输入");
+		$.messager.alert('失败信息', "货品类别不是一个正确的输入",'error');
 		return;
 	}
 
@@ -149,7 +112,7 @@ function backProcess(data){
 				          barcodes[i].product.wholeSalePrice+"</td><td>"+
 				          barcodes[i].barcode+"</td><td>"+
 				          barcodes[i].createDate+"</td><td>"+
-				          belong+"</td><td><s:if test="#session.LOGIN_USER.containFunction('productJSPAction!searchForUpdate')"><a href='#' onclick=\"window.open ('productJSPAction!searchForUpdate?formBean.productBarcode.barcode="+barcodes[i].barcode+"','新窗口','height=670, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');\"><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></s:if></td></tr>").appendTo("#orgTablebody");
+				          belong+"</td><td><s:if test="#session.LOGIN_USER.containFunction('productJSPAction!searchForUpdate')"><a href='#' onclick=\"window.open ('productJSPAction!searchForUpdate?formBean.productBarcode.barcode="+barcodes[i].barcode+"','新窗口','height=750, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');\"><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></s:if></td></tr>").appendTo("#orgTablebody");
 	        }
 	    }
 
@@ -185,7 +148,7 @@ function selectAll(){
 }
 function validateCheckbox(){
 	if ($("input[name='selectedBarcodes']:checked").length == 0){
-		alert("请先选中货品");
+		$.messager.alert('失败信息', "请先选中货品",'error');
 		return false;
 	}
 	return true;
@@ -209,7 +172,7 @@ function searchBrand(){
 	
         window.open(url,'_blank','height=400, width=300, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no');  
 	} else {
-        alert("请输入品牌名称");
+        $.messager.alert('失败信息', "请输入品牌名称",'error');
     } 
 }
 
@@ -218,7 +181,7 @@ function searchBrand(){
  */
 function selectBrand(brandName, brandId){
 	if (brandName != "" && brandId != "" && brandId != 0){
-		 $("#brandName").attr("value", "");
+		 $("#brandName").val("");
     }
     
 	var added = false;
@@ -235,15 +198,15 @@ function selectBrand(brandName, brandId){
 </head>
 <body>
  	<div class="easyui-layout"  data-options="fit : true,border : false">
-		<div data-options="region:'north',border:false" style="height: 170px;">
+		<div data-options="region:'north',border:false" style="height: 175px;">
 			<s:form id="barcodeSearchForm" action="" method="POST" theme="simple">
 			 <input type="hidden" id="isInitialized" name="formBean.isInitialized"/>
 			 <table width="100%" border="0">
 			    <tr class="InnerTableContent">
 			      <td width="94" height="19"><strong>年份：</strong></td>
-			      <td width="234"><s:select name="formBean.productBarcode.product.year.year_ID" size="1" id="year_ID"  list="uiBean.basicData.yearList" listKey="year_ID" listValue="year"  headerKey="0" headerValue="---全选---" />			     </td>
+			      <td width="234"><s:select name="formBean.productBarcode.product.year.year_ID" cssClass="easyui-combobox" data-options="editable:false"  style="width:80px;"  size="1" id="year_ID"  list="uiBean.basicData.yearList" listKey="year_ID" listValue="year"  headerKey="0" headerValue="---全选---" />			     </td>
 			      <td width="79"><strong>季度：</strong></td>
-			      <td width="175"><s:select name="formBean.productBarcode.product.quarter.quarter_ID" size="1" id="quarter_ID"  list="uiBean.basicData.quarterList" listKey="quarter_ID" listValue="quarter_Name"  headerKey="0" headerValue="---全选---" />			      </td>
+			      <td width="175"><s:select name="formBean.productBarcode.product.quarter.quarter_ID" cssClass="easyui-combobox" data-options="editable:false"  style="width:80px;"  size="1" id="quarter_ID"  list="uiBean.basicData.quarterList" listKey="quarter_ID" listValue="quarter_Name"  headerKey="0" headerValue="---全选---" />			      </td>
 			      <td width="59"><strong>品牌：</strong></td>
 			      <td width="357" rowspan="4">
 				  	<s:textfield name="formBean.productBarcode.product.brand.brand_Name" id="brandName" size="10"/>
@@ -253,7 +216,7 @@ function selectBrand(brandName, brandId){
 			    </tr>
 			    <tr class="InnerTableContent">
 			      <td height="19"><strong>货号：</strong></td>
-			      <td><input type="text" name="formBean.productBarcode.product.productCode" id="productCode" title="产品货号"/>			      </td>
+			      <td><input type="text" name="formBean.productBarcode.product.productCode" class="easyui-textbox" style="width:80px;"  id="productCode" title="产品货号"/>			      </td>
 			      <td><strong>货品类：</strong></td>
 			      <td>
 			        <s:select name="formBean.productBarcode.product.category.category_ID" size="1" cssClass="easyui-combobox"  id="category_ID" list="uiBean.basicData.categoryList" listKey="category_ID" listValue="category_Name"  headerKey="0" headerValue="" />			      </td>
@@ -261,7 +224,7 @@ function selectBrand(brandName, brandId){
 		        </tr>
 			    <tr class="InnerTableContent">
 			      <td height="19"><strong>条形码：</strong></td>
-			      <td><input type="text" name="formBean.productBarcode.barcode" id="barcode" title="请输入12位的条码"/></td>
+			      <td><input type="text" name="formBean.productBarcode.barcode" id="barcode" title="请输入12位的条码"  class="easyui-textbox" style="width:80px;" /></td>
 		          <td colspan = "4">
 		          	仅总部<input type="radio" name="formBean.productBarcode.chainStore.chain_id" value="99" checked/>
 		          	仅连锁店<input type="radio" name="formBean.productBarcode.chainStore.chain_id" value="0"/>
@@ -287,7 +250,8 @@ function selectBrand(brandName, brandId){
 		        </tr>
 			    <tr class="InnerTableContent">
 			      <td height="30">&nbsp;</td>
-			      <td><input type="button" name="saveButton" value="查询条形码 " onClick="searchBarcode();" /> </td>
+			      <td>
+			          <a href="#" id="saveButton" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchBarcode();">查询条形码 </a></td>
 			      <td>&nbsp;</td>
 			      <td>&nbsp;</td>
 			      <td>&nbsp;</td>

@@ -31,7 +31,7 @@ function clock(){
 	}else{
 		
 		if (postAction == "close")
-			parent.closeIFrame();
+			window.close(); 
 		else 
 			location.href= prefix + postAction;
 	}

@@ -14,7 +14,7 @@ function searchBrand(){
 	
         window.open(url,'_blank','height=400, width=450, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no');  
 	} else {
-        alert("请输入品牌名称");
+        $.messager.alert('失败信息', "请输入品牌名称",'error');
     } 
 }
 
@@ -23,8 +23,8 @@ function searchBrand(){
  */
 function selectBrand(brandName, brandId){
 	if (brandName != "" && brandId != "" && brandId != 0){
-        $("#brandName").attr("value", brandName);
-        $("#brand_ID").attr("value", brandId);
+        $("#brandName").val(brandName);
+        $("#brand_ID").val(brandId);
 
         $("#brandName").attr("disabled", "disabled");
         $("#searchBt").attr("disabled", "disabled");
@@ -33,8 +33,8 @@ function selectBrand(brandName, brandId){
 }
 
 function clearBrand(){
-    $("#brandName").attr("value", "");
-    $("#brand_ID").attr("value", "");
+    $("#brandName").val("");
+    $("#brand_ID").val("");
 
     $("#brandName").removeAttr("disabled");
     $("#searchBt").removeAttr("disabled");

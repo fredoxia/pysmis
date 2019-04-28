@@ -30,7 +30,7 @@ function checkProductCodeBackProcess(data){
        $.messager.alert('提示信息', tips,'warning');
     } else if (returnCode == WARNING){
 		tips += "<br/> 你确定是否继续生成货品和条码?";
-		$.messager.confirm('确认', 'tips', function(r){
+		$.messager.confirm('确认', tips, function(r){
 			if (r){
 				generateBarcode();
 	
@@ -138,7 +138,7 @@ function saveBarcodeBackProcess(data){
 				          barcodes[i].product.wholeSalePrice+"</td><td>"+
 				          barcodes[i].barcode+"</td><td>"+
 				          barcodes[i].createDate+"</td><td>"+
-				          belong+"</td><td><s:if test="#session.LOGIN_USER.containFunction('productJSPAction!searchForUpdate')"><a href='#' onclick=\"window.open ('productJSPAction!searchForUpdate?formBean.productBarcode.barcode="+barcodes[i].barcode+"','新窗口','height=670, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');\"><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></s:if></td></tr>").appendTo("#orgTablebody");
+				          belong+"</td><td><s:if test="#session.LOGIN_USER.containFunction('productJSPAction!searchForUpdate')"><a href='#' onclick=\"window.open ('productJSPAction!searchForUpdate?formBean.productBarcode.barcode="+barcodes[i].barcode+"','新窗口','height=700, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');\"><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></s:if></td></tr>").appendTo("#orgTablebody");
 		         }
 		    }
 
@@ -215,7 +215,7 @@ function clearAllData(){
 	$("#serialNum").textbox("setValue","");
 	$("#color").empty();
 	$("#colorName").val("");
-	$("#discount").val("");
+	$("#discount").numberbox("setValue","");
 	
     $('#orgTablebody tr').each(function () {                
         $(this).remove();

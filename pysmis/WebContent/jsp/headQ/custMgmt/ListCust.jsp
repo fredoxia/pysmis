@@ -78,10 +78,7 @@ $(document).ready(function(){
 				title : '地址',
 				width : 200
 		    }, {	
-				field : 'initialAcctBalance',
-				title : '初期账目',
-				width : 90
-			}, {		    	
+	    	
 				field : 'currentAcctBalance',
 				title : '当前账目',
 				width : 90,
@@ -158,7 +155,10 @@ function EditCust(){
 	
 
 }
-
+function downloadCust(){
+	document.searchForm.action="headqReportJSP!downloadCustExcelReport";
+	document.searchForm.submit();
+}
 function searchCust(){
 	dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
 }
@@ -193,6 +193,7 @@ function refresh(){
 			         <a onclick="cleanSearch();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">清空查询</a>
 		             <a onclick="AddCust();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
                      <a onclick="EditCust();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">更改</a>
+                     <a onclick="downloadCust();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-save'">下载客户信息</a>
                      <a onclick="refresh();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-reload'">刷新</a>
 	        </div>
 		</div>

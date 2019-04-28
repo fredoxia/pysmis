@@ -13,14 +13,14 @@ $(document).ready(function(){
 	parent.$.messager.progress('close'); 
 });
 function save(){
-	if ($("#yearId").val() == "" || $("#yearId").val() == "0")
-		alert("年份不能为空");
-	else if ($("#quarterId").val() == "" || $("#quarterId").val() == "0")
-		alert("季度不能为空");
+	if ($("#yearId").combobox("getValue") == "" || $("#yearId").combobox("getValue")== "0")
+		$.messager.alert('失败信息', "年份不能为空",'error');
+	else if ($("#quarter_ID").combobox("getValue") == "" || $("#quarter_ID").combobox("getValue") == "0")
+		$.messager.alert('失败信息', "季度不能为空",'error');
 	else if ($("#brand_ID").val() == "" || $("#brand_ID").val() == "0")
-		alert("品牌不能为空");
+		$.messager.alert('失败信息', "品牌不能为空",'error');
 	else if ($("#inventory").val() == "")
-		alert("批量增加条码文件不能为空");
+		$.messager.alert('失败信息', "批量增加条码文件不能为空",'error');
 	else {
 		$.messager.progress({
 			title : '提示',
@@ -47,9 +47,9 @@ function save(){
 	       				</tr>
 	       					<tr class="InnerTableContent">
 					         <td width="10%" height="40">年份</td>
-					         <td width="30%"><s:select name="formBean.productBarcode.product.year.year_ID" size="1" id="yearId"  list="uiBean.basicData.yearList" listKey="year_ID" listValue="year"  /></td>
+					         <td width="30%"><s:select name="formBean.productBarcode.product.year.year_ID" cssClass="easyui-combobox" data-options="editable:false"  style="width:80px;"  size="1" id="yearId"  list="uiBean.basicData.yearList" listKey="year_ID" listValue="year"  /></td>
 					         <td width="10%">季度</td>
-					         <td width="50%"><s:select name="formBean.productBarcode.product.quarter.quarter_ID" size="1" id="quarter_ID" list="uiBean.basicData.quarterList" listKey="quarter_ID" listValue="quarter_Name"  /></td>
+					         <td width="50%"><s:select name="formBean.productBarcode.product.quarter.quarter_ID" cssClass="easyui-combobox" data-options="editable:false"  style="width:80px;"  size="1" id="quarter_ID" list="uiBean.basicData.quarterList" listKey="quarter_ID" listValue="quarter_Name"  /></td>
 				           </tr>
 				           <tr class="InnerTableContent">
 				           	 <td height="40">品牌</td>
@@ -61,7 +61,7 @@ function save(){
 						    <td height="25" align='left'>&nbsp;</td>
 						    <td align='left' colspan="3">
 						      <s:if test="#session.LOGIN_USER.containFunction('productJSPAction!batchInsertBarcode')">
-						           <input type="button" value="上传导入条码" onclick="save();" />
+						           <a href="#" id="saveButton" class="easyui-linkbutton" onclick="save();">上传导入条码</a>
 						      </s:if>				
 						    </td>
 					      </tr>

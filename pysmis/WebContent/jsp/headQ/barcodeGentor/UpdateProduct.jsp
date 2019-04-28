@@ -36,101 +36,53 @@ function backProcess(data){
 	}
 }
 function update(){
-	var error ="";
-	if ($("#productCode").val() == ""){
-		error +="产品货号 - 不能为空\n";
-		$("#productCode").focus();
-	} 	
-	
-	if ($("#brand_ID").val() == ""){
-		error +="产品牌 - 不能为空\n";
-	} 	
-	
-	var categoryId = $("#category").combo("getValue");
-	if (categoryId != "0" && !isValidPositiveInteger(categoryId)){
-		alert("货品类别不是一个正确的输入");
-		return;
-	}
-	var priceValue = $("#salesPrice").val();
-	if (priceValue != "" && isNaN(priceValue)){
-        error += "连锁店零售价 - 必须是数字\n";
-        $("#salesPrice").focus();
-	} else if (priceValue != "" && priceValue == 0){
-        $("#salesPrice").attr("value","");
-	} 
+	if ($('#updateProductForm').form('validate')){
+		var error = "";
 
-	var recCostValue = $("#recCost").val();
-	if (recCostValue != "" && isNaN(recCostValue)){
-        error += "进价 - 必须是数字\n";
-        $("#recCost").focus();
-	} else if (recCostValue != "" && recCostValue == 0){
-        $("#recCost").attr("value","");
-	} 
-	
-	var wholePriceValue = $("#wholeSalePrice").val();
-	if (wholePriceValue != "" && isNaN(wholePriceValue)){
-        error += "预设价1 - 必须是数字\n";
-        $("#wholeSalePrice").focus();
-	} else if (wholePriceValue != "" && wholePriceValue == 0){
-        $("#wholeSalePrice").attr("value","");
-	} 
-
-	var wholePriceValue2 = $("#wholeSalePrice2").val();
-	if (wholePriceValue2 != "" && isNaN(wholePriceValue2)){
-        error += "预设价2 - 必须是数字\n";
-        $("#wholeSalePrice").focus();
-	} else if (wholePriceValue2 != "" && wholePriceValue2 == 0){
-        $("#wholeSalePrice2").attr("value","");
-	} 
-
-	var wholePriceValue3 = $("#wholeSalePrice3").val();
-	if (wholePriceValue3 != "" && isNaN(wholePriceValue3)){
-        error += "预设价3 - 必须是数字\n";
-        $("#wholeSalePrice3").focus();
-	} else if (wholePriceValue3 != "" && wholePriceValue3 == 0){
-        $("#wholeSalePrice3").attr("value","");
-	} 
-
-	var salesPriceFactoryValue = $("#salesPriceFactory").val();
-	if (salesPriceFactoryValue != "" && isNaN(salesPriceFactoryValue)){
-        error += "厂家零售价 - 必须是数字\n";
-        $("#salesPriceFactory").focus();
-	} else if (salesPriceFactoryValue != "" && salesPriceFactoryValue == 0){
-        $("#salesPriceFactory").attr("value","");
-	} 
-
-	var discountValue = $("#discount").val();
-	if (discountValue != "" && isNaN(discountValue)){
-        error += "折扣 - 必须是数字\n";
-        $("#discount").focus();
-	} else if (discountValue != "" && (discountValue < 0 || discountValue >1)){
-        error += "折扣 - 必须是小于或者等于1的正数\n";
-        $("#discount").focus();
-	} else if (discountValue != "" && discountValue == 0){
-        $("#discount").attr("value","");
-	} 
-	
-	var sizeMin = $("#sizeMin").val();
-	var sizeMax = $("#sizeMax").val();
-	
-	if (sizeMin != ""){
-		if (sizeMax == ""){
-			error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
-		} else if (parseInt(sizeMin) > parseInt(sizeMax)){
-			error += "最小码段 应该小于 最大码段 \n";
+		var brandId = $("#brand_ID").val();
+		if (brandId == "" || brandId == 0){
+	          error += "品牌 - 是必选项<br/>";
+		} else if (!isValidPositiveInteger(brandId)) {
+	        error += "品牌 - 必须是系统已经存在的信息，请检查<br/>";
 		}
-	} else {
-		if (sizeMax != ""){
-			error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
+		
+		var categoryId = $("#category").combobox("getValue");
+		if (categoryId == ""){
+	          error += "货品类 - 是必选项<br/>";
+		} else if (!isValidPositiveInteger(categoryId)) {
+	        error += "货品类 - 必须是系统已经存在的类别，请检查<br/>";
 		}
-	}
+		
+		var sizeMin = $("#sizeMin").combobox("getValue");
+		var sizeMax = $("#sizeMax").combobox("getValue");
+		
+		if (sizeMin != ""){
+			if (sizeMax == ""){
+				error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
+			} else if (parseInt(sizeMin) > parseInt(sizeMax)){
+				error += "最小码段 应该小于 最大码段 \n";
+			}
+		} else {
+			if (sizeMax != ""){
+				error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
+			}
+		}
+
 	
-	if (error != "")
-	    $.messager.alert('操作失败', error,'error');
-	else {
-		document.updateProductForm.action = "action/productJSPAction!update";
-		document.updateProductForm.submit();
-	}
+		if (error == ""){
+			if (error != "")
+			    $.messager.alert('操作失败', error,'error');
+			else {
+				document.updateProductForm.action = "action/productJSPAction!update";
+				document.updateProductForm.submit();
+			}
+		} else{
+			$.messager.alert('操作失败', error,'error');
+
+		}
+    }
+	
+
 }
 </script>
 </head>
@@ -234,7 +186,9 @@ function update(){
 	          <td height="18"><strong>最大码</strong>:</td><td><s:select name="formBean.productBarcode.product.sizeMax" cssClass="easyui-combobox"  style="width:80px;" id="sizeMax"   list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td>
 	       </tr>		                
 	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
-	          <td colspan="2"> <input type="button" value="更新" onclick="update();"/>&nbsp;&nbsp;<input type="button" value="删除" onclick="del();"/>&nbsp;&nbsp;<input type="button" value="取消" onclick="window.close();"/></td>
+	          <td colspan="2"> <a href="#" id="saveButton" class="easyui-linkbutton" onclick="update();">更新 </a>&nbsp;&nbsp;
+	                           <a href="#" id="saveButton" class="easyui-linkbutton" onclick="del();">删除</a>&nbsp;&nbsp;
+	                           <a href="#" id="saveButton" class="easyui-linkbutton" onclick="window.close();">取消</a></td>
 	       </tr>
 	    </table>
 	    </s:form>

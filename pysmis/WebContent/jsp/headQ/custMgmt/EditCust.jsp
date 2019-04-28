@@ -22,7 +22,7 @@ function saveCust(){
 function updateCustBKProcess(data){
 	var returnCode = data.returnCode;
 	if (returnCode != SUCCESS)
-		alert(response.message);
+		$.messager.alert('失败信息', data.message,'error');
 	else {
 		$.modalDialog.handler.dialog('close');
 		$("#dataGrid").datagrid('reload');
@@ -42,34 +42,31 @@ function cancel(){
 	       <tr class="InnerTableContent">
 	          <td>客户名字    :</td><td>
 	          <s:hidden name="formBean.cust.id"/>
-	          <s:textfield id="name" name="formBean.cust.name" cssClass="easyui-validatebox" data-options="required:true"  maxlength="20"/>*</td>
+	          <s:textfield id="name" name="formBean.cust.name" cssClass="easyui-textbox" data-options="required:true,validType:'length[2,20]'"/>*</td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>客户地区         :</td>
-	          <td><s:textfield id="area" name="formBean.cust.area" cssClass="easyui-validatebox" data-options="required:true"  maxlength="10"/></td>
+	          <td><s:textfield id="area" name="formBean.cust.area" cssClass="easyui-textbox" data-options="required:true,validType:'length[2,10]'"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>客户地址         :</td>
-	          <td><s:textfield id="address" name="formBean.cust.address" cssClass="easyui-validatebox" data-options="required:true"  maxlength="50"/></td>
+	          <td><s:textfield id="address" name="formBean.cust.address" cssClass="easyui-textbox" data-options="required:true,validType:'length[2,50]'"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>电话      :</td>
-	          <td><s:textfield id="phone" name="formBean.cust.phone" cssClass="easyui-validatebox" data-options="required:true"  maxlength="20"/></td>
+	          <td><s:textfield id="phone" name="formBean.cust.phone" cssClass="easyui-textbox" data-options="required:true,validType:'length[5,20]'"/></td>
 	       </tr>
-	       <tr class="InnerTableContent">
-	          <td>初始账目      :</td>
-	          <td><s:textfield id="initialAcctBalance" name="formBean.cust.initialAcctBalance" cssClass="easyui-numberbox" value="0" data-options="min:-100000,precision:2"/></td>
-	       </tr>	       
+       
 	       <tr class="InnerTableContent">
 	          <td>当前账目      :</td><td><s:property value="formBean.cust.currentAcctBalance"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>备注      :</td>
-	          <td><s:textfield id="comment" name="formBean.cust.comment" maxlength="50"/></td>
+	          <td><s:textfield id="comment" name="formBean.cust.comment" cssClass="easyui-textbox" data-options="validType:'length[0,50]'" /></td>
 	       </tr>	  
 	       <tr class="InnerTableContent">
 	          <td>状态      :</td>
-	          <td><s:select name="formBean.cust.status" id="status"  list="#{'0':'正常','1':'冻结'}" listKey="key" listValue="value" /> </td>
+	          <td><s:select name="formBean.cust.status" id="status" cssClass="easyui-combobox"  style="width:80px;" list="#{'0':'正常','1':'冻结'}" listKey="key" listValue="value" /> </td>
 	       </tr>		            
 	       <tr class="InnerTableContent">
 	       <td colspan="2">

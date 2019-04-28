@@ -42,30 +42,26 @@ function cancel(){
 	       <tr class="InnerTableContent">
 	          <td>供应商名字    :</td><td>
 	          <s:hidden name="formBean.supplier.id"/>
-	          <s:textfield id="name" name="formBean.supplier.name" cssClass="easyui-validatebox" data-options="required:true"  maxlength="20"/>*</td>
+	          <s:textfield id="name" name="formBean.supplier.name" cssClass="easyui-textbox" data-options="required:true,validType:'length[2,20]'"/>*</td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>供应商地址         :</td>
-	          <td><s:textfield id="address" name="formBean.supplier.address" cssClass="easyui-validatebox" data-options="required:true"  maxlength="50"/></td>
+	          <td><s:textfield id="address" name="formBean.supplier.address" cssClass="easyui-textbox" data-options="required:true,validType:'length[2,50]'"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>电话      :</td>
-	          <td><s:textfield id="phone" name="formBean.supplier.phone" cssClass="easyui-validatebox" data-options="required:true"  maxlength="20"/></td>
-	       </tr>
-	       <tr class="InnerTableContent">
-	          <td>初始账目      :</td>
-	          <td><s:textfield id="initialAcctBalance" name="formBean.supplier.initialAcctBalance" cssClass="easyui-numberbox" value="0" data-options="min:-100000,precision:2"/></td>
+	          <td><s:textfield id="phone" name="formBean.supplier.phone" cssClass="easyui-textbox" data-options="required:true,validType:'length[5,20]'"/></td>
 	       </tr>	       
 	       <tr class="InnerTableContent">
 	          <td>当前账目      :</td><td><s:property value="formBean.supplier.currentAcctBalance"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td>备注      :</td>
-	          <td><s:textfield id="comment" name="formBean.supplier.comment" maxlength="50"/></td>
+	          <td><s:textfield id="comment" name="formBean.supplier.comment" cssClass="easyui-textbox"  data-options="validType:'length[0,20]'"/></td>
 	       </tr>	  
 	       <tr class="InnerTableContent">
 	          <td>状态      :</td>
-	          <td><s:select name="formBean.supplier.status" id="status"  list="#{'0':'正常','1':'冻结'}" listKey="key" listValue="value" /> </td>
+	          <td><s:select name="formBean.supplier.status" id="status" cssClass="easyui-combobox"  style="width:80px;"  list="#{'0':'正常','1':'冻结'}" listKey="key" listValue="value" /> </td>
 	       </tr>		            
 	       <tr class="InnerTableContent">
 	       <td colspan="2">

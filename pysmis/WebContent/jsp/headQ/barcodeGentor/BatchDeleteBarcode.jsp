@@ -43,10 +43,10 @@ function saveUpdate(){
 						    <td width="10%" height="25" align='left'>&nbsp;</td>
 						    <td width="90%" align='left'>
 						      <s:if test="#session.LOGIN_USER.containFunction('productJSPAction!batchUpdateBarcode')">
-						           <input type="button" value="上传批量更新" onclick="saveUpdate();" />
+						           <a href="#" id="saveButton" class="easyui-linkbutton" onclick="saveUpdate();">上传批量更新</a>
 						      </s:if>
 						      <s:if test="#session.LOGIN_USER.containFunction('productJSPAction!batchDeleteBarcode')">
-						           <input type="button" value="上传批量删除" onclick="save();" />
+						           <a href="#" id="saveButton" class="easyui-linkbutton" onclick="save();">上传批量删除</a>
 						      </s:if>				
 						    </td>
 					      </tr>

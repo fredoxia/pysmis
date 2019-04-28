@@ -27,18 +27,20 @@ function checkProductCodeBackProcess(data){
 	var tips = data.tip;
 
 	if (returnCode == FAIL){
-       alert(tips);
+       $.messager.alert('提示信息', tips,'warning');
     } else if (returnCode == WARNING){
-		tips += "\n 你确定是否继续生成货品和条码?";
-		var con = confirm(tips);
-		if(con == true){
-			generateBarcode();
-		}
+		tips += "<br/> 你确定是否继续生成货品和条码?";
+		$.messager.confirm('确认', 'tips', function(r){
+			if (r){
+				generateBarcode();
+	
+			}
+		});
     } else if (returnCode == SUCCESS){
     	generateBarcode();
     }
 
-    $("#saveButton").attr("disabled", false);
+	$("#saveButton").linkbutton("enable");
 }
 function generateBarcode(){
 	$("#color").find("option").attr("selected","selected"); 
@@ -47,108 +49,67 @@ function generateBarcode(){
 }
 
 function saveProduct(){
-    $("#saveButton").attr("disabled", true);
-    
-	var error = "";
-	if ($("#area_ID").val() == ""){
-          error += "地区 - 是必选项\n";
-	} 
-	if ($("#year_ID").val() == ""){
-          error += "年份 - 是必选项\n";
-	} 
-	if ($("#quarter_ID").val() == ""){
-          error += "季度 - 是必选项\n";
-	} 
-	var brandId = $("#brand_ID").val();
-	if (brandId == "" || brandId == 0){
-          error += "品牌 - 是必选项\n";
-	} 
-	
-	var categoryId = $("#category_ID").combo("getValue");
-	if (categoryId == ""){
-          error += "货品类 - 是必选项\n";
-	} else if (!isValidPositiveInteger(categoryId)) {
-        error += "货品类 - 必须是系统已经存在的类别，请检查\n";
-	}
-	
-	var sizeMin = $("#sizeMin").val();
-	var sizeMax = $("#sizeMax").val();
-	
-	if (sizeMin != ""){
-		if (sizeMax == ""){
-			error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
-		} else if (parseInt(sizeMin) > parseInt(sizeMax)){
-			error += "最小码段 应该小于 最大码段 \n";
-		}
-	} else {
-		if (sizeMax != ""){
-			error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
-		}
-	}
-	
-	if ($("#productCode").val() == ""){
-          error += "货号 - 是必选项\n";
-          $("#productCode").focus();
-	}
-	/**
-	if ($("#serialNum").val() == ""){
-        error += "商品编码 - 是必填项\n";
-        $("#serialNum").focus();
-	}*/
-	var priceValue = $("#salesPrice").val();
-	if (priceValue != "" && !isPositiveDouble(priceValue)){
-        error += "连锁店零售价 - 必须是大于零数字\n";
-	}
-	var recCostValue = $("#recCost").val();
-	if (recCostValue != "" && !isPositiveDouble(recCostValue)){
-        error += "进价 - 必须是大于零数字\n";
-	}
-	var wholePriceValue = $("#wholeSalePrice").val();
-	if (wholePriceValue != "" && !isPositiveDouble(wholePriceValue)){
-        error += "预设价1 - 必须是大于零数字\n";
-	}
-	var wholePriceValue2 = $("#wholeSalePrice2").val();
-	if (wholePriceValue2 != "" && !isPositiveDouble(wholePriceValue2)){
-        error += "预设价2 - 必须是大于零数字\n";
-	}
-	var wholePriceValue3 = $("#wholeSalePrice3").val();
-	if (wholePriceValue3 != "" && !isPositiveDouble(wholePriceValue3)){
-        error += "预设价3 - 必须是大于零数字\n";
-	}
-	var salesPriceFactory = $("#salesPriceFactory").val();
-	if (salesPriceFactory != "" && !isPositiveDouble(salesPriceFactory)){
-        error += "厂家零售价 - 必须是大于零数字\n";
-	}
-	var discount = $("#discount").val();
-	if (discount != "" && !isPositiveDouble(discount)){
-        error += "折扣 - 必须是大于零数字\n";
-	} else if (discount != "" && (discount < 0 || discount >1)){
-        error += "折扣 - 必须是小于或者等于1的正数\n";
-	}
-	
-	if (error == ""){
-		var colors = $("#color").text();
-		var sizes = $("#size").text();
+	  $("#saveButton").linkbutton("disable");
+	    if ($('#barcodeGenForm').form('validate')){
+			var error = "";
 
-        if (colors !="" || sizes != "" ){
-        	var msg ="你确定要生成此颜色组和尺码组条码:\n" + colors + "\n" + sizes;
-		    if (confirm(msg))
-		       checkProductCodeSerialNum();
-			else 
-				$("#saveButton").attr("disabled", false);
-        } else 
-        	checkProductCodeSerialNum();
-	} else{
-		alert(error);
-		$("#saveButton").attr("disabled", false);
-	}
+			var brandId = $("#brand_ID").val();
+			if (brandId == "" || brandId == 0){
+		          error += "品牌 - 是必选项<br/>";
+			} else if (!isValidPositiveInteger(brandId)) {
+		        error += "品牌 - 必须是系统已经存在的信息，请检查<br/>";
+			}
+			
+			var categoryId = $("#category_ID").combobox("getValue");
+			if (categoryId == ""){
+		          error += "货品类 - 是必选项<br/>";
+			} else if (!isValidPositiveInteger(categoryId)) {
+		        error += "货品类 - 必须是系统已经存在的类别，请检查<br/>";
+			}
+			
+			var sizeMin = $("#sizeMin").combobox("getValue");
+			var sizeMax = $("#sizeMax").combobox("getValue");
+			
+			if (sizeMin != ""){
+				if (sizeMax == ""){
+					error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
+				} else if (parseInt(sizeMin) > parseInt(sizeMax)){
+					error += "最小码段 应该小于 最大码段 \n";
+				}
+			} else {
+				if (sizeMax != ""){
+					error += "最小码段 和 最大码段  应该同时填写或者同时空白\n";
+				}
+			}
+
+		
+			if (error == ""){
+				var colors = $("#color").text();
+		
+		        if (colors !="" ){
+		        	var msg ="你确定要生成此颜色组和尺码组条码:<br/>" + colors;
+		    		$.messager.confirm('确认', msg, function(r){
+		    			if (r){
+		    				checkProductCodeSerialNum();
+		    			} else 
+		    				$("#saveButton").linkbutton("enable");
+		    		});
+						
+		        } else 
+		        	checkProductCodeSerialNum();
+			} else{
+				$.messager.alert('操作失败', error,'error');
+				$("#saveButton").linkbutton("enable");
+			}
+	    } else 
+	    	$("#saveButton").linkbutton("enable");
 }
 
 function saveBarcodeBackProcess(data){
 	var returnCode = data.returnCode;
 
 	if (returnCode != SUCCESS){
-		alert(data.error);
+		$.messager.alert('失败信息', data.error,'error');
 	}else {
 		clearAllData();
 	
@@ -177,17 +138,17 @@ function saveBarcodeBackProcess(data){
 				          barcodes[i].product.wholeSalePrice+"</td><td>"+
 				          barcodes[i].barcode+"</td><td>"+
 				          barcodes[i].createDate+"</td><td>"+
-				          belong+"</td><td><s:if test="#session.LOGIN_USER.containFunction('productJSPAction!searchForUpdate')"><a href='#' onclick=\"window.open ('productJSPAction!searchForUpdate?formBean.productBarcode.barcode="+barcodes[i].barcode+"','新窗口','height=550, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');\"><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></s:if></td></tr>").appendTo("#orgTablebody");
+				          belong+"</td><td><s:if test="#session.LOGIN_USER.containFunction('productJSPAction!searchForUpdate')"><a href='#' onclick=\"window.open ('productJSPAction!searchForUpdate?formBean.productBarcode.barcode="+barcodes[i].barcode+"','新窗口','height=670, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');\"><img src='<%=request.getContextPath()%>/conf_files/web-image/editor.gif' border='0'/></a></s:if></td></tr>").appendTo("#orgTablebody");
 		         }
 		    }
-		    
-	        alert("成功生成条码");
+
+	        $.messager.alert('成功信息', "成功生成条码",'infor');
 	    }else {
 	    	$("<tr class='InnerTableContent' style='background-color: rgb(255, 250, 208);' align='center'><td colspan=15><font color='red'>对应信息没有条形码存在</font> </td></tr>").appendTo("#orgTablebody");
 	    }
     }
 
-	$("#saveButton").attr("disabled", false);
+	$("#saveButton").linkbutton("enable");
 }
 
 function getProductColors(){
@@ -200,7 +161,7 @@ function getProductBySNBackProcess(data){
 	var response = data.response;
 	var returnCode = response.returnCode;
 	if (returnCode != SUCCESS)
-		alert(response.message);
+	    $.messager.alert('失败信息', response.message,'error');
 	else {
 		var returnValue = response.returnValue;
 		var colors = returnValue.color;
@@ -212,43 +173,46 @@ function getProductBySNBackProcess(data){
 }
 function assignProductValue(p){
 	if (p != undefined && p != null){
-		$("#productCode").val(p.productCode);
-		$("#recCost").val(p.recCost);
-		$("#wholeSalePrice").val(p.wholeSalePrice);
+		$("#salesPrice").numberbox("setValue",p.salesPrice);
+		$("#productCode").textbox("setValue",p.productCode);
+		$("#recCost").numberbox("setValue",p.recCost);
+		$("#wholeSalePrice").numberbox("setValue",p.wholeSalePrice);
 		if (p.wholeSalePrice2 > 0)
-			$("#wholeSalePrice2").val(p.wholeSalePrice2);
+			$("#wholeSalePrice2").numberbox("setValue",p.wholeSalePrice2);
 		if (p.wholeSalePrice3 > 0)
-			$("#wholeSalePrice3").val(p.wholeSalePrice3);
+			$("#wholeSalePrice3").numberbox("setValue",p.wholeSalePrice3);
 		if (p.salesPriceFactory > 0)
-		    $("#salesPriceFactory").val(p.salesPriceFactory);
-		$("#discount").val(p.discount);
-		$("#numPerHand").val(p.numPerHand);
-		$("#unit").val(p.unit);
-		$("#year_ID").val(p.year.year_ID);
-		$("#quarter_ID").val(p.quarter.quarter_ID);
+		    $("#salesPriceFactory").numberbox("setValue",p.salesPriceFactory);
+		$("#discount").numberbox("setValue",p.discount);
+		$("#numPerHand").combobox("select",p.numPerHand);
+		$("#unit").combobox("select",p.unit);
+		$("#year_ID").combobox("select",p.year.year_ID);
+		$("#quarter_ID").combobox("select",p.quarter.quarter_ID);
 		$("#brand_ID").val(p.brand.brand_ID);
 		$("#brandName").val(p.brand.brand_Name);
-		$("#salesPrice").val(p.salesPrice);
+		
+		
 		$("#category_ID").combobox("select",p.category.category_ID);
 		
-		$("#sizeMin").val(p.sizeMin);
-		$("#sizeMax").val(p.sizeMax);
-		$("#gender").val(p.gender);
-		$("#sizeRange").val(p.sizeRange);
+		$("#sizeMin").combobox("select",p.sizeMin);
+		$("#sizeMax").combobox("select",p.sizeMax);
+		$("#gender").combobox("select",p.gender);
+		$("#sizeRange").combobox("select",p.sizeRange);
 	}
 }
 function clearAllData(){
 	$("#error").html("");
 	$("#tip").html("");
-	$("#salesPrice").val("");
-	$("#barcode").val("");
-	$("#productCode").val("");
-	$("#recCost").val("");
-	$("#wholeSalePrice").val("");
-	$("#wholeSalePrice2").val("");
-	$("#wholeSalePrice3").val("");
-	$("#salesPriceFactory").val("");
-	$("#serialNum").val("");
+	$("#colorsDiv").html("");
+	$("#salesPrice").numberbox("setValue","");
+	$("#barcode").textbox("setValue","");
+	$("#productCode").textbox("setValue","");
+	$("#recCost").numberbox("setValue","");
+	$("#wholeSalePrice").numberbox("setValue","");
+	$("#wholeSalePrice2").numberbox("setValue","");
+	$("#wholeSalePrice3").numberbox("setValue","");
+	$("#salesPriceFactory").numberbox("setValue","");
+	$("#serialNum").textbox("setValue","");
 	$("#color").empty();
 	$("#colorName").val("");
 	$("#discount").val("");
@@ -267,9 +231,9 @@ function searchColor(){
     
         var url = encodeURI(encodeURI("productJSPAction!searchColor?" +params));
 	
-        window.open(url,'新窗口','height=400, width=300, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no');  
+        window.open(url,'新窗口','height=450, width=300, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no');  
 	} else {
-        alert("请输入颜色名称");
+        $.messager.alert('成功信息', "请输入颜色名称",'infor');
     }; 
 }
 function selectColor(data){
@@ -304,7 +268,7 @@ function clickSize(){
 
 </head>
 <body>
-<s:form id="barcodeGenForm" action="" method="POST"  theme="simple">
+<s:form id="barcodeGenForm" cssClass="easyui-form" action="" method="POST"  theme="simple">
  <table width="95%" align="center"  class="OuterTable">
  <tr><td>
 
@@ -313,11 +277,11 @@ function clickSize(){
     <tr class="InnerTableContent">
       <td height="19"><strong>年份：</strong></td>
       <td>
-      		<s:select name="formBean.productBarcode.product.year.year_ID" size="1" id="year_ID"  list="uiBean.basicData.yearList" listKey="year_ID" listValue="year"  />     
+      		<s:select name="formBean.productBarcode.product.year.year_ID" cssClass="easyui-combobox" data-options="editable:false"  style="width:80px;" size="1" id="year_ID"  list="uiBean.basicData.yearList" listKey="year_ID" listValue="year"  />     
       </td>
       <td><strong>季度：</strong></td>
       <td>
-            <s:select name="formBean.productBarcode.product.quarter.quarter_ID" size="1" id="quarter_ID" list="uiBean.basicData.quarterList" listKey="quarter_ID" listValue="quarter_Name"  />
+            <s:select name="formBean.productBarcode.product.quarter.quarter_ID" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false" size="1" id="quarter_ID" list="uiBean.basicData.quarterList" listKey="quarter_ID" listValue="quarter_Name"  />
       </td>
       <td><strong>品牌：</strong></td>
       <td colspan="2">
@@ -325,28 +289,28 @@ function clickSize(){
       </td>
       
       <td><strong>性别：</strong></td>    
-      <td><s:select name="formBean.productBarcode.product.gender" size="1" id="gender"   list="#{'M':'男','F':'女','N':'中性'}" listKey="key" listValue="value"  headerKey="" headerValue=""/></td> 
+      <td><s:select name="formBean.productBarcode.product.gender" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false" size="1" id="gender"   list="#{'M':'男','F':'女','N':'中性'}" listKey="key" listValue="value"  headerKey="" headerValue=""/></td> 
       <td><strong>段位：</strong></td> 
-      <td><s:select name="formBean.productBarcode.product.sizeRange" size="1" id="sizeRange"   list="#{'S':'小','M':'中','L':'大'}" listKey="key" listValue="value" headerKey="" headerValue=""/> </td> 
+      <td><s:select name="formBean.productBarcode.product.sizeRange" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false" size="1" id="sizeRange"   list="#{'S':'小','M':'中','L':'大'}" listKey="key" listValue="value" headerKey="" headerValue=""/> </td> 
       <td>&nbsp;</td>     
     </tr>
     <tr class="InnerTableContent">
       <td height="19"><strong>齐码数量：</strong></td>
       <td>
-          <s:select name="formBean.productBarcode.product.numPerHand" size="1" id="numPerHand" list="uiBean.basicData.numPerHandList" listKey="numPerHand" listValue="numPerHand"/>     
+          <s:select name="formBean.productBarcode.product.numPerHand" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false" size="1" id="numPerHand" list="uiBean.basicData.numPerHandList" listKey="numPerHand" listValue="numPerHand"/>     
       </td>
       <td><strong>货品类：</strong></td>
       <td>
           <s:select name="formBean.productBarcode.product.category.category_ID" cssClass="easyui-combobox" size="1" id="category_ID" list="uiBean.basicData.categoryList" listKey="category_ID" listValue="category_Name"  headerKey="-1" headerValue="" />      </td>
       <td><strong>单位：</strong></td>
       <td>
-      	 <s:select name="formBean.productBarcode.product.unit" size="1" id="unit" list="uiBean.basicData.unitList" listKey="productUnit" listValue="productUnit"/>
+      	 <s:select name="formBean.productBarcode.product.unit" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false" size="1" id="unit" list="uiBean.basicData.unitList" listKey="productUnit" listValue="productUnit"/>
       </td>
       <td>&nbsp;</td>
       <td><strong>最小码段：</strong></td>  
-      <td><s:select name="formBean.productBarcode.product.sizeMin" id="sizeMin" list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td> 
+      <td><s:select name="formBean.productBarcode.product.sizeMin" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false" id="sizeMin" list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td> 
       <td><strong>最大码段：</strong></td> 
-      <td><s:select name="formBean.productBarcode.product.sizeMax" id="sizeMax"   list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td> 
+      <td><s:select name="formBean.productBarcode.product.sizeMax" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false" id="sizeMax"   list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td> 
       <td>&nbsp;</td>        
     </tr>
    <tr class="InnerTableContent">
@@ -355,31 +319,31 @@ function clickSize(){
     <tr class="InnerTableContent">
 		      <td width="80" height="19"><strong>货号：</strong></td>
 		      <td width="110">
-		       <input type="text" name="formBean.productBarcode.product.productCode" id="productCode"  onfocus="this.select();" maxlength="20" size="9"/>*
+		       <input type="text" name="formBean.productBarcode.product.productCode"  class="easyui-textbox" style="width:80px;" id="productCode" data-options="required:true,validType:['required','length[3,20]']" />*
 		      </td>
 		      <td width="80"><strong>进价:</strong></td>
 		      <td width="110">  
-		        <input type="text" name="formBean.productBarcode.product.recCost" id="recCost" onfocus="this.select();" size="9"/>
+		        <input type="text" name="formBean.productBarcode.product.recCost" class="easyui-numberbox" style="width:80px;" id="recCost"  data-options="required:true,min:0,max:999,precision:0" size="9"/>
 		      </td>
 		      <td width="80"><strong>厂家零售价：</strong></td>
-		      <td width="110"><input type="text" name="formBean.productBarcode.product.salesPriceFactory" id="salesPriceFactory" onfocus="this.select();" size="9"/></td>
+		      <td width="110"><input type="text" name="formBean.productBarcode.product.salesPriceFactory" class="easyui-numberbox" style="width:80px;" id="salesPriceFactory" data-options="min:0,max:999,precision:0" size="9"/></td>
 		      <td width="100"></td>
 		      <td width="80"><strong>折扣:</strong></td>
-		      <td width="100"><input type="text" name="formBean.productBarcode.product.discount" id="discount" onfocus="this.select();" size="9"/></td> 
+		      <td width="100"><input type="text" name="formBean.productBarcode.product.discount" class="easyui-numberbox" style="width:80px;" id="discount"  data-options="min:0,max:1,precision:2" size="9"/></td> 
       		  <td width="80">&nbsp;</td> 
       		  <td width="100">&nbsp;</td> 
      		  <td>&nbsp;</td>  
 		    </tr>
 		    <tr class="InnerTableContent">
               <td><strong>连锁零售价：</strong></td>
-		      <td><input type="text" name="formBean.productBarcode.product.salesPrice" id="salesPrice" onfocus="this.select();" size="9"/></td>
+		      <td><input type="text" name="formBean.productBarcode.product.salesPrice" class="easyui-numberbox" style="width:80px;" id="salesPrice"  data-options="required:true,min:0,max:999,precision:0" size="9"/></td>
 		      <td height="19"><strong>预设价1：</strong></td>
-		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice" id="wholeSalePrice" onfocus="this.select();" size="9"/></td>
+		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice"  data-options="min:0,max:999,precision:0" size="9"/></td>
 		      <td><strong>预设价2：</strong></td>
-		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice2" id="wholeSalePrice2" onfocus="this.select();" size="9"/></td>
+		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice2" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice2" data-options="min:0,max:999,precision:0"  size="9"/></td>
 		      <td></td>
 		      <td><strong>预设价3：</strong></td>
-		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice3" id="wholeSalePrice3" onfocus="this.select();" size="9"/></td> 
+		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice3" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice3" data-options="min:0,max:999,precision:0"  size="9"/></td> 
       		  <td>&nbsp;</td> 
       		  <td>&nbsp;</td> 
      		  <td>&nbsp;</td> 		      
@@ -389,7 +353,9 @@ function clickSize(){
 	</tr>
     <tr class="InnerTableContent">
       <td height="19"><strong>商品编码：</strong></td>
-      <td colspan="11"><input type="text" name="formBean.productBarcode.product.serialNum" id="serialNum" onfocus="this.select();"/> <input type="button" value="获取已录信息" onclick="getProductColors();"/>(*当需要为已经存在的货品添加额外颜色和尺码的条码时，请输入) <br/> <div id="colorsDiv"></div></td>
+      <td colspan="11">
+       <input type="text" name="formBean.productBarcode.product.serialNum" class="easyui-textbox" style="width:80px;" id="serialNum" onfocus="this.select();"/> 
+       <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="getProductColors();">获取已录信息</a>(*当需要为已经存在的货品添加额外颜色和尺码的条码时，请输入) <br/> <div id="colorsDiv"></div></td>
     </tr>
     <tr class="InnerTableContent">
       <td height="4" colspan="12"><hr width="100%" color="#FFCC00"/></td>
@@ -409,7 +375,7 @@ function clickSize(){
     </tr>
     <tr class="InnerTableContent">
       <td height="30">&nbsp;</td>
-      <td colspan="3"><input type="button" id="saveButton" name="saveButton" value="保存产品信息 " onclick="saveProduct();" /> </td>
+      <td colspan="3"><a href="#" id="saveButton" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="saveProduct();">保存产品信息 </a></td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>

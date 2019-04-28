@@ -310,7 +310,7 @@ $(document).ready(function(){
 			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="deleteOrder();">删除单据</a></td>			 					 		
 			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="exportOrderToExcel();">订单导出到Excel</a><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="printPOSOrder();">打印小票配货</a></td>	
 	  </tr>
-	</s:elseif><s:elseif test="#session.LOGIN_USER.containFunction('inventoryOrder!acctProcess') || #session.LOGIN_USER.roleType == 99">
+	</s:elseif><s:elseif test="#session.LOGIN_USER.containFunction('inventoryOrder!acctUpdate') || #session.LOGIN_USER.roleType == 99">
 	  <tr height="10">
 	         <td>&nbsp;</td>
 	  	     <td>&nbsp;</td>

@@ -136,9 +136,9 @@ function confirmOrderBKProcess(data){
 							      <td><s:property value="#orderProduct.productBarcode.product.unit"/></td>
 							      <td><s:property value="#orderProduct.quantity"/></td>
 							      <td><s:property value="#orderProduct.salesPrice"/></td>
-							      <td><s:property value="#orderProduct.totalSalesPrice"/></td>
-							      <td><s:property value="#orderProduct.wholeSalesPrice"/></td>
-							      <td><s:property value="#orderProduct.totalWholeSalesPrice"/></td>
+							      <td><s:text name="format.price"><s:param value="#orderProduct.totalSalesPrice"/></s:text></td>
+							      <td><s:text name="format.price"><s:param value="#orderProduct.wholeSalesPrice"/></s:text></td>
+							      <td><s:text name="format.price"><s:param value="#orderProduct.totalWholeSalesPrice"/></s:text></td>
 							     </tr>
 							   </s:iterator>  
 						  </tbody>
@@ -146,9 +146,9 @@ function confirmOrderBKProcess(data){
 						    <th height="25" colspan="8" align='left'>合计</th>
 						    <th align='center'><s:property value="uiBean.order.totalQuantity"/></th>
 						    <th align='center'>&nbsp;</th>
-						    <th align='center'><s:property value="uiBean.order.totalSalesPrice"/></th>
+						    <th align='center'><s:text name="format.price"><s:param value="uiBean.order.totalSalesPrice"/></s:text></th>
 						    <th align='center'>&nbsp;</th>
-						    <th align='center'><s:property value="uiBean.order.totalWholeSalesPrice"/></th>
+						    <th align='center'><s:text name="format.price"><s:param value="uiBean.order.totalWholeSalesPrice"/></s:text></th>
 						  </tr>
 					     </table>
 			      </td>

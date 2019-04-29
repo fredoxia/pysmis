@@ -41,7 +41,7 @@ $(document).ready(function(){
 							if (row.wholePrice == 0)
 								return "";
 							else 
-								return row.wholePrice;
+								return (row.wholePrice).toFixed(1);
 						}},
 					{field:'salesPrice', width:40,title:'总零售价'},
 					{field:'transportationFee', width:40,title:'运费'},

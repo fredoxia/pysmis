@@ -155,7 +155,7 @@ function update(){
 	          <td height="18"><strong>连锁零售价 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.salesPrice" class="easyui-numberbox"  data-options="required:true,min:0,max:999,precision:0" size="9" style="width:80px;" id="salesPrice" value="<s:if test="uiBean.product.product.salesPrice!=0"><s:property value="uiBean.product.product.salesPrice"/></s:if>" size="10"/></td>
 	       </tr>
 	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
-	          <td height="18"><strong>进价 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.recCost" id="recCost" class="easyui-numberbox"  data-options="required:true,min:0,max:999,precision:0" size="9" style="width:80px;" value="<s:if test="uiBean.product.product.recCost!=0"><s:property value="uiBean.product.product.recCost"/></s:if>" size="10"/></td>
+	          <td height="18"><strong>进价 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.recCost" id="recCost" class="easyui-numberbox"  data-options="required:true,min:0,max:999,precision:1" size="9" style="width:80px;" value="<s:if test="uiBean.product.product.recCost!=0"><s:property value="uiBean.product.product.recCost"/></s:if>" size="10"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
 	          <td height="18"><strong>预设价1 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.wholeSalePrice" class="easyui-numberbox"  data-options="min:0,max:999,precision:0" size="9" style="width:80px;" id="wholeSalePrice" value="<s:if test="uiBean.product.product.wholeSalePrice!=0"><s:property value="uiBean.product.product.wholeSalePrice"/></s:if>" size="10"/></td>

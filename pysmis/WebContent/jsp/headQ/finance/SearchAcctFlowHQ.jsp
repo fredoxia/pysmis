@@ -81,6 +81,14 @@ function searchAcctFlow(){
 	var params= $.serializeObject($('#SalesOrderSearchForm'));
 	$('#dataGrid').datagrid('load',params); 
 }
+function downloadAcctFlow(){
+	if ($("#clientID").val()==0 || $("#clientID").val()==""){
+		$.messager.alert('警告', '客户  - 不能为空', 'warning');
+		return ;
+	}
+	document.SalesOrderSearchForm.action="headqReportJSP!downloadCustAcctFlowExcelReport";
+	document.SalesOrderSearchForm.submit();
+}
 function changeChainStore(chainId){
 
 }
@@ -89,7 +97,7 @@ function changeChainStore(chainId){
 <body>
 	<div class="easyui-layout" data-options="fit : true,border : false">
 		<div data-options="region:'north',border:false" style="height: 90px;">
-               <s:form id="SalesOrderSearchForm" action="/actionChain/salesAction!searchOrders" theme="simple" method="POST"> 
+               <s:form id="SalesOrderSearchForm" name="SalesOrderSearchForm" action="/actionChain/salesAction!searchOrders" theme="simple" method="POST"> 
                 <table width="100%" border="0">
 			    <tr class="InnerTableContent">
 			      <td width="45" height="25">&nbsp;</td>
@@ -120,6 +128,7 @@ function changeChainStore(chainId){
 		        </table>
 		        <div id="toolbar" style="display: none;">
 			         <a onclick="searchAcctFlow();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询往来账目</a>
+			         <a onclick="downloadAcctFlow();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">下载往来账目</a>
 	            </div>
 		  </div>
 	</div>	

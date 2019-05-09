@@ -124,15 +124,15 @@ function update(){
 	          <td height="18"><strong>品牌 </strong>        :</td>
 	          <td><%@ include file="SearchBrandStub.jsp"%></td>
 	       </tr>
-	       <tr class="InnerTableContent">
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>年份  </strong>       :</td>
 	          <td><s:select name="formBean.productBarcode.product.year.year_ID" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false"  size="1" id="year" list="uiBean.basicData.yearList"  listKey="year_ID" listValue="year"/></td>
 	       </tr>
-	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	       <tr class="InnerTableContent">
 	          <td height="18"><strong>季度</strong>         :</td>
 	          <td><s:select name="formBean.productBarcode.product.quarter.quarter_ID" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false"  size="1" id="quarter" list="uiBean.basicData.quarterList"  listKey="quarter_ID" listValue="quarter_Name"/></td>
 	       </tr>
-	       <tr class="InnerTableContent">
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>类别</strong>       :</td>
 	          <td><s:select name="formBean.productBarcode.product.category.category_ID" cssClass="easyui-combobox"  style="width:80px;"  size="1" id="category" list="uiBean.basicData.categoryList"  listKey="category_ID" listValue="category_Name"/></td>
 	       </tr>
@@ -140,15 +140,15 @@ function update(){
 	      <tr class="InnerTableContent">
 	          <td height="18"><strong>产品货号</strong>:</td><td><s:textfield name="formBean.productBarcode.product.productCode"  cssClass="easyui-textbox" style="width:80px;" id="productCode"  data-options="required:true,validType:['required','length[3,20]']" />*</td>
 	       </tr>	
-	       <tr class="InnerTableContent">
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>齐码数量 </strong>   :</td>
 	          <td><s:select name="formBean.productBarcode.product.numPerHand" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false"  size="1" id="numPerHand" list="uiBean.basicData.numPerHandList" listKey="numPerHand" listValue="numPerHand"/></td>
 	       </tr>
-	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	       <tr class="InnerTableContent">
 	          <td height="18"><strong>单位 </strong> :</td>
 	          <td><s:select name="formBean.productBarcode.product.unit" cssClass="easyui-combobox"  style="width:80px;" data-options="editable:false"  size="1" id="unit" list="uiBean.basicData.unitList" listKey="productUnit" listValue="productUnit"/></td>
 	       </tr>
-	       <tr class="InnerTableContent">
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>颜色</strong>         :</td><td><s:property value="uiBean.product.color.name"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
@@ -158,34 +158,37 @@ function update(){
 	          <td height="18"><strong>进价 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.recCost" id="recCost" class="easyui-numberbox"  data-options="required:true,min:0,max:999,precision:1" size="9" style="width:80px;" value="<s:if test="uiBean.product.product.recCost!=0"><s:property value="uiBean.product.product.recCost"/></s:if>" size="10"/></td>
 	       </tr>
 	       <tr class="InnerTableContent">
+	          <td height="18"><strong>进价(调价) </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.recCost2" id="recCost2" class="easyui-numberbox"  data-options="min:0,max:999,precision:1" size="9" style="width:80px;" value="<s:if test="uiBean.product.product.recCost2!=0"><s:property value="uiBean.product.product.recCost2"/></s:if>" size="10"/></td>
+	       </tr>	       
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>预设价1 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.wholeSalePrice" class="easyui-numberbox"  data-options="min:0,max:999,precision:0" size="9" style="width:80px;" id="wholeSalePrice" value="<s:if test="uiBean.product.product.wholeSalePrice!=0"><s:property value="uiBean.product.product.wholeSalePrice"/></s:if>" size="10"/></td>
 	       </tr>
-	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	       <tr class="InnerTableContent">
 	          <td height="18"><strong>预设价2 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.wholeSalePrice2" id="wholeSalePrice2"  data-options="min:0,max:999,precision:0" size="9" class="easyui-numberbox" style="width:80px;" value="<s:if test="uiBean.product.product.wholeSalePrice2!=0"><s:property value="uiBean.product.product.wholeSalePrice2"/></s:if>" size="10"/></td>
 	       </tr>
-	       <tr class="InnerTableContent">
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>预设价3 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.wholeSalePrice3" id="wholeSalePrice3"  data-options="min:0,max:999,precision:0" size="9" class="easyui-numberbox" style="width:80px;" value="<s:if test="uiBean.product.product.wholeSalePrice3!=0"><s:property value="uiBean.product.product.wholeSalePrice3"/></s:if>" size="10"/></td>
 	       </tr>	       
-	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	       <tr class="InnerTableContent">
 	          <td height="18"><strong>厂家零售价 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.salesPriceFactory" id="salesPriceFactory"  data-options="min:0,max:999,precision:0" size="9" class="easyui-numberbox" style="width:80px;" value="<s:if test="uiBean.product.product.salesPriceFactory!=0"><s:property value="uiBean.product.product.salesPriceFactory"/></s:if>" size="10"/></td>
 	       </tr>
-	       <tr class="InnerTableContent">
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>折扣 </strong>       :</td><td><input type="text" name="formBean.productBarcode.product.discount" id="discount" class="easyui-numberbox"  data-options="required:true,min:0,max:1,precision:2" size="9" style="width:80px;" value="<s:if test="uiBean.product.product.discount!=0"><s:property value="uiBean.product.product.discount"/></s:if>" size="10" /></td>
 	       </tr>	
-	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	       <tr class="InnerTableContent">
 	          <td height="18"><strong>段位</strong>:</td><td><s:select name="formBean.productBarcode.product.sizeRange" cssClass="easyui-combobox"  style="width:80px;" size="1" id="sizeRange"   list="#{'S':'小','M':'中','L':'大'}" listKey="key" listValue="value" headerKey="" headerValue=""/></td>
 	       </tr>	       
-	       <tr class="InnerTableContent">
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>性别</strong>       :</td>
 	          <td><s:select name="formBean.productBarcode.product.gender" cssClass="easyui-combobox"  style="width:80px;" size="1" id="gender"   list="#{'M':'男','F':'女','N':'中性'}" listKey="key" listValue="value"  headerKey="" headerValue=""/></td>
 	       </tr>  
-	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	       <tr class="InnerTableContent">
 	          <td height="18"><strong>最小码</strong>:</td><td><s:select name="formBean.productBarcode.product.sizeMin" cssClass="easyui-combobox"  style="width:80px;" id="sizeMin" list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td>
 	       </tr>	       
-	       <tr class="InnerTableContent">
+	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
 	          <td height="18"><strong>最大码</strong>:</td><td><s:select name="formBean.productBarcode.product.sizeMax" cssClass="easyui-combobox"  style="width:80px;" id="sizeMax"   list="{'',80,90,100,110,120,130,140,150,160,170,180}" /></td>
 	       </tr>		                
-	       <tr class="InnerTableContent" style="background-color: rgb(255, 250, 208);">
+	       <tr class="InnerTableContent">
 	          <td colspan="2"> <a href="#" id="saveButton" class="easyui-linkbutton" onclick="update();">更新 </a>&nbsp;&nbsp;
 	                           <a href="#" id="saveButton" class="easyui-linkbutton" onclick="del();">删除</a>&nbsp;&nbsp;
 	                           <a href="#" id="saveButton" class="easyui-linkbutton" onclick="window.close();">取消</a></td>

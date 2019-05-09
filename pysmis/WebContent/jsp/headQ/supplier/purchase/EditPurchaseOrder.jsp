@@ -129,7 +129,7 @@ function calculateTotal(){
 	 for (var i =0; i < index; i++){
 		 var quantityInputs = $("#quantity" + i).val();
 		 var recCostInputs = $("#recCost" + i).val();
-		 var wholeSalePriceInputs = $("#wholeSalePrice" + i).val();
+		 //var wholeSalePriceInputs = $("#wholeSalePrice" + i).val();
 		 
 		 if (quantityInputs != undefined){
 			 totalQ = totalQ + parseInt(quantityInputs);
@@ -182,10 +182,15 @@ function addNewRow(barcode){
 	var colorName = "";
 	if (color != null && color != undefined && color.name!=undefined)
 		colorName = color.name; 
+	
+	var recCost = barcode.product.recCost2;
+	if (recCost == 0)
+		recCost = barcode.product.recCost;
+	
     str += "<td>" + colorName+"</td>";	
     str += "<td>"+barcode.product.unit+"</td>"; 					 		
     str += "<td><input type='text' name='formBean.order.productList["+indexB+"].quantity' id='quantity"+indexB+"' value='"+barcode.product.numPerHand+"' size='2'  onchange='onQuantityChange();'  onfocus='this.select();'/>  </td>";
-    str += "<td><input type='text' name='formBean.order.productList["+indexB+"].recCost' id='recCost"+indexB+"' value='"+barcode.product.recCost+"' size='4'  readonly/>  </td>";
+    str += "<td><input type='text' name='formBean.order.productList["+indexB+"].recCost' id='recCost"+indexB+"' value='"+recCost+"' size='4'  readonly/>  </td>";
     str += "<td>"+barcode.product.wholeSalePrice+"</td>";
     str += "<td><img src='"+baseurl+"/conf_files/web-image/delete.png' border='0' onclick='deleteRow(\"row"+indexB +"\","+indexB+")' style='cursor:pointer;'/></td>";
     str += "<td></td>";			 		

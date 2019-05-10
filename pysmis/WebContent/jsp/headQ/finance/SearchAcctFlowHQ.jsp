@@ -86,7 +86,7 @@ function downloadAcctFlow(){
 		$.messager.alert('警告', '客户  - 不能为空', 'warning');
 		return ;
 	}
-	document.SalesOrderSearchForm.action="headqReportJSP!downloadCustAcctFlowExcelReport";
+	document.SalesOrderSearchForm.action="headqReportJSP!downloadCustAcctFlowExcel";
 	document.SalesOrderSearchForm.submit();
 }
 function changeChainStore(chainId){

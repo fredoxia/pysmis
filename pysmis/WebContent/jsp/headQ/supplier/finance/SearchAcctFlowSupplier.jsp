@@ -89,7 +89,7 @@ function downloadAcctFlow(){
 		$.messager.alert('警告', '供应商  - 不能为空', 'warning');
 		return ;
 	}
-	document.SalesOrderSearchForm.action="headqReportJSP!downloadSupplierAcctFlowExcelReport";
+	document.SalesOrderSearchForm.action="headqReportJSP!downloadSupplierAcctFlowExcel";
 	document.SalesOrderSearchForm.submit();
 }
 </script>

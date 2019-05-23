@@ -828,14 +828,15 @@ function backProcessChangeChainStore(data){
 		for (var i = 0; i < users.length; i++)
 			   $("#chainSaler").append("<option value='"+users[i].user_id+"'>"+users[i].name+"</option>"); 
 	}
-	
 	var chainConf = data.chainStoreConf;
 	if (chainConf != undefined){
-		$("#printCopy").attr("value",chainConf.printCopy);
-	    $("#minDiscountRate").attr("value",chainConf.minDiscountRate);
-	    $("#discountAmtType").attr("value",chainConf.discountAmtType);
-	    $("#lowThanCostAlert").attr("value",chainConf.lowThanCostAlert);
-	    $("#defaultDiscount").attr("value", chainConf.defaultDiscount);
+		
+		$("#printCopy").val(chainConf.printCopy);
+	    $("#minDiscountRate").val(chainConf.minDiscountRate);
+	    $("#discountAmtType").val(chainConf.discountAmtType);
+	    $("#lowThanCostAlert").val(chainConf.lowThanCostAlert);
+	    $("#defaultDiscount").val( chainConf.defaultDiscount);
+	    
 	}
 	
 	var chainStore = data.chainStore;

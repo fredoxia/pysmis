@@ -250,6 +250,7 @@ $(document).ready(function(){
 	   $("#chainPrepaidAmt").removeAttr("disabled");
 	   $("#refreshBt").removeAttr("disabled");
 	   var vipScoreCash = $("#maxVipCash").val();
+	   changeDiscountCoupon();
     }
 	jQuery.excel('InnerTableContent');
 	jQuery.excel('PBAOuterTableTitale');

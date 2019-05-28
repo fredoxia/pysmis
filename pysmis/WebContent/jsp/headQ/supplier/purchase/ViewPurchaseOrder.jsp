@@ -80,8 +80,19 @@ function copyOrderBackProcess(data){
 	    $.messager.alert('复制单据失败', response.message, 'error');
 	else {
         $.messager.alert('复制单据成功', "复制单据成功,单据号 " + response.returnValue, 'info');
-    }
-		
+    }	
+}
+function updateOrderComment(){
+    var url = "<%=request.getContextPath()%>/action/supplierPurchaseJSON!updateOrderComment";
+    var params=$("#purchaseOrderForm").serialize();  
+    $.post(url,params, updateOrderCommentBackProcess,"json");	
+}
+function updateOrderCommentBackProcess(data){
+	var returnValue = data.returnCode;
+	if (returnValue == SUCCESS)
+	    $.messager.alert('消息', data.message, 'info');
+	else 
+		$.messager.alert('操作失败', data.message, 'error');
 }
 $(document).ready(function(){
 	parent.$.messager.progress('close'); 
@@ -205,7 +216,7 @@ $(document).ready(function(){
 	            </tr>
 				<tr height="10" class="InnerTableContent" >
 				  	 <td align ="center">备注</td>
-					 <td colspan="2"><textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
+					 <td colspan="2"><input name="formBean.order.comment" id="comment" class="easyui-textbox"  style="width:500px" value="<s:property value="uiBean.order.comment"/>"><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updateOrderComment();">修改备注</a></td>			 					 				 					 		
 				</tr>
                 <tr class="InnerTableContent">
                   <td width="5%" height="27" align="center">优惠</td>

@@ -98,11 +98,11 @@ $(document).ready(function(){
 		}, {
 			field : 'comment',
 			title : '备注',
-			width : 100
+			width : 130
 		}, {
 			field : 'typeS',
 			title : '单据类型',
-			width : 70
+			width : 90
 		}, {	
 			field : 'statusS',
 			title : '状态',

@@ -122,7 +122,7 @@ $(document).ready(function(){
 		}, {					
 			field : 'action2',
 			title : '权限转移',
-			width : 150,
+			width : 180,
 			formatter : function(value, row, index) {
 				var str = '';
 				if (row.isAuthorizedToTransfer == true){

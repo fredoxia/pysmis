@@ -39,6 +39,18 @@ function printOrderBackProcess(data){
 		printContent(response.returnValue);
 	}
 }
+function updateOrderComment(){
+    var url = "<%=request.getContextPath()%>/action/financeHQJSON!updateFinanceBillComment";
+    var params=$("#financeBillForm").serialize();  
+    $.post(url,params, updateOrderCommentBackProcess,"json");	
+}
+function updateOrderCommentBackProcess(data){
+	var returnValue = data.returnCode;
+	if (returnValue == SUCCESS)
+	    $.messager.alert('消息', data.message, 'info');
+	else 
+		$.messager.alert('操作失败', data.message, 'error');
+}
 </script>
 </head>
 <body>
@@ -71,8 +83,8 @@ function printOrderBackProcess(data){
 							 				<s:property value="uiBean.order.statusS"/>
 							 		   </s:else>
 							 </td>
-							 <td>备注 ： <s:property value="uiBean.order.comment"/></td>
-							 <td></td>
+							 <td>备注 ：<input name="formBean.order.comment" id="comment" class="easyui-textbox"  style="width:300px" value="<s:property value="uiBean.order.comment"/>"></td>
+							 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updateOrderComment();">修改备注</a></td>
 					       </tr>
 					       <tr class="InnerTableContent">	
 					         <td height="25">折扣:<s:property value="uiBean.order.invoiceDiscount"/></td>      

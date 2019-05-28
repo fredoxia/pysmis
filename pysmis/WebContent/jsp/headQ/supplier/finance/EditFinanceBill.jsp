@@ -89,6 +89,10 @@ function recalcualteTotal(){
 function validateForm(){
 	var charInNum = false;
 	var error = "";
+	
+	if (!$('#financeBillForm').form('validate'))
+		return;
+	
 //alert(itemSize);
 	for (var i = 0; i < itemSize; i++){
 	    var itemTotalS = $("#financeBillItem" + i).numberbox('getValue');
@@ -197,7 +201,7 @@ function chooseSupplier(supplierId){
 	                            <s:hidden name="formBean.order.id"/> </td>
 		    				</tr>
 						   <tr class="InnerTableContent">
-						     <td width="200" height="35">单据种类 ： <s:select id="financeBillType" name="formBean.order.type"  list="formBean.order.typeHQMap" listKey="key" listValue="value" /></td>
+						     <td width="200" height="35">单据种类 ： <s:select  cssClass="easyui-combobox"  style="width:100px;" data-options="editable:false" id="financeBillType" name="formBean.order.type"  list="formBean.order.typeHQMap" listKey="key" listValue="value" /></td>
 
 						     <td>日期 ：  <s:textfield id="billDate" name="formBean.order.billDate" cssClass="easyui-datebox"  data-options="width:100,editable:false"/>	  
 							</td>
@@ -206,10 +210,10 @@ function chooseSupplier(supplierId){
 						     </td>
 					       </tr>
 						   <tr class="InnerTableContent">	      
-							<td height="25" colspan="3"> 备注 ： <s:textarea name="formBean.order.comment" rows="1" cols="50"/></td>
+							<td height="25" colspan="3"> 备注 ： <s:textfield cssClass="easyui-textbox" style="width:300px" name="formBean.order.comment" /></td>
 					      </tr>
 					      <tr class="InnerTableContent">	      
-							<td height="25" colspan="3"> 折让 ： <s:textfield name="formBean.order.invoiceDiscount"/></td>
+							<td height="25" colspan="3"> 折让 ： <s:textfield cssClass="easyui-numberbox" name="formBean.order.invoiceDiscount"/></td>
 					      </tr>
 				       </table>
 			      </td>
@@ -235,7 +239,7 @@ function chooseSupplier(supplierId){
 	                          <input type="hidden" name="formBean.order.financeBillItemList[<s:property value="#st.index"/>].financeCategorySupplier.id" value="<s:property value="#billItem.financeCategorySupplier.id"/>"/>
 	                      </td>
 	                      <td><input type="text" id="financeBillItem<s:property value="#st.index"/>" name="formBean.order.financeBillItemList[<s:property value="#st.index"/>].total" value="<s:property value="#billItem.total"/>" size="6"  class="easyui-numberbox" value="0" data-options="min:-100000,precision:2" onchange="recalcualteTotal();"/></td>
-	                      <td><input type="text" name="formBean.order.financeBillItemList[<s:property value="#st.index"/>].comment" value="<s:property value="#billItem.comment"/>" maxLength="20"/></td>
+	                      <td><input type="text" name="formBean.order.financeBillItemList[<s:property value="#st.index"/>].comment" value="<s:property value="#billItem.comment"/>"  class="easyui-textbox" data-options="validType:'length[0,20]'"/></td>
 	                    </tr>
 	                  </s:iterator>
 	                  <tr align='left' class="PBAInnerTableTitale">

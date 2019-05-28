@@ -255,8 +255,7 @@ $(document).ready(function(){
 	  </tr>
 	  <tr height="10" class="InnerTableContent" >
 	  	     <td align="center"></td>
-			 <td colspan="4">备注 : <textarea name="formBean.order.comment" id="comment" rows="1" cols="80"><s:property value="formBean.order.comment"/></textarea></td>			 					 				 					 		
-			 <td><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updateOrderComment();">修改备注</a></td>
+			 <td colspan="5">备注 : <input name="formBean.order.comment" id="comment" class="easyui-textbox"  style="width:500px" value="<s:property value="uiBean.order.comment"/>"><a id="btn2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updateOrderComment();">修改备注</a></td>			 					 				 					 		
 			 <td>&nbsp;</td>	
 	  </tr>
 	  <tr height="10" class="InnerTableContent" >

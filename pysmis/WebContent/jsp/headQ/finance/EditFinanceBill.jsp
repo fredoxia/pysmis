@@ -13,6 +13,7 @@ var paidBillType = <%=FinanceBill.FINANCE_PAID_HQ%>;
 var incomeBillType = <%=FinanceBill.FINANCE_INCOME_HQ%>;
 var prepayAcctType =  <%=FinanceCategory.PREPAY_ACCT_TYPE%>;
 var prepayBillType = <%=FinanceBill.FINANCE_PREINCOME_HQ%>;
+var prepayBillRType = <%=FinanceBill.FINANCE_PREINCOME_HQ_R%>;
 var increaseBillType = <%=FinanceBill.FINANCE_INCREASE_HQ%>;
 var increaseDecreaseAcctType =  <%=FinanceCategory.INCREASE_DECREASE_ACCT_TYPE%>;
 var decreaseBillType = <%=FinanceBill.FINANCE_DECREASE_HQ%>;
@@ -92,6 +93,9 @@ function validateForm(){
 	var charInNum = false;
 	var error = "";
 	
+	if (!$('#financeBillForm').form('validate'))
+		return;
+	
 	for (var i = 0; i < itemSize; i++){
 	    var itemTotalS = $("#financeBillItem" + i).numberbox('getValue');
 
@@ -125,7 +129,7 @@ function validateForm(){
 
 	//1. check the pre-pay bill type
 	var billType = $("#financeBillType").val();
-	if (billType == prepayBillType){
+	if (billType == prepayBillType || billType == prepayBillRType){
 		for (var i = 0; i < itemSize; i++){
 		    var acctType = $("#acctType" + i).val();
 		    var acctAmt = $("#financeBillItem"+i).numberbox('getValue');
@@ -208,7 +212,7 @@ function chooseClient(clientId, preAcct){
 </head>
 <body>
 
-    <s:form action="/action/financeHQJSP!saveToDraft" method="POST" name="financeBillForm"  id="financeBillForm" theme="simple">
+    <s:form action="/action/financeHQJSP!saveToDraft" method="POST" name="financeBillForm" cssClass="easyui-form" id="financeBillForm" theme="simple">
     
 	<table width="80%" align="center"  class="OuterTable">
 	    <tr><td>
@@ -223,7 +227,7 @@ function chooseClient(clientId, preAcct){
 	                            <s:hidden name="formBean.order.id"/> </td>
 		    				</tr>
 						   <tr class="InnerTableContent">
-						     <td width="200" height="35">单据种类 ： <s:select id="financeBillType" name="formBean.order.type"  list="formBean.order.typeHQMap" listKey="key" listValue="value" /></td>
+						     <td width="200" height="35">单据种类 ： <s:select  cssClass="easyui-combobox"  style="width:100px;" data-options="editable:false" id="financeBillType" name="formBean.order.type"  list="formBean.order.typeHQMap" listKey="key" listValue="value" /></td>
 
 						     <td>日期 ：  <s:textfield id="billDate" name="formBean.order.billDate" cssClass="easyui-datebox"  data-options="width:100,editable:false"/>	  
 							</td>
@@ -232,10 +236,10 @@ function chooseClient(clientId, preAcct){
 						     </td>
 					       </tr>
 						   <tr class="InnerTableContent">	      
-							<td height="25" colspan="3"> 备注 ： <s:textarea name="formBean.order.comment" rows="1" cols="50"/></td>
+							<td height="25" colspan="3"> 备注 ： <s:textfield cssClass="easyui-textbox" style="width:300px" name="formBean.order.comment" rows="1" cols="50"/></td>
 					      </tr>
 					      <tr class="InnerTableContent">	      
-							<td height="25" colspan="3"> 折让 ： <s:textfield name="formBean.order.invoiceDiscount"/></td>
+							<td height="25" colspan="3"> 折让 ： <s:textfield cssClass="easyui-numberbox" name="formBean.order.invoiceDiscount"/></td>
 					      </tr>
 				       </table>
 			      </td>
@@ -261,7 +265,7 @@ function chooseClient(clientId, preAcct){
 	                          <input type="hidden" name="formBean.order.financeBillItemList[<s:property value="#st.index"/>].financeCategory.id" value="<s:property value="#billItem.financeCategory.id"/>"/>
 	                      </td>
 	                      <td><input type="text" id="financeBillItem<s:property value="#st.index"/>" name="formBean.order.financeBillItemList[<s:property value="#st.index"/>].total" value="<s:property value="#billItem.total"/>" size="6"  class="easyui-numberbox" value="0" data-options="min:-100000,precision:2" onchange="recalcualteTotal();"/></td>
-	                      <td><input type="text" name="formBean.order.financeBillItemList[<s:property value="#st.index"/>].comment" value="<s:property value="#billItem.comment"/>" maxLength="20"/></td>
+	                      <td><input type="text" name="formBean.order.financeBillItemList[<s:property value="#st.index"/>].comment" value="<s:property value="#billItem.comment"/>"  class="easyui-textbox" data-options="validType:'length[0,20]'"/></td>
 	                    </tr>
 	                  </s:iterator>
 	                  <tr align='left' class="PBAInnerTableTitale">

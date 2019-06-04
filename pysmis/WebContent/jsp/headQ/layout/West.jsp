@@ -153,9 +153,10 @@ $(function() {
 				  	<ul style="width: 150%">
 				  	    <s:if test="#session.LOGIN_USER.containFunction('financeSupplierJSP!preFinanceRpt')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'financeSupplierJSP!preFinanceRpt'}">供应商财务报表</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('financeHQJSP!preFinanceRpt')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'financeHQJSP!preFinanceRpt'}">批发财务报表</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGenerateHQExpenseReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGenerateHQExpenseReport'}">总部费用报表</li></s:if>
 					    <s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGeneratePurchaseReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGeneratePurchaseReport'}">总部采购统计报表</li></s:if>
 					    <s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGenerateSalesReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGenerateSalesReport'}">总部销售统计报表</li></s:if>
-					<s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGenerateCustAcctFlowReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGenerateCustAcctFlowReport'}">连锁客户往来帐报表</li></s:if>
+					    <s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGenerateCustAcctFlowReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGenerateCustAcctFlowReport'}">连锁客户往来帐报表</li></s:if>
 					</ul>
 			 	</li>
 			 	<s:if test="#session.LOGIN_USER.containFunction('userJSP!preEdit')">

@@ -100,6 +100,10 @@ function exportFile(){
         document.preGenReportForm.submit();
 	}
 }
+function downloadReport(){
+	document.preGenReportForm.action="headqReportJSP!downloadExpenseExcelReport";
+	document.preGenReportForm.submit();
+}
 </script>
 
 </head>
@@ -126,7 +130,7 @@ function exportFile(){
 		    </table>
 		    <div id="toolbar" style="display: none;">
 			         <a onclick="genReport();" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询报表</a>
-
+					<a onclick="downloadReport();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-save'">下载费用报表</a>
 	        </div>
 		</div>
 	</div>

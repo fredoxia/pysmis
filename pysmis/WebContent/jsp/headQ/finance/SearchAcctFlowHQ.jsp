@@ -39,7 +39,7 @@ $(document).ready(function(){
 							return parseQuantity(row.quantity);
 						}},
 					{field:'amount', width:60,title:'单据金额'},
-					{field:'comment', width:80,title:'单据摘要'},
+					{field:'comment', width:160,title:'单据摘要'},
 					{field:'acctIncrease', width:60,title:'应收增加',
 						formatter: function (value, row, index){
 							return parseNumberValue(row.acctIncrease);

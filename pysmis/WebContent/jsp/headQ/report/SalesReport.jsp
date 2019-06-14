@@ -60,6 +60,14 @@ $(document).ready(function(){
 								return row.salesQ;
 	
 						}},
+						{field:'salesCost', width:100,title:'销售成本',
+							formatter: function (value, row, index){
+								if (row.salesCost == 0)
+									return "-";
+								else 
+									return (row.salesCost).toFixed(2);
+		
+							}},							
 					{field:'salesPrice', width:100,title:'销售额',
 						formatter: function (value, row, index){
 							if (row.salesPrice == 0)
@@ -68,14 +76,7 @@ $(document).ready(function(){
 								return (row.salesPrice).toFixed(2);
 	
 						}},							
-					{field:'salesCost', width:100,title:'销售成本',
-						formatter: function (value, row, index){
-							if (row.salesCost == 0)
-								return "-";
-							else 
-								return (row.salesCost).toFixed(2);
-	
-						}},	
+
 					{field:'salesProfit', width:100,title:'销售利润',
 						formatter: function (value, row, index){
 							if (row.salesProfit == 0)
@@ -92,14 +93,6 @@ $(document).ready(function(){
 									return row.returnQ;
 		
 							}},
-					{field:'returnPrice', width:80,title:'退货额',
-						formatter: function (value, row, index){
-							if (row.returnPrice == 0)
-								return "-";
-							else 
-								return (row.returnPrice).toFixed(2);
-	
-						}},
 					{field:'returnCost', width:80,title:'退货成本',
 						formatter: function (value, row, index){
 							if (row.returnCost == 0)
@@ -107,7 +100,15 @@ $(document).ready(function(){
 							else 
 								return (row.returnCost).toFixed(2);
 	
-						}},						
+						}},	
+						{field:'returnPrice', width:80,title:'退货额',
+							formatter: function (value, row, index){
+								if (row.returnPrice == 0)
+									return "-";
+								else 
+									return (row.returnPrice).toFixed(2);
+		
+							}},						
 					{field:'returnProfit', width:80,title:'退货利润',
 						formatter: function (value, row, index){
 							if (row.returnProfit == 0)
@@ -117,16 +118,17 @@ $(document).ready(function(){
 	
 						}},								
 					{field:'netQ', width:80,title:'净销售量'},
+					{field:'netCost', width:100,title:'净销售成本',
+						formatter: function (value, row, index){
+							return (row.netCost).toFixed(2);
+	
+						}},					
 					{field:'netPrice', width:100,title:'净销售额',
 						formatter: function (value, row, index){
 							return (row.netPrice).toFixed(2);
 	
 						}},						
-					{field:'netCost', width:100,title:'净销售成本',
-						formatter: function (value, row, index){
-							return (row.netCost).toFixed(2);
-	
-						}},
+
 					{field:'netProfit', width:100,title:'利润',
 						formatter: function (value, row, index){
 							return (row.netProfit).toFixed(2);

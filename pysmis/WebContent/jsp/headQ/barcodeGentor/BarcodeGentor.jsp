@@ -329,7 +329,7 @@ function clickSize(){
       		  <td width="100"><input type="text" name="formBean.productBarcode.product.recCost2" class="easyui-numberbox" style="width:80px;" id="recCost2"  data-options="min:0,max:999,precision:1" size="9"/></td> 		      
 		      <td width="100"></td>		      
 		      <td width="80"><strong>厂家零售价：</strong></td>
-		      <td width="110"><input type="text" name="formBean.productBarcode.product.salesPriceFactory" class="easyui-numberbox" style="width:80px;" id="salesPriceFactory" data-options="min:0,max:999,precision:0" size="9"/></td>
+		      <td width="110"><input type="text" name="formBean.productBarcode.product.salesPriceFactory" class="easyui-numberbox" style="width:80px;" id="salesPriceFactory" data-options="min:0,max:999,precision:1" size="9"/></td>
 		      
 		      <td width="80"><strong>折扣:</strong></td>
 		      <td width="100"><input type="text" name="formBean.productBarcode.product.discount" class="easyui-numberbox" style="width:80px;" id="discount"  data-options="min:0,max:1,precision:2" size="9"/></td> 
@@ -337,14 +337,14 @@ function clickSize(){
 		    </tr>
 		    <tr class="InnerTableContent">
               <td><strong>连锁零售价：</strong></td>
-		      <td><input type="text" name="formBean.productBarcode.product.salesPrice" class="easyui-numberbox" style="width:80px;" id="salesPrice"  data-options="required:true,min:0,max:999,precision:0" size="9"/></td>
+		      <td><input type="text" name="formBean.productBarcode.product.salesPrice" class="easyui-numberbox" style="width:80px;" id="salesPrice"  data-options="required:true,min:0,max:999,precision:1" size="9"/></td>
 		      <td height="19"><strong>预设价1：</strong></td>
-		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice"  data-options="min:0,max:999,precision:0" size="9"/></td>
+		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice"  data-options="min:0,max:999,precision:1" size="9"/></td>
 		      <td><strong>预设价2：</strong></td>
-		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice2" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice2" data-options="min:0,max:999,precision:0"  size="9"/></td>
+		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice2" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice2" data-options="min:0,max:999,precision:1"  size="9"/></td>
 		      <td></td>
 		      <td><strong>预设价3：</strong></td>
-		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice3" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice3" data-options="min:0,max:999,precision:0"  size="9"/></td> 
+		      <td><input type="text" name="formBean.productBarcode.product.wholeSalePrice3" class="easyui-numberbox" style="width:80px;" id="wholeSalePrice3" data-options="min:0,max:999,precision:1"  size="9"/></td> 
       		  <td>&nbsp;</td> 
       		  <td>&nbsp;</td> 
      		  <td>&nbsp;</td> 		      

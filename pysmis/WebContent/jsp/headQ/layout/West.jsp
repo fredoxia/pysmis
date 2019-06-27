@@ -102,6 +102,7 @@ $(function() {
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!create')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!create'}">批发销售单据录入 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!createReturnOrder')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!createReturnOrder'}">批发退货单据录入 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!createFreeOrder')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!createFreeOrder'}">批发赠送单据录入 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!preSearch')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!preSearch?formBean.order.order_Status=<%=InventoryOrder.STATUS_PDA_COMPLETE%>'}">PDA完成单据</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!preSearch')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!preSearch?formBean.order.order_Status=<%=InventoryOrder.STATUS_DRAFT%>'}">仓库草稿单据</li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('inventoryOrder!preSearch')"><li data-options="iconCls:'icon-images',attributes:{url:'inventoryOrder!preSearch?formBean.order.order_Status=<%=InventoryOrder.STATUS_ACCOUNT_PROCESS%>'}">等待审核单据</li></s:if>

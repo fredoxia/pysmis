@@ -3,7 +3,6 @@
 	<name>pysmis</name>
 	<comment></comment>
 	<projects>
-		<project>qxservice</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

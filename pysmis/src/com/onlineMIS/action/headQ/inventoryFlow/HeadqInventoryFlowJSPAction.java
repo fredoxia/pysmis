@@ -31,6 +31,7 @@ import com.onlineMIS.ORM.entity.chainS.user.ChainStore;
 import com.onlineMIS.ORM.entity.chainS.user.ChainUserInfor;
 import com.onlineMIS.ORM.entity.chainS.vip.ChainVIPCard;
 import com.onlineMIS.ORM.entity.headQ.inventory.HeadqInvenTraceInfoVO;
+import com.onlineMIS.ORM.entity.headQ.inventory.HeadqInventoryFlowOrder;
 import com.onlineMIS.ORM.entity.headQ.user.UserInfor;
 import com.onlineMIS.action.BaseAction;
 import com.onlineMIS.common.Common_util;
@@ -49,6 +50,16 @@ import com.opensymphony.xwork2.ActionContext;
 public class HeadqInventoryFlowJSPAction extends HeadqInventoryFlowAction{
 	private final String CHAIN_INVENTORY_REPORT_TEMPLATENAME = "ChainInventoryReportTemplate.xls";
 	private final String CHAIN_INVENTORY_REPORT_NAME = "KuCunBiao.xls";
+	
+	/**
+	 * 用户准备创建单据
+	 * @return
+	 */
+	public String preCreateInventoryFlowOrder(){
+		loggerLocal.info("HeadqInventoryFlowJSPAction - preCreateInventoryFlowOrder");
+		
+		return "flowOrder";
+	}
 	
 	public String preInventoryRpt(){
 		

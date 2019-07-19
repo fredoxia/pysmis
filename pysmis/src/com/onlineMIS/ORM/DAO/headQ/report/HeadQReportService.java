@@ -37,6 +37,8 @@ import com.onlineMIS.ORM.DAO.headQ.finance.HeadQAcctFlowDaoImpl;
 import com.onlineMIS.ORM.DAO.headQ.inventory.InventoryOrderDAOImpl;
 import com.onlineMIS.ORM.DAO.headQ.inventory.InventoryOrderProductDAOImpl;
 import com.onlineMIS.ORM.DAO.headQ.supplier.finance.FinanceSupplierService;
+import com.onlineMIS.ORM.DAO.headQ.supplier.finance.SupplierAcctFlowDaoImpl;
+import com.onlineMIS.ORM.DAO.headQ.supplier.purchase.PurchaseOrderDaoImpl;
 import com.onlineMIS.ORM.DAO.headQ.supplier.purchase.PurchaseOrderProductDaoImpl;
 import com.onlineMIS.ORM.DAO.headQ.supplier.purchase.SupplierPurchaseService;
 import com.onlineMIS.ORM.DAO.headQ.supplier.supplierMgmt.HeadQSupplierDaoImpl;
@@ -70,8 +72,11 @@ import com.onlineMIS.ORM.entity.headQ.report.HeadQReportItemVO;
 import com.onlineMIS.ORM.entity.headQ.report.HeadQSalesStatisticReportItem;
 import com.onlineMIS.ORM.entity.headQ.report.HeadQSalesStatisticReportItemVO;
 import com.onlineMIS.ORM.entity.headQ.report.HeadQSalesStatisticsReportTemplate;
+import com.onlineMIS.ORM.entity.headQ.report.HeadQSupplierAcctFlowReportItem;
+import com.onlineMIS.ORM.entity.headQ.report.HeadQSupplierAcctFlowReportTemplate;
 import com.onlineMIS.ORM.entity.headQ.report.HeadQSupplierAcctFlowTemplate;
 import com.onlineMIS.ORM.entity.headQ.report.HeadQSupplierInforTemplate;
+import com.onlineMIS.ORM.entity.headQ.supplier.finance.FinanceBillSupplier;
 import com.onlineMIS.ORM.entity.headQ.supplier.finance.SupplierAcctFlowReportItem;
 import com.onlineMIS.ORM.entity.headQ.supplier.purchase.PurchaseOrder;
 import com.onlineMIS.ORM.entity.headQ.supplier.supplierMgmt.HeadQSupplier;
@@ -106,6 +111,7 @@ public class HeadQReportService {
 	
 	@Autowired
 	private HeadQCustDaoImpl headQCustDaoImpl;
+
 	
 	@Autowired
 	private QuarterDaoImpl quarterDaoImpl;
@@ -132,6 +138,9 @@ public class HeadQReportService {
 	private HeadQAcctFlowDaoImpl headQAcctFlowDaoImpl;
 	
 	@Autowired
+	private SupplierAcctFlowDaoImpl supplierAcctFlowDaoImpl;
+	
+	@Autowired
 	private FinanceBillImpl financeBillImpl;
 	
 	@Autowired
@@ -139,6 +148,9 @@ public class HeadQReportService {
 	
 	@Autowired
 	private ExpenseTypeDaoImpl expenseTypeDaoImpl;
+	
+	@Autowired
+	private PurchaseOrderDaoImpl purchaseOrderDaoImpl;
 	/**
 	 * 获取总部的采购报表数据
 	 * @param parentId
@@ -1411,6 +1423,152 @@ public class HeadQReportService {
 		//2. 准备excel 报表
 		try {
 		    HeadQExpenseReportTemplate rptTemplate = new HeadQExpenseReportTemplate(reportItems, path, startDate, endDate);
+		    HSSFWorkbook wb = rptTemplate.process();
+			
+			ByteArrayInputStream byteArrayInputStream = ExcelUtil.convertExcelToInputStream(wb);
+			
+			response.setReturnValue(byteArrayInputStream);
+			response.setReturnCode(Response.SUCCESS);
+		} catch (IOException e){
+			e.printStackTrace();
+			response.setFail(e.getMessage());
+		}
+		return response;
+	}
+
+	/**
+	 * 下载供应商账户流水报表
+	 * @param string
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public Response downloadSupplierAcctFlowReport(String path, Date startDate, Date endDate) {
+		Response response = new Response();
+
+		List<HeadQSupplierAcctFlowReportItem> items = new ArrayList<HeadQSupplierAcctFlowReportItem>();
+
+		
+		//1. 准备供应商名单
+		
+		Set<Integer> supplierIds = headQSupplierDaoImpl.getAllSupplierIds();
+		
+		//2. 准备日期
+		java.util.Date startDate1 = Common_util.formStartDate(startDate);
+		java.util.Date endDate1 = Common_util.formEndDate(endDate);
+		
+		//3.获取上期欠款
+		Map<Integer, Double> lastPeriodAcctBalance = supplierAcctFlowDaoImpl.getAccumulateAcctFlowBefore(supplierIds, startDate1);
+		
+		//4.获取当期期末欠款
+		Map<Integer, Double> currentPeriodAcctBalance = supplierAcctFlowDaoImpl.getAccumulateAcctFlowBefore(supplierIds, endDate1);
+		
+		//5.获取本期付款
+		DetachedCriteria financeCriteria = DetachedCriteria.forClass(FinanceBillSupplier.class);
+		
+		financeCriteria.add(Restrictions.in("supplier.id", supplierIds));
+		financeCriteria.add(Restrictions.eq("status", FinanceBillSupplier.STATUS_COMPLETE));
+		financeCriteria.add(Restrictions.eq("type", FinanceBillSupplier.FINANCE_PAID_HQ));
+		financeCriteria.add(Restrictions.between("billDate", startDate, endDate));
+		
+		ProjectionList projList = Projections.projectionList();
+		projList.add(Projections.groupProperty("supplier.id"));
+		projList.add(Projections.sum("invoiceTotal"));
+		financeCriteria.setProjection(projList);
+		
+		List<Object> result = financeBillImpl.getByCriteriaProjection(financeCriteria, false);
+		Map<Integer, Double> stockMap = new HashMap<Integer, Double>();
+
+		for (Object object : result)
+		  if (object != null){
+			Object[] recordResult = (Object[])object;
+			int clientId = Common_util.getInt(recordResult[0]);
+			double amount =  Common_util.getDouble(recordResult[1]);
+			stockMap.put(clientId, amount);
+		  } 
+		
+		//6. 获取本期发生 这段时间的销售金额
+		DetachedCriteria inventoryCriteria = DetachedCriteria.forClass(PurchaseOrder.class);
+		
+		inventoryCriteria.add(Restrictions.in("supplier.id", supplierIds));
+		inventoryCriteria.add(Restrictions.between("lastUpdateTime", startDate1, endDate1));
+		inventoryCriteria.add(Restrictions.eq("status", PurchaseOrder.STATUS_COMPLETE));
+		
+		ProjectionList inventoryProjList = Projections.projectionList();
+		inventoryProjList.add(Projections.groupProperty("supplier.id"));
+		inventoryProjList.add(Projections.groupProperty("type"));
+		inventoryProjList.add(Projections.sum("totalRecCost"));
+		inventoryProjList.add(Projections.sum("totalQuantity"));
+		inventoryCriteria.setProjection(inventoryProjList);
+		
+		List<Object> inventoryResult = purchaseOrderDaoImpl.getByCriteriaProjection(inventoryCriteria, false);
+		Map<Integer, Double> purchaseAmtMap = new HashMap<Integer, Double>();
+		Map<Integer, Double> returnAmtMap = new HashMap<Integer, Double>();
+		Map<Integer, Integer> purchaseQMap = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> returnQMap = new HashMap<Integer, Integer>();
+
+		for (Object object : inventoryResult)
+		  if (object != null){
+			Object[] recordResult = (Object[])object;
+			int supplierId = Common_util.getInt(recordResult[0]);
+			int type = Common_util.getInt(recordResult[1]);
+			double amount =  Common_util.getDouble(recordResult[2]);
+			int quantity = Common_util.getInt(recordResult[3]);
+			
+			switch (type) {
+				case PurchaseOrder.TYPE_PURCHASE:
+					
+					Double purchaseAmt = purchaseAmtMap.get(supplierId);
+					if (purchaseAmt == null){
+						purchaseAmt = new Double(0);
+					}
+					purchaseAmt += amount;
+					purchaseAmtMap.put(supplierId, purchaseAmt);
+					
+					Integer purchaseQ = purchaseQMap.get(supplierId);
+					if (purchaseQ == null){
+						purchaseQ = new Integer(0);
+					}
+					purchaseQ += quantity;
+					purchaseQMap.put(supplierId, purchaseQ);
+					
+					break;
+				case PurchaseOrder.TYPE_RETURN:
+					Double returnAmt = returnAmtMap.get(supplierId);
+					if (returnAmt == null){
+						returnAmt = new Double(0);
+					}
+					
+					returnAmt += amount;
+					returnAmtMap.put(supplierId, returnAmt);
+					
+					Integer returnQ = returnQMap.get(supplierId);
+					if (returnQ == null){
+						returnQ = new Integer(0);
+					}
+					returnQ += quantity;
+					returnQMap.put(supplierId, returnQ);
+					break;
+				default:
+					break;
+			}
+
+		  } 
+		
+
+
+		//8.获取数据
+		List<HeadQSupplier> suppliers = headQSupplierDaoImpl.getAllSuppliers();
+		for (HeadQSupplier supplier : suppliers){
+			int supplierId = supplier.getId();
+
+			HeadQSupplierAcctFlowReportItem item = new HeadQSupplierAcctFlowReportItem(lastPeriodAcctBalance.get(supplierId), stockMap.get(supplierId), currentPeriodAcctBalance.get(supplierId), purchaseQMap.get(supplierId), purchaseAmtMap.get(supplierId), returnQMap.get(supplierId), returnAmtMap.get(supplierId));		
+			items.add(item);
+		}
+		
+		//2. 准备excel 报表
+		try {
+		    HeadQSupplierAcctFlowReportTemplate rptTemplate = new HeadQSupplierAcctFlowReportTemplate(items, path, startDate, endDate);
 		    HSSFWorkbook wb = rptTemplate.process();
 			
 			ByteArrayInputStream byteArrayInputStream = ExcelUtil.convertExcelToInputStream(wb);

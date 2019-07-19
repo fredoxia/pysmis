@@ -553,6 +553,8 @@ public class FinanceService {
 					acctFlowType = ChainAcctFlowReportItem.ACCT_FLOW_TYPE_INCREASE;
 				else if (order.getOrder_type() == InventoryOrder.TYPE_SALES_RETURN_ORDER_W)
 					acctFlowType = ChainAcctFlowReportItem.ACCT_FLOW_TYPE_DECREASE;
+				else if (order.getOrder_type() == InventoryOrder.TYPE_SALES_FREE_ORDER_W)
+					acctFlowType = ChainAcctFlowReportItem.ACCT_FLOW_TYPE_NOCHANGE;
 				
 				ChainAcctFlowReportItem acctFlowItem = new ChainAcctFlowReportItem(cust, order.getOrder_EndTime(), orderType, ChainAcctFlowReportItem.ITEM_TYPE_PURCHASE,acctFlowType, order.getTotalQuantity(), order.getTotalWholePrice() - order.getTotalDiscount(), order.getOrder_ID(),order.getComment(), 0,0);
 				rptItems.add(acctFlowItem);

@@ -27,7 +27,7 @@ function selectBarcodes(){
         barcodeArray.push(barcode);
         });
     if (barcodeArray.length == 0)
-        alert("请选中至少一个条码");
+         $.messager.alert('操作失败', '请选中至少一个条码', 'error');
     else {
     	var index_trigger = $("#index").val();
     	var index  = 0;

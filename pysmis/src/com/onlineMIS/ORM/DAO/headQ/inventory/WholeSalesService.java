@@ -892,6 +892,10 @@ public class WholeSalesService {
 	
 	private double calculatePostAcctBalance(InventoryOrder order, double preAcctAmt){
     	int orderType = order.getOrder_type();
+    	
+    	if (orderType == InventoryOrder.TYPE_SALES_FREE_ORDER_W)
+    		return preAcctAmt; 
+    	
     	double totalAmt = order.getTotalWholePrice();
     	double totalDis = order.getTotalDiscount();
     	double netAmt = totalAmt - totalDis;
@@ -928,6 +932,8 @@ public class WholeSalesService {
     	int offset = 1;
 		if (orderType == InventoryOrder.TYPE_SALES_RETURN_ORDER_W)
 			offset *= -1;
+		else if (orderType == InventoryOrder.TYPE_SALES_FREE_ORDER_W)
+			offset = 0;
 			
 		if (isCancel)
 			offset *= -1;

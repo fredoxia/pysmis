@@ -60,7 +60,7 @@ public class HeadQReportJSPAction extends HeadQReportAction {
 	}
 	
 	/**
-	 * 总部销售报表
+	 * 总部客户往来帐目报表
 	 * @return
 	 */
 	public String preGenerateCustAcctFlowReport(){
@@ -69,6 +69,18 @@ public class HeadQReportJSPAction extends HeadQReportAction {
 		headQReportService.prepareAcctFlowReportUI(formBean, uiBean);
     	
 		return "CustAcctFlowReport";		
+	}
+	
+	/**
+	 * 总部供应商往来帐目报表
+	 * @return
+	 */
+	public String preGenerateSupplierAcctFlowReport(){
+		loggerLocal.info(this.getClass().getName()+ ".preGenerateSupplierAcctFlowReport");
+		
+		headQReportService.prepareAcctFlowReportUI(formBean, uiBean);
+    	
+		return "CustSupplierFlowReport";		
 	}
 	
 	/**
@@ -260,6 +272,32 @@ public class HeadQReportJSPAction extends HeadQReportAction {
 		    InputStream excelStream= (InputStream)response.getReturnValue();
 		    this.setExcelStream(excelStream);
 		    this.setExcelFileName("KeHuWangLaiZhang.xls");
+		    return "report"; 
+		} else 
+			return ERROR;	
+	}
+	
+	/**
+	 * 下载 供应商acct flow 成excel report
+	 * @return
+	 */
+	public String downloadSupplierAcctFlowExcelReport(){
+		loggerLocal.info(this.getClass().getName()+ ".downloadSupplierAcctFlowExcelReport");
+		HttpServletRequest request = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);   
+		String contextPath= request.getRealPath("/"); 
+
+		Response response = new Response();
+		try {
+		     response = headQReportService.downloadSupplierAcctFlowReport(contextPath + "WEB-INF\\template\\headQ", formBean.getStartDate(), formBean.getEndDate());
+		} catch (Exception e) {
+			response.setReturnCode(Response.FAIL);
+			response.setMessage(e.getMessage());
+		}
+		 
+		if (response.getReturnCode() == Response.SUCCESS){
+		    InputStream excelStream= (InputStream)response.getReturnValue();
+		    this.setExcelStream(excelStream);
+		    this.setExcelFileName("GongYinShangWangLaiZhang.xls");
 		    return "report"; 
 		} else 
 			return ERROR;	

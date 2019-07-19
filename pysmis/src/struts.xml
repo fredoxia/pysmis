@@ -41,6 +41,7 @@
             <result name="purchaseReport">/jsp/headQ/report/PurchaseReport.jsp</result>
 			<result name="salesReport">/jsp/headQ/report/SalesReport.jsp</result>
 			<result name="CustAcctFlowReport">/jsp/headQ/report/CustAcctFlowReport.jsp</result>
+			<result name="CustSupplierFlowReport">/jsp/headQ/report/SupplierAcctFlowReport.jsp</result>
 			<result name="HQExpenseReport">/jsp/headQ/report/HQExpenseReport.jsp</result>
 			<result type="stream" name="report">  
                  <param name="contentType">  
@@ -74,6 +75,8 @@
         <action name="headqInventoryFlowJSPAction" class="com.onlineMIS.action.headQ.inventoryFlow.HeadqInventoryFlowJSPAction">
             <result name="preInventoryRpt">/jsp/headQ/inventoryFlow/InventoryFlowRpt.jsp</result>  
             <result name="OpenCheckInventoryTracePage">/jsp/headQ/inventoryFlow/HeadqInvenTracePage.jsp</result>
+            <result name="flowOrder">/jsp/headQ/inventoryFlow/HeadqInvenflowOrder.jsp</result>
+            
             <result type="stream" name="download">  
                  <param name="contentType">  
                      application/vnd.ms-excel   

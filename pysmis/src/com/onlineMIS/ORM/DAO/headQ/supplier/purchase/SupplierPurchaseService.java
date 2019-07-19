@@ -385,6 +385,8 @@ public class SupplierPurchaseService {
     	int offset = 1;
 		if (orderType == PurchaseOrder.TYPE_RETURN)
 			offset *= -1;
+		else if (orderType == PurchaseOrder.TYPE_FREE)
+		    offset = 0;
 			
 		if (isCancel)
 			offset *= -1;
@@ -545,7 +547,7 @@ public class SupplierPurchaseService {
 		
 		ProductBarcode productBarcode = ProductBarcodeDaoImpl.getByBarcode(barcode);
 		if (productBarcode!= null && productBarcode.getStatus() == ProductBarcode.STATUS_OK){
-                if (orderType == PurchaseOrder.TYPE_PURCHASE){
+                if (orderType == PurchaseOrder.TYPE_PURCHASE || orderType == PurchaseOrder.TYPE_FREE){
 					
 					dataMap.put("barcode", productBarcode);
 					dataMap.put("orderType", orderType);

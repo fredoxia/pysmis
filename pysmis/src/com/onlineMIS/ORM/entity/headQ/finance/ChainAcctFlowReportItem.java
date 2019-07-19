@@ -11,6 +11,7 @@ public class ChainAcctFlowReportItem {
 	
 	public static final String ACCT_FLOW_TYPE_INCREASE = "I";
 	public static final String ACCT_FLOW_TYPE_DECREASE = "D";
+	public static final String ACCT_FLOW_TYPE_NOCHANGE = "N";
 	
 	private HeadQCust cust = new HeadQCust();
 	private Date date = new Date();

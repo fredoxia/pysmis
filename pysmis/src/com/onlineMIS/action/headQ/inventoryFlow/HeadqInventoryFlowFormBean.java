@@ -2,6 +2,7 @@ package com.onlineMIS.action.headQ.inventoryFlow;
 
 import java.io.InputStream;
 
+import com.onlineMIS.ORM.entity.headQ.inventory.HeadqInventoryFlowOrder;
 import com.onlineMIS.action.chainS.ChainActionFormBaseBean;
 
 
@@ -18,7 +19,15 @@ public class HeadqInventoryFlowFormBean extends ChainActionFormBaseBean{
 	private String fileName;
 	private int pbId;
 	
+	private HeadqInventoryFlowOrder order = new HeadqInventoryFlowOrder();
 	
+	
+	public HeadqInventoryFlowOrder getOrder() {
+		return order;
+	}
+	public void setOrder(HeadqInventoryFlowOrder order) {
+		this.order = order;
+	}
 	public int getPbId() {
 		return pbId;
 	}

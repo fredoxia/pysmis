@@ -393,7 +393,7 @@ $(document).ready(function(){
  <table cellpadding="0" border="0" cellspacing="0"  style="width: 98%" align="center" class="OuterTable">
 	<tr class="title">
 	     <td colspan="7">
-	     <s:if test="formBean.order.type == 1">
+	     <s:if test="formBean.order.type == 1 || formBean.order.type == 2">
 	          <font style="color:red"><s:property value="formBean.order.typeS"/> </font>
 	     </s:if><s:else>
 	     	  <s:property value="formBean.order.typeS"/>

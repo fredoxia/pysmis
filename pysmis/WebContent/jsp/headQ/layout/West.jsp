@@ -80,6 +80,7 @@ $(function() {
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchase')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchase'}">采购单据录入 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchaseReturn')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchaseReturn'}">采购退货单据录入 </li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preEditPurchaseFree')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preEditPurchaseFree'}">采购赠送单据录入 </li></s:if>
 			    		<s:if test="#session.LOGIN_USER.containFunction('supplierPurchaseJSP!preSearchPurchase')"><li data-options="iconCls:'icon-images',attributes:{url:'supplierPurchaseJSP!preSearchPurchase'}">搜索采购单据 </li></s:if>
 			    	</ul>
 			    </li>
@@ -122,8 +123,6 @@ $(function() {
 			    </li>
 			    </s:if>
 
-			    
-
 		</ul>
 
 	</div>  
@@ -133,6 +132,7 @@ $(function() {
 			  	    <span>库存管理</span>
 			  		<ul style="width: 150%">
 			    		<s:if test="#session.LOGIN_USER.containFunction('headqInventoryFlowJSPAction!preInventoryRpt')"><li data-options="iconCls:'icon-database',attributes:{url:'headqInventoryFlowJSPAction!preInventoryRpt'}">当前库存统计</li></s:if>
+			    		<s:if test="#session.LOGIN_USER.containFunction('headqInventoryFlowJSPAction!preCreateInventoryFlowOrder')"><li data-options="iconCls:'icon-database',attributes:{url:'headqInventoryFlowJSPAction!preCreateInventoryFlowOrder?formBean.order.type=2'}">报损单</li></s:if>
 			    	</ul>
 			    </li>
 			    <s:if test="#session.LOGIN_USER.containFunction('expenseHeadqJSP!preCreateExpenseHeadq') || #session.LOGIN_USER.containFunction('expenseHeadqJSP!preSearchExpenseHeadq')">
@@ -158,6 +158,7 @@ $(function() {
 					    <s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGeneratePurchaseReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGeneratePurchaseReport'}">总部采购统计报表</li></s:if>
 					    <s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGenerateSalesReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGenerateSalesReport'}">总部销售统计报表</li></s:if>
 					    <s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGenerateCustAcctFlowReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGenerateCustAcctFlowReport'}">连锁客户往来帐报表</li></s:if>
+					    <s:if test="#session.LOGIN_USER.containFunction('headqReportJSP!preGenerateSupplierAcctFlowReport')"><li data-options="iconCls:'icon-chart_bar',attributes:{url:'headqReportJSP!preGenerateSupplierAcctFlowReport'}">供应商往来帐报表</li></s:if>
 					</ul>
 			 	</li>
 			 	<s:if test="#session.LOGIN_USER.containFunction('userJSP!preEdit')">

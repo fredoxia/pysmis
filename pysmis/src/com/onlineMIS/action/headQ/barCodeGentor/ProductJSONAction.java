@@ -86,7 +86,7 @@ public class ProductJSONAction extends ProductAction {
 		//--get the original list
     	List<ProductBarcode> barcodes = new ArrayList<ProductBarcode>();
     	ProductBarcode barcode_org = null;
-    	if (formBean.getOrderType() == InventoryOrder.TYPE_SALES_ORDER_W){
+    	if (formBean.getOrderType() == InventoryOrder.TYPE_SALES_ORDER_W || formBean.getOrderType() == InventoryOrder.TYPE_SALES_FREE_ORDER_W){
     		barcode_org= productService.scanProductsByBarcodeHeadq(formBean.getProductBarcode().getBarcode(), formBean.getClient_id());
     	} else if (formBean.getOrderType() == InventoryOrder.TYPE_SALES_RETURN_ORDER_W){
     		barcode_org = productService.getProductFromSalesHistory(formBean.getProductBarcode().getBarcode(), formBean.getClient_id());

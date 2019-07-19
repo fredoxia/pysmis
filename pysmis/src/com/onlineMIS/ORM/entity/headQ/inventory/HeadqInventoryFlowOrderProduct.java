@@ -10,7 +10,7 @@ public class HeadqInventoryFlowOrderProduct  extends BaseProduct  {
 	 * 
 	 */
 	private static final long serialVersionUID = 5036399563895853707L;
-	private int id;
+	//private int id;
 	private HeadqInventoryFlowOrder flowOrder = new HeadqInventoryFlowOrder();
 	private ProductBarcode productBarcode = new ProductBarcode();
 	private int quantity;
@@ -47,12 +47,12 @@ public class HeadqInventoryFlowOrderProduct  extends BaseProduct  {
 	public void setTotalWholePrice(double totalWholePrice) {
 		this.totalWholePrice = totalWholePrice;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public int getId() {
+//		return id;
+//	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 	public int getInventoryQ() {
 		return inventoryQ;
 	}
@@ -94,7 +94,7 @@ public class HeadqInventoryFlowOrderProduct  extends BaseProduct  {
 
 	@Override
 	public String toString() {
-		return "ChainInventoryFlowOrderProduct [id=" + id + ", orderId="
+		return "ChainInventoryFlowOrderProduct [orderId="
 				+ flowOrder.getId() + ", product=" + productBarcode.getId() + ", quantity=" + quantity
 			    + ", comment=" + comment + "]";
 	}

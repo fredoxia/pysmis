@@ -97,5 +97,18 @@ public class SupplierPurchaseJSPAction extends SupplierPurchaseAction {
 		return "editPurchase";
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
+	public String preEditPurchaseFree(){
+		UserInfor loginUserInfor = (UserInfor)ActionContext.getContext().getSession().get(Common_util.LOGIN_USER);
+		loggerLocal.info(loginUserInfor.getUser_name() + " : SupplierPurchaseJSPAction.preEditPurchaseFree");
+		
+		supplierPurchaseService.prepareEditPurchasePage(uiBean);
+		
+		formBean.getOrder().setType(PurchaseOrder.TYPE_FREE);
+		
+		return "editPurchase";
+	}
 }

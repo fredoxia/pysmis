@@ -25,6 +25,7 @@ public class PurchaseOrder extends BaseOrder {
 	private static final long serialVersionUID = 4158424919552736997L;
 	public static final int TYPE_PURCHASE = 0;
 	public static final int TYPE_RETURN = 1;
+	public static final int TYPE_FREE = 2;
 	
 	private int id;
 	private HeadQInventoryStore store = new HeadQInventoryStore(1);
@@ -48,6 +49,7 @@ public class PurchaseOrder extends BaseOrder {
     {
     	typeHQMap.put(TYPE_PURCHASE, "采购入库单");
     	typeHQMap.put(TYPE_RETURN, "采购退货单");
+    	typeHQMap.put(TYPE_FREE, "采购赠送单");
 	}
     
     

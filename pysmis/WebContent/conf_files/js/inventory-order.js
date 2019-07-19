@@ -358,6 +358,10 @@ function calculateCasher(){
 	//销售出库
 	} else if (orderType == 0){
 		casherInput.numberbox("setValue",( totalWhole-discount-cash-card-alipay-wechat).toFixed(2));
+	
+	//赠送单
+	} else if (orderType == 2){
+		casherInput.numberbox("setValue",( 0-discount-cash-card-alipay-wechat).toFixed(2));
 	}
 	 
 	 calculatePostAcct();

@@ -9,10 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import com.onlineMIS.ORM.entity.base.BaseOrder;
-import com.onlineMIS.ORM.entity.base.BaseProduct;
-import com.onlineMIS.ORM.entity.chainS.user.ChainStore;
-import com.onlineMIS.ORM.entity.chainS.user.ChainUserInfor;
-import com.onlineMIS.sorter.ChainInventoryOrderProductSorter;
+import com.onlineMIS.ORM.entity.headQ.user.UserInfor;
 import com.onlineMIS.sorter.ProductSortByIndex;
 /**
  * This class is 
@@ -22,7 +19,7 @@ import com.onlineMIS.sorter.ProductSortByIndex;
 public class HeadqInventoryFlowOrder extends BaseOrder {
 	/**
 	 * 1. overflow order 报溢单, value=1 (电脑是4，实际是5 -> 报溢单添加到电脑)
-	 * 2. flowloss order 报损单, value=2 (电脑时4，实际是3 -> 报损单在电脑存储减除)
+	 * 2. flowloss order 报损单, value=2 (电脑时4，实际是2 -> 报损单在电脑存储减除)
 	 * 3. inventory order 库存单， value=3
 	 */
 	public final static int OVER_FLOW_ORDER = 1;
@@ -36,7 +33,7 @@ public class HeadqInventoryFlowOrder extends BaseOrder {
 	{
 		typeHQMap.put(OVER_FLOW_ORDER, "报溢单据");
 		typeHQMap.put(FLOW_LOSS_ORDER, "报损单据");
-		typeHQMap.put(INVENTORY_ORDER, "库存单据");
+		//typeHQMap.put(INVENTORY_ORDER, "库存单据");
 	}
 	
 	private int id;
@@ -47,7 +44,7 @@ public class HeadqInventoryFlowOrder extends BaseOrder {
 	private double totalCost = 0;
 	private Date orderDate;
 	private String comment;
-	private ChainUserInfor creator;
+	private UserInfor creator;
 	private Set<HeadqInventoryFlowOrderProduct> productSet = new HashSet<HeadqInventoryFlowOrderProduct>();
 	private List<HeadqInventoryFlowOrderProduct> productList = new ArrayList<HeadqInventoryFlowOrderProduct>();
 
@@ -85,11 +82,11 @@ public class HeadqInventoryFlowOrder extends BaseOrder {
 	}
 
 
-	public ChainUserInfor getCreator() {
+	public UserInfor getCreator() {
 		return creator;
 	}
 
-	public void setCreator(ChainUserInfor creator) {
+	public void setCreator(UserInfor creator) {
 		this.creator = creator;
 	}
 

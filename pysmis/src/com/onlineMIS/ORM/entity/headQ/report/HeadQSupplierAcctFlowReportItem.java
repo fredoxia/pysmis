@@ -79,8 +79,8 @@ public class HeadQSupplierAcctFlowReportItem {
 		else 
 			this.returnAmt = returnAmt;
 		
-		this.netQ = purchaseQ - returnQ;
-		this.netAmt = purchaseAmt - returnAmt;
+		this.netQ = this.purchaseQ - this.returnQ;
+		this.netAmt = this.purchaseAmt - this.returnAmt;
 	}
 
 

@@ -33,8 +33,8 @@ public class HeadQSupplierDaoImpl extends BaseDAO<HeadQSupplier>{
 	 * @return
 	 */
 	public Set<Integer> getAllSupplierIds(){
-		DetachedCriteria criteria = DetachedCriteria.forClass(ChainStore.class);
-		criteria.add(Restrictions.ne("status", HeadQSupplier.CustStatusEnum.DELETED));
+		DetachedCriteria criteria = DetachedCriteria.forClass(HeadQSupplier.class);
+		criteria.add(Restrictions.ne("status", HeadQSupplier.CustStatusEnum.DELETED.getKey()));
 		
 		List<HeadQSupplier> suppliers = getByCritera(criteria, true);
 		Set<Integer> supplierIds = new HashSet<Integer>();
@@ -46,8 +46,8 @@ public class HeadQSupplierDaoImpl extends BaseDAO<HeadQSupplier>{
 	}
 
 	public List<HeadQSupplier> getAllSuppliers() {
-		DetachedCriteria criteria = DetachedCriteria.forClass(ChainStore.class);
-		criteria.add(Restrictions.ne("status", HeadQSupplier.CustStatusEnum.DELETED));
+		DetachedCriteria criteria = DetachedCriteria.forClass(HeadQSupplier.class);
+		criteria.add(Restrictions.ne("status", HeadQSupplier.CustStatusEnum.DELETED.getKey()));
 		
 		return getByCritera(criteria, true);
 	}

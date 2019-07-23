@@ -18,9 +18,10 @@ $(document).ready(function(){
 function exportReport(){
 	tips = "你确定是否按照当前条件生成报表?<br\>";
 	tips += "时间段 : " + $("#startDate").datebox("getValue") + " 至 " + $("#endDate").datebox("getValue") + "<br\>";
-	tips += "季度 : " + $("#year").combobox("getText") + " " + $("#quarter").combobox("getText");
-	$.messager.confirm('确认', tips, function(r){
+	$.messager.confirm('确认输入信息', tips, function(r){
+
 		if (r){
+
 	        document.preGenReportForm.action="headqReportJSP!downloadSupplierAcctFlowExcelReport";
 	        document.preGenReportForm.submit();
 		}
@@ -36,7 +37,7 @@ function exportReport(){
 		 <table width="100%" border="0">
    		
 		    <tr class="InnerTableContent">
-		      <td height="45"><strong>时间段：</strong></td>
+		      <td width="90"  height="45"><strong>时间段：</strong></td>
 		      <td >
 		        <s:textfield id="startDate" name="formBean.startDate" cssClass="easyui-datebox"  data-options="width:100,editable:false"/> 
 		        &nbsp;至 &nbsp;

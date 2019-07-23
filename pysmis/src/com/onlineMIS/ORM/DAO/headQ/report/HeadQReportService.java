@@ -1563,6 +1563,7 @@ public class HeadQReportService {
 			int supplierId = supplier.getId();
 
 			HeadQSupplierAcctFlowReportItem item = new HeadQSupplierAcctFlowReportItem(lastPeriodAcctBalance.get(supplierId), stockMap.get(supplierId), currentPeriodAcctBalance.get(supplierId), purchaseQMap.get(supplierId), purchaseAmtMap.get(supplierId), returnQMap.get(supplierId), returnAmtMap.get(supplierId));		
+			item.setSupplier(supplier);
 			items.add(item);
 		}
 		

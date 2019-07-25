@@ -83,6 +83,8 @@ public class HeadQSupplierAcctFlowReportTemplate extends ExcelTemplate{
 			row.createCell(RETURN_AMT).setCellValue(item.getReturnAmt());
 			row.createCell(NET_Q).setCellValue(item.getNetQ());
 			row.createCell(NET_AMT).setCellValue(item.getNetAmt());
+			row.createCell(ACCT_BALANCE_END).setCellValue(item.getAcctBalanceEnd());
+			row.createCell(CURRENT_PAY).setCellValue(item.getCurrentPay());
 		}
 
 		return templateWorkbook;

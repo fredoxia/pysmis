@@ -28,6 +28,7 @@ import com.onlineMIS.ORM.DAO.Response;
 import com.onlineMIS.ORM.DAO.chainS.user.ChainStoreDaoImpl;
 import com.onlineMIS.ORM.DAO.headQ.barCodeGentor.BrandDaoImpl;
 import com.onlineMIS.ORM.DAO.headQ.barCodeGentor.ProductBarcodeDaoImpl;
+import com.onlineMIS.ORM.DAO.headQ.barCodeGentor.ProductDaoImpl;
 import com.onlineMIS.ORM.DAO.headQ.barCodeGentor.QuarterDaoImpl;
 import com.onlineMIS.ORM.DAO.headQ.barCodeGentor.YearDaoImpl;
 import com.onlineMIS.ORM.DAO.headQ.custMgmt.HeadQCustDaoImpl;
@@ -91,6 +92,7 @@ import com.onlineMIS.filter.SystemParm;
 import com.onlineMIS.sorter.ChainStatisticReportItemVOSorter;
 import com.onlineMIS.sorter.HeadQExpenseReportSort;
 import com.onlineMIS.sorter.HeadQStatisticReportItemSorter;
+import com.onlineMIS.sorter.HeadQStatisticReportItemSumSorter;
 import com.onlineMIS.sorter.HeadQStatisticReportItemVOSorter;
 
 @Service
@@ -121,6 +123,9 @@ public class HeadQReportService {
 	
 	@Autowired
 	private ProductBarcodeDaoImpl productBarcodeDaoImpl;
+	
+	@Autowired
+	private ProductDaoImpl productDaoImpl;
 	
 	@Autowired
 	private InventoryOrderProductDAOImpl inventoryOrderProductDAOImpl;
@@ -801,25 +806,31 @@ public class HeadQReportService {
 		String whereClause = "";
 		String rptDesp = "";
 
-		
+		StringBuffer sqlSum = new StringBuffer("SELECT SUM(quantity), SUM(recCost * quantity), p.pb.product.year.year_ID, p.pb.product.quarter.quarter_ID, p.pb.product.brand.brand_ID, p.order.type FROM PurchaseOrderProduct p WHERE p.order.status = ? AND p.order.creationTime BETWEEN ? AND ?") ;
 		StringBuffer sql = new StringBuffer("SELECT SUM(quantity), SUM(recCost * quantity), p.pb.id, p.order.type FROM PurchaseOrderProduct p WHERE p.order.status = ? AND p.order.creationTime BETWEEN ? AND ?") ;
 
 		if (yearId != Common_util.ALL_RECORD_NEW){
-			sql.append(" AND p.pb.product.year.year_ID =" + yearId);
+			String where = " AND p.pb.product.year.year_ID =" + yearId;
+			sql.append(where);
+			sqlSum.append(where);
 			Year year = yearDaoImpl.get(yearId, true);
 			
 			rptDesp += " " + year.getYear();
 		}
 		
 		if (quarterId != Common_util.ALL_RECORD_NEW){
-			sql.append(" AND p.pb.product.quarter.quarter_ID =" + quarterId);
+			String where = " AND p.pb.product.quarter.quarter_ID =" + quarterId;
+			sql.append(where);
+			sqlSum.append(where);
 			Quarter quarter = quarterDaoImpl.get(quarterId, true);
 			
 			rptDesp += " " + quarter.getQuarter_Name();
 		}
 		
 		if (brandId != Common_util.ALL_RECORD_NEW){
-			sql.append(" AND p.pb.product.brand.brand_ID =" + brandId);
+			String where = " AND p.pb.product.brand.brand_ID =" + brandId;
+			sql.append(where);
+			sqlSum.append(where);
 			Brand brand = brandDaoImpl.get(brandId, true);
 			
 			rptDesp += " " + brand.getBrand_Name();
@@ -833,6 +844,7 @@ public class HeadQReportService {
 		rptDesp = supplier.getName() + " " + rptDesp;
 		
 		sql.append(whereClause);
+		sqlSum.append(whereClause);
 		sql.append(" GROUP BY p.pb.id, p.order.type");
 		
 		List<Object> values = purchaseOrderProductDaoImpl.executeHQLSelect(sql.toString(), value_sale.toArray(), null, true);
@@ -863,9 +875,47 @@ public class HeadQReportService {
 		List<HeadQPurchaseStatisticReportItem> items = new ArrayList<HeadQPurchaseStatisticReportItem>(dataMap.values());
 		
 		Collections.sort(items, new HeadQStatisticReportItemSorter());
-		//2. 准备excel 报表
+		
+		//2. 准备品牌汇总数据
+		sqlSum.append(" GROUP BY p.pb.product.year.year_ID,p.pb.product.quarter.quarter_ID, p.pb.product.brand.brand_ID, p.order.type");
+        
+		List<Object> valuesSum = purchaseOrderProductDaoImpl.executeHQLSelect(sqlSum.toString(), value_sale.toArray(), null, true);
+
+		
+		Map<String, HeadQPurchaseStatisticReportItem> dataMapSum = new HashMap<String, HeadQPurchaseStatisticReportItem>();
+
+		for (Object record : valuesSum ){
+			Object[] records = (Object[])record;
+			int quantity = Common_util.getInt(records[0]);
+			double amount = Common_util.getDouble(records[1]);
+			int yearIdDB = Common_util.getInt(records[2]);
+			int quarterIdDB = Common_util.getInt(records[3]);
+			int brandIdDB = Common_util.getInt(records[4]);
+			int type = Common_util.getInt(records[5]);
+			
+			String key = yearIdDB + "@" + quarterIdDB + "@" + brandIdDB;
+			
+			HeadQPurchaseStatisticReportItem levelOneItem = dataMapSum.get(key);
+			if (levelOneItem != null){
+				levelOneItem.add(type, quantity, amount);
+			} else {
+				Year year = yearDaoImpl.get(yearIdDB, true);
+				Quarter quarter = quarterDaoImpl.get(quarterIdDB, true);
+				Brand brand = brandDaoImpl.get(brandIdDB, true);
+				
+				levelOneItem = new HeadQPurchaseStatisticReportItem(type, quantity, amount, year, quarter, brand);
+				
+				dataMapSum.put(key, levelOneItem);
+			}
+		}
+		
+		List<HeadQPurchaseStatisticReportItem> itemsSum = new ArrayList<HeadQPurchaseStatisticReportItem>(dataMapSum.values());
+		
+		Collections.sort(itemsSum, new HeadQStatisticReportItemSumSorter());
+		
+		//3. 准备excel 报表
 		try {
-		    HeadQPurchaseStatisticsReportTemplate rptTemplate = new HeadQPurchaseStatisticsReportTemplate(items, totalItem, rptDesp, excelPath, startDate, endDate);
+		    HeadQPurchaseStatisticsReportTemplate rptTemplate = new HeadQPurchaseStatisticsReportTemplate(items, itemsSum, totalItem, rptDesp, excelPath, startDate, endDate);
 			HSSFWorkbook wb = rptTemplate.process();
 			
 			ByteArrayInputStream byteArrayInputStream = ExcelUtil.convertExcelToInputStream(wb);
@@ -902,25 +952,32 @@ public class HeadQReportService {
 		String whereClause = "";
 		String rptDesp = "";
 
-		
+		//1. 下载明细数据
+		StringBuffer sql_sum = new StringBuffer("SELECT SUM(quantity), SUM(recCost * quantity), SUM(wholeSalePrice * quantity),p.productBarcode.product.year.year_ID,p.productBarcode.product.quarter.quarter_ID,p.productBarcode.product.brand.brand_ID, p.order.order_type FROM InventoryOrderProduct p WHERE p.order.order_Status = ? AND p.order.order_EndTime BETWEEN ? AND ? ") ;
 		StringBuffer sql = new StringBuffer("SELECT SUM(quantity), SUM(recCost * quantity), SUM(wholeSalePrice * quantity),p.productBarcode.id, p.order.order_type FROM InventoryOrderProduct p WHERE p.order.order_Status = ? AND p.order.order_EndTime BETWEEN ? AND ? ") ;
 
 		if (yearId != Common_util.ALL_RECORD_NEW){
-			sql.append(" AND p.productBarcode.product.year.year_ID =" + yearId);
+			String where = " AND p.productBarcode.product.year.year_ID =" + yearId;
+			sql.append(where);
+			sql_sum.append(where);
 			Year year = yearDaoImpl.get(yearId, true);
 			
 			rptDesp += " " + year.getYear();
 		}
 		
 		if (quarterId != Common_util.ALL_RECORD_NEW){
-			sql.append(" AND p.productBarcode.product.quarter.quarter_ID =" + quarterId);
+			String where = " AND p.productBarcode.product.quarter.quarter_ID =" + quarterId;
+			sql.append(where);
+			sql_sum.append(where);
 			Quarter quarter = quarterDaoImpl.get(quarterId, true);
 			
 			rptDesp += " " + quarter.getQuarter_Name();
 		}
 		
 		if (brandId != Common_util.ALL_RECORD_NEW){
-			sql.append(" AND p.productBarcode.product.brand.brand_ID =" + brandId);
+			String where = " AND p.productBarcode.product.brand.brand_ID =" + brandId;
+			sql.append(where);
+			sql_sum.append(where);
 			Brand brand = brandDaoImpl.get(brandId, true);
 			
 			rptDesp += " " + brand.getBrand_Name();
@@ -934,6 +991,8 @@ public class HeadQReportService {
 		rptDesp = cust.getName() + " " + rptDesp;
 		
 		sql.append(whereClause);
+		sql.append(whereClause);
+        
 		sql.append(" GROUP BY p.productBarcode.id, p.order.order_type");
 		
 		List<Object> values = inventoryOrderProductDAOImpl.executeHQLSelect(sql.toString(), value_sale.toArray(), null, true);
@@ -963,11 +1022,49 @@ public class HeadQReportService {
 		}
 		
 		List<HeadQSalesStatisticReportItem> items = new ArrayList<HeadQSalesStatisticReportItem>(dataMap.values());
-		
 		Collections.sort(items, new HeadQStatisticReportItemSorter());
-		//2. 准备excel 报表
+		
+		
+		//2。下载以品牌为基础的明细数据
+		sql_sum.append(" GROUP BY p.productBarcode.product.year.year_ID,p.productBarcode.product.quarter.quarter_ID, p.productBarcode.product.brand.brand_ID, p.order.order_type");
+        List<Object> values_sum = inventoryOrderProductDAOImpl.executeHQLSelect(sql_sum.toString(), value_sale.toArray(), null, true);
+		
+		Map<String, HeadQSalesStatisticReportItem> dataMap_sum = new HashMap<String, HeadQSalesStatisticReportItem>();
+
+		for (Object record : values_sum ){
+			Object[] records = (Object[])record;
+			int quantity = Common_util.getInt(records[0]);
+			double cost = Common_util.getDouble(records[1]);
+			double amount = Common_util.getDouble(records[2]);
+			int yearIdDB = Common_util.getInt(records[3]);
+			int quarterIdDB = Common_util.getInt(records[4]);
+			int brandIdDB = Common_util.getInt(records[5]);
+			int type = Common_util.getInt(records[6]);
+			
+			//System.out.println(yearIdDB + "," + quarterIdDB + "," + brandIdDB + "," + type + "," + quantity + "," + cost + "," + amount);
+			
+			String key = yearIdDB + "@" + quarterIdDB + "@" + brandIdDB;
+			
+			HeadQSalesStatisticReportItem levelOneItem = dataMap_sum.get(key);
+			if (levelOneItem != null){
+				levelOneItem.add(type, quantity, amount, cost);
+			} else {
+				Year year = yearDaoImpl.get(yearIdDB, true);
+				Quarter quarter = quarterDaoImpl.get(quarterIdDB, true);
+				Brand brand = brandDaoImpl.get(brandIdDB, true);
+				
+				levelOneItem = new HeadQSalesStatisticReportItem(type, quantity, amount, cost, year, quarter,brand);
+				
+				dataMap_sum.put(key, levelOneItem);
+			}
+		}
+		
+		List<HeadQSalesStatisticReportItem> items_sum = new ArrayList<HeadQSalesStatisticReportItem>(dataMap_sum.values());
+		Collections.sort(items_sum, new HeadQStatisticReportItemSumSorter());
+		
+		//3. 准备excel 报表
 		try {
-		    HeadQSalesStatisticsReportTemplate rptTemplate = new HeadQSalesStatisticsReportTemplate(items, totalItem, rptDesp, excelPath, startDate, endDate);
+		    HeadQSalesStatisticsReportTemplate rptTemplate = new HeadQSalesStatisticsReportTemplate(items, items_sum, totalItem, rptDesp, excelPath, startDate, endDate);
 			HSSFWorkbook wb = rptTemplate.process();
 			
 			ByteArrayInputStream byteArrayInputStream = ExcelUtil.convertExcelToInputStream(wb);
@@ -1554,6 +1651,8 @@ public class HeadQReportService {
 			}
 
 		  } 
+		//7. 获取本期付款
+		
 		
 
 

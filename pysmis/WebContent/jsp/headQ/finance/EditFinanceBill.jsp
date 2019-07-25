@@ -229,7 +229,7 @@ function chooseClient(clientId, preAcct){
 						   <tr class="InnerTableContent">
 						     <td width="200" height="35">单据种类 ： <s:select  cssClass="easyui-combobox"  style="width:100px;" data-options="editable:false" id="financeBillType" name="formBean.order.type"  list="formBean.order.typeHQMap" listKey="key" listValue="value" /></td>
 
-						     <td>日期 ：  <s:textfield id="billDate" name="formBean.order.billDate" cssClass="easyui-datebox"  data-options="width:100,editable:false"/>	  
+						     <td>日期 ：  <s:textfield id="billDate" name="formBean.order.billDate" cssClass="easyui-textbox"  data-options="width:100,editable:false"/>	  
 							</td>
 							 <td width="400">客户 ： <%@ include file="../include/ClientInput.jsp"%>
 								              <div style="display:block;" id="currentFinance"></div>

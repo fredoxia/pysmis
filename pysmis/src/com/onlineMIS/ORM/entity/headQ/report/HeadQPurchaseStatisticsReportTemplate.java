@@ -30,6 +30,7 @@ import com.sun.jndi.toolkit.ctx.StringHeadTail;
 public class HeadQPurchaseStatisticsReportTemplate  extends ExcelTemplate{
 	private final static String TEMPLATE_FILE_NAME = "HeadQPurchaseStatisticsReportTemplate.xls";
 	private List<HeadQPurchaseStatisticReportItem> items = new ArrayList<HeadQPurchaseStatisticReportItem>();
+	private List<HeadQPurchaseStatisticReportItem> itemsSum = new ArrayList<HeadQPurchaseStatisticReportItem>();
 	private HeadQPurchaseStatisticReportItem totalItem = new HeadQPurchaseStatisticReportItem();
 
 	private int data_row = 5;
@@ -50,6 +51,15 @@ public class HeadQPurchaseStatisticsReportTemplate  extends ExcelTemplate{
 	private final int RETURN_AMT_COLUMN = 13;
 	private final int NET_AMT_COLUMN = 14;
 	private final int INVENTORY_LEVEL_COLUMN = 15;
+	
+	private final int BRAND_COLUMN_SUM = 0;
+	private final int QUARTER_COLUMN_SUM = 1;
+	private final int PURCHASE_Q_COLUMN_SUM =2;
+	private final int RETURN_Q_COLUMN_SUM = 3;
+	private final int NET_Q_COLUMN_SUM = 4;
+	private final int PURCHASE_AMT_COLUMN_SUM = 5;
+	private final int RETURN_AMT_COLUMN_SUM = 6;
+	private final int NET_AMT_COLUMN_SUM = 7;
 
 	private String rptDesp ;
 	private Date startDate = new Date();
@@ -60,7 +70,7 @@ public class HeadQPurchaseStatisticsReportTemplate  extends ExcelTemplate{
     	super(file);
     }
 	
-	public HeadQPurchaseStatisticsReportTemplate(List<HeadQPurchaseStatisticReportItem> items, HeadQPurchaseStatisticReportItem totalItem, String rptDesp, String templateWorkbookPath, Date startDate, Date endDate) throws IOException{
+	public HeadQPurchaseStatisticsReportTemplate(List<HeadQPurchaseStatisticReportItem> items,List<HeadQPurchaseStatisticReportItem> itemsSum, HeadQPurchaseStatisticReportItem totalItem, String rptDesp, String templateWorkbookPath, Date startDate, Date endDate) throws IOException{
 		super(templateWorkbookPath + "\\" + TEMPLATE_FILE_NAME);	
 		this.items = items;
 		this.rptDesp = rptDesp;
@@ -68,6 +78,7 @@ public class HeadQPurchaseStatisticsReportTemplate  extends ExcelTemplate{
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.totalItem = totalItem;
+		this.itemsSum = itemsSum;
 	}
 	
 	/**
@@ -75,6 +86,8 @@ public class HeadQPurchaseStatisticsReportTemplate  extends ExcelTemplate{
 	 * @return
 	 */
 	public HSSFWorkbook process(){
+		
+		//1. 书写第一张明细
 		HSSFSheet sheet = templateWorkbook.getSheetAt(0);
 		//write header
 		Row header1 = sheet.getRow(1);
@@ -154,6 +167,62 @@ public class HeadQPurchaseStatisticsReportTemplate  extends ExcelTemplate{
 		  row.createCell(RETURN_AMT_COLUMN).setCellValue(totalItem.getReturnTotalAmt());
 		row.createCell(NET_AMT_COLUMN).setCellValue(totalItem.getNetTotalAmt());
 	
+		//2. 书写第二章以brand汇总
+		HSSFSheet sheet2 = templateWorkbook.getSheetAt(1);
+		//write header
+		Row header1Sum = sheet2.getRow(1);
+		header1Sum.createCell(1).setCellValue(Common_util.dateFormat.format(startDate));
+		header1Sum.createCell(3).setCellValue(Common_util.dateFormat.format(endDate));
+		
+		Row header2Sum = sheet2.getRow(2);
+		header2Sum.createCell(1).setCellValue(Common_util.dateFormat_f.format(Common_util.getToday()));
+		
+		Row header3Sum = sheet2.getRow(3);
+		header3Sum.createCell(1).setCellValue(rptDesp);
+
+		
+		//write product infmration
+		int totalDataRowSum = itemsSum.size();
+
+		for (int i = 0; i < totalDataRowSum; i++){
+
+			HeadQPurchaseStatisticReportItem levelFourItem = itemsSum.get(i);
+			Row rowSum = sheet2.createRow(data_row + i);
+			
+			rowSum.createCell(BRAND_COLUMN_SUM).setCellValue(levelFourItem.getBrand().getBrand_Name());
+			
+			rowSum.createCell(QUARTER_COLUMN_SUM).setCellValue(levelFourItem.getYear().getYear() + "-" + levelFourItem.getQuarter().getQuarter_Name());
+			
+			if (levelFourItem.getPurchaseQuantity() != 0)
+				rowSum.createCell(PURCHASE_Q_COLUMN_SUM).setCellValue(levelFourItem.getPurchaseQuantity());
+			
+			if (levelFourItem.getReturnQuantity() != 0)
+				rowSum.createCell(RETURN_Q_COLUMN_SUM).setCellValue(levelFourItem.getReturnQuantity());
+			rowSum.createCell(NET_Q_COLUMN_SUM).setCellValue(levelFourItem.getNetQuantity());
+			
+			if (levelFourItem.getPurchaseTotalAmt() != 0)
+				rowSum.createCell(PURCHASE_AMT_COLUMN_SUM).setCellValue(levelFourItem.getPurchaseTotalAmt());
+			
+			if (levelFourItem.getReturnTotalAmt() != 0)
+				rowSum.createCell(RETURN_AMT_COLUMN_SUM).setCellValue(levelFourItem.getReturnTotalAmt());
+			rowSum.createCell(NET_AMT_COLUMN_SUM).setCellValue(levelFourItem.getNetTotalAmt());
+
+		}
+		
+		//把总数放进去
+		Row rowSum = sheet2.createRow(data_row + totalDataRowSum);
+		rowSum.createCell(BRAND_COLUMN_SUM).setCellValue("总计");
+		if (totalItem.getPurchaseQuantity() != 0)
+		   rowSum.createCell(PURCHASE_Q_COLUMN_SUM).setCellValue(totalItem.getPurchaseQuantity());
+		if (totalItem.getReturnQuantity() != 0)
+		   rowSum.createCell(RETURN_Q_COLUMN_SUM).setCellValue(totalItem.getReturnQuantity());
+		rowSum.createCell(NET_Q_COLUMN_SUM).setCellValue(totalItem.getNetQuantity());
+		if (totalItem.getPurchaseTotalAmt() != 0)
+		   rowSum.createCell(PURCHASE_AMT_COLUMN_SUM).setCellValue(totalItem.getPurchaseTotalAmt());
+		if (totalItem.getReturnTotalAmt() != 0)
+		  rowSum.createCell(RETURN_AMT_COLUMN_SUM).setCellValue(totalItem.getReturnTotalAmt());
+		rowSum.createCell(NET_AMT_COLUMN_SUM).setCellValue(totalItem.getNetTotalAmt());
+		
 		return templateWorkbook;
 	}
 	

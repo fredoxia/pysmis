@@ -1,6 +1,10 @@
 package com.onlineMIS.ORM.entity.headQ.report;
 
+import com.onlineMIS.ORM.entity.headQ.barcodeGentor.Brand;
+import com.onlineMIS.ORM.entity.headQ.barcodeGentor.Product;
 import com.onlineMIS.ORM.entity.headQ.barcodeGentor.ProductBarcode;
+import com.onlineMIS.ORM.entity.headQ.barcodeGentor.Quarter;
+import com.onlineMIS.ORM.entity.headQ.barcodeGentor.Year;
 import com.onlineMIS.ORM.entity.headQ.inventory.InventoryOrder;
 import com.onlineMIS.ORM.entity.headQ.supplier.purchase.PurchaseOrder;
 
@@ -45,6 +49,13 @@ public class HeadQSalesStatisticReportItem extends HeadQStatisticReportItem{
 	
 	public HeadQSalesStatisticReportItem(int orderType,  int quantity, double amount, double cost,  ProductBarcode pb){
 		this.setPb(pb);
+	    add(orderType, quantity, amount, cost);
+	}
+	
+	public HeadQSalesStatisticReportItem(int orderType,  int quantity, double amount, double cost,  Year year, Quarter quarter, Brand brand){
+		this.setYear(year);
+		this.setQuarter(quarter);
+		this.setBrand(brand);
 	    add(orderType, quantity, amount, cost);
 	}
 	

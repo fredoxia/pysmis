@@ -204,7 +204,7 @@ public class HeadQReportJSPAction extends HeadQReportAction {
 	 * @return
 	 */
 	public String downloadSupplierAcctFlowExcel(){
-		loggerLocal.info(this.getClass().getName()+ ".downloadSupplierAcctFlowExcelReport");
+		loggerLocal.info(this.getClass().getName()+ ".downloadSupplierAcctFlowExcel");
 		HttpServletRequest request = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);   
 		String contextPath= request.getRealPath("/"); 
 
@@ -230,7 +230,7 @@ public class HeadQReportJSPAction extends HeadQReportAction {
 	 * @return
 	 */
 	public String downloadCustAcctFlowExcel(){
-		loggerLocal.info(this.getClass().getName()+ ".downloadCustAcctFlowExcelReport");
+		loggerLocal.info(this.getClass().getName()+ ".downloadCustAcctFlowExcel");
 		HttpServletRequest request = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);   
 		String contextPath= request.getRealPath("/"); 
 

@@ -119,7 +119,13 @@ function changeChainStore(chainId){
 		      <td colspan="2">
 		      	<s:textfield name="formBean.vipPrepaid.amount" id="amount" cssClass="easyui-numberspinner" style="width:80px;" required="required" data-options=" increment:1,min:1,max:20000"/>
 		      </td>
-		    </tr>		
+		    </tr>	
+		    <tr class="InnerTableContent">
+		      <td>赠送金额 </td>
+		      <td colspan="2">
+		      	<s:textfield name="formBean.vipPrepaid.amt2" id="amt2" cssClass="easyui-numberspinner" style="width:80px;" required="required" data-options=" increment:1,min:0,max:1000"/>
+		      </td>
+		    </tr>			    	
 		    <tr class="InnerTableContent">
 		      <td>备注</td>
 		      <td colspan="2">

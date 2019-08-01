@@ -71,6 +71,7 @@ $(document).ready(function(){
 					{field:'depositCard', width:50,title:'刷卡'},
 					{field:'depositWechat', width:50,title:'微信'},
 					{field:'depositAlipay', width:50,title:'支付宝'},
+					{field:'amt2', width:40,title:'赠送金额'},	
 					{field:'consump', width:50,title:'消费 预存金额'},
 					{field:'calculatedAmts', width:45,title:'账户增减'},
 					{field:'createDate', width:60,title:'操作时间'},

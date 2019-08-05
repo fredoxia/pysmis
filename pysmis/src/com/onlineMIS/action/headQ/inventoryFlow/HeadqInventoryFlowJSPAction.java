@@ -57,6 +57,9 @@ public class HeadqInventoryFlowJSPAction extends HeadqInventoryFlowAction{
 	 */
 	public String preCreateInventoryFlowOrder(){
 		loggerLocal.info("HeadqInventoryFlowJSPAction - preCreateInventoryFlowOrder");
+		UserInfor loginUserInfor = (UserInfor)ActionContext.getContext().getSession().get(Common_util.LOGIN_USER);
+		
+		headqInventoryService.prepareCreateOrderUI(formBean, loginUserInfor);
 		
 		return "flowOrder";
 	}

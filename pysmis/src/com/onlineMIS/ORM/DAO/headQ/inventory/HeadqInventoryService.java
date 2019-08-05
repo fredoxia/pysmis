@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,8 @@ import com.onlineMIS.ORM.entity.headQ.inventory.HeadQInventoryStock;
 import com.onlineMIS.ORM.entity.headQ.inventory.HeadQInventoryStore;
 import com.onlineMIS.ORM.entity.headQ.inventory.HeadqInvenTraceInfoVO;
 import com.onlineMIS.ORM.entity.headQ.inventory.HeadqInventoryReportTemplate;
+import com.onlineMIS.ORM.entity.headQ.user.UserInfor;
+import com.onlineMIS.action.headQ.inventoryFlow.HeadqInventoryFlowFormBean;
 import com.onlineMIS.common.Common_util;
 import com.onlineMIS.common.ExcelUtil;
 import com.onlineMIS.sorter.ChainInventoryReportSort;
@@ -321,6 +324,19 @@ public class HeadqInventoryService {
 		response.setReturnValue(data);
 		
 		return response;
+	}
+
+	/**
+	 * 
+	 * @param formBean
+	 */
+	public void prepareCreateOrderUI(HeadqInventoryFlowFormBean formBean, UserInfor loginUser) {
+		//2. set the creator
+		formBean.getOrder().setCreator(loginUser);
+		
+		//3. set the date
+		formBean.getOrder().setOrderDate(new Date());
+		
 	}
 	
 

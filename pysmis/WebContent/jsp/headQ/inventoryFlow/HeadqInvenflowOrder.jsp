@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%@ page import="com.onlineMIS.ORM.entity.chainS.inventoryFlow.ChainInventoryFlowOrder" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>朴与素连锁店管理信息系统</title>
 <%@ include file="../../common/Style.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/ChainInvenShare.js?v3.7"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/ChainInvenFlow.js?v1.17"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/HeadQInvenFlow.js?v1.17"></script>
 <LINK href="<%=request.getContextPath()%>/conf_files/css/qxbaby_css.css" type=text/css rel=STYLESHEET>
 <script>
 $(document).ready(function(){
@@ -26,9 +24,9 @@ function downloadOrder(){
 <body>
 
     <s:form action="/action/inventoryFlowAction!saveToDraft" method="POST" name="chainInventoryFlowForm" id="chainInventoryFlowForm" theme="simple">
-	<s:hidden name="formBean.flowOrder.type"/>  
-	<s:hidden name="formBean.flowOrder.id"/>   
-	<s:hidden name="formBean.flowOrder.status"/> 
+	<s:hidden name="formBean.order.type"/>  
+	<s:hidden name="formBean.order.id"/>   
+	<s:hidden name="formBean.order.status"/> 
     <table width="85%" align="center"  class="OuterTable">
 	    <tr><td>
 	         <div class="errorAndmes"><s:actionerror cssStyle="color:red"/><s:actionmessage cssStyle="color:blue"/></div>
@@ -38,15 +36,15 @@ function downloadOrder(){
 				   	 <table width="100%" border="0">
 				       <tr class="PBAOuterTableTitale">
 				         <td height="32" colspan="4">
-				              	<s:property value="formBean.flowOrder.typeHQS"/><p/>
+				              	<s:property value="formBean.order.typeHQS"/><p/>
 				              	- 当电脑库存大于实际盘点库存,请建报损单<br/>
 				              	- 当电脑库存小于实际盘点库存,请建报溢单
 				         </td>
 			           </tr>
 				       <tr class="InnerTableContent">
-				         <td width="234" height="32">创建人:<s:property value="formBean.flowOrder.creator.name"/></td>
-				         <td width="160">日期:<s:property value="formBean.flowOrder.orderDate"/></td>
-				         <td width="400">状态:<s:property value="formBean.flowOrder.statusS"/></td>
+				         <td width="234" height="32">创建人:<s:property value="formBean.order.creator.name"/></td>
+				         <td width="160">日期:<s:property value="formBean.order.orderDate"/></td>
+				         <td width="400">状态:<s:property value="formBean.order.statusS"/></td>
 				         <td width="334"></td>
 				       </tr>
 				     </table></td>

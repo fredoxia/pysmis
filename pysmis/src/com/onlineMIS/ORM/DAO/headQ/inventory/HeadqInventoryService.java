@@ -338,6 +338,18 @@ public class HeadqInventoryService {
 		formBean.getOrder().setOrderDate(new Date());
 		
 	}
+
+	/**
+	 * 在inventory flow order上 scan barcode
+	 * @param barcode
+	 * @param indexPage
+	 * @param fromSrc
+	 * @return
+	 */
+	public Response scanByBarcodeInvenOrder(String barcode, int indexPage, int fromSrc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

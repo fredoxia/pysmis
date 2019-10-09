@@ -2,6 +2,7 @@ package com.onlineMIS.action.headQ.inventoryFlow;
 
 import java.io.InputStream;
 
+import com.onlineMIS.ORM.entity.headQ.barcodeGentor.ProductBarcode;
 import com.onlineMIS.ORM.entity.headQ.inventory.HeadqInventoryFlowOrder;
 import com.onlineMIS.action.chainS.ChainActionFormBaseBean;
 
@@ -19,9 +20,31 @@ public class HeadqInventoryFlowFormBean extends ChainActionFormBaseBean{
 	private String fileName;
 	private int pbId;
 	
+	private ProductBarcode pb = new ProductBarcode();
+	private int indexPage;
+	private int fromSrc;
+	
 	private HeadqInventoryFlowOrder order = new HeadqInventoryFlowOrder();
 	
 	
+	public ProductBarcode getPb() {
+		return pb;
+	}
+	public void setPb(ProductBarcode pb) {
+		this.pb = pb;
+	}
+	public int getIndexPage() {
+		return indexPage;
+	}
+	public void setIndexPage(int indexPage) {
+		this.indexPage = indexPage;
+	}
+	public int getFromSrc() {
+		return fromSrc;
+	}
+	public void setFromSrc(int fromSrc) {
+		this.fromSrc = fromSrc;
+	}
 	public HeadqInventoryFlowOrder getOrder() {
 		return order;
 	}

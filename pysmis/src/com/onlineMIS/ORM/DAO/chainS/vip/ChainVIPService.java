@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.naming.java.javaURLContextFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.hibernate.Criteria;
@@ -1294,5 +1295,98 @@ public class ChainVIPService {
 		
 	}
 
+	public void prepareUpdatePasswordUI(ChainVIPActionFormBean formBean) {
+		int vipCardId = formBean.getVipCard().getId();
+		ChainVIPCard card = chainVIPCardImpl.get(vipCardId, true);
+		
+		formBean.setVipCard(card);
+		
+	}
+
+	/**
+	 * 获取vip的信息
+	 * 
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Response checkVIPPasswordStatus(int cardId) {
+		Response response = new Response();
+		
+		ChainVIPCard vipCard = chainVIPCardImpl.get(cardId, true);
+		if (vipCard == null){
+			response.setFail("无法找到信息");
+		} else {
+			if (StringUtils.isEmpty(vipCard.getPassword())){
+				response.setReturnCode(Response.WARNING);
+			} else 
+			    response.setReturnCode(Response.SUCCESS);
+		}
+		return response;
+	}
+	
+	/**
+	 * 更新vip密码
+	 * 1. 如果以前没有设置密码，就直接设置密码
+	 * 2。 如果以前有设置密码,需要输入以前正确密码再修改
+	 * @param loginUser
+	 * @param vipCardId
+	 * @param password
+	 * @return
+	 */
+	@Transactional
+	public Response updateVIPPassword(ChainUserInfor loginUser, int vipCardId, String newPassword){
+		Response response = new Response();
+		ChainVIPCard vipCard = chainVIPCardImpl.get(vipCardId, true);
+		if (vipCard == null){
+			response.setFail("无法找到vip信息 : " + vipCardId);
+			return response;
+		}
+		
+		int chainId = vipCard.getIssueChainStore().getChain_id();
+		ChainStoreConf conf = chainStoreConfDaoImpl.getChainStoreConfByChainId(chainId);
+		
+		if (!ChainUserInforService.isMgmtFromHQ(loginUser) && loginUser.getMyChainStore().getChain_id() != vipCard.getIssueChainStore().getChain_id()){
+			if (conf != null && conf.getAllowMyPrepaidCrossStore() == ChainStoreConf.PREPAID_ALL_PREPAID_CROSS_STORE){
+				int salesOrderChainId = loginUser.getMyChainStore().getChain_id();
+				Set<Integer> chainStoreAssociated = chainStoreGroupDaoImpl.getChainGroupStoreIdList(chainId, null, Common_util.CHAIN_ACCESS_LEVEL_3);
+				if (!chainStoreAssociated.contains(salesOrderChainId)){
+					response.setQuickValue(Response.ERROR, "预存金  只能在VIP卡的开户连锁店/关联连锁店中使用");
+					return response;
+				}	
+			}
+		}
+
+		
+		if (newPassword.length()>6 || !StringUtils.isNumeric(newPassword)){
+			response.setFail("密码只能是六位数的数字");
+			return response;
+		}
+		
+		vipCard.setPassword(newPassword);
+		chainVIPCardImpl.update(vipCard, true);
+		
+		response.setSuccess("成功更新vip信息");
+		return response;
+	}
+
+	/**
+	 * 验证vip密码
+	 * @param vipCard
+	 * @return
+	 */
+	public Response validatePassword(ChainVIPCard vipCard) {
+		Response response = new Response();
+		
+		int vipCardId = vipCard.getId();
+		ChainVIPCard vipCardDB = chainVIPCardImpl.get(vipCardId, true);
+		
+		if (vipCardDB.getPassword() == null){
+			response.setFail("VIP还未设置密码,请设置密码后继续.");
+		} else if (!vipCard.getPassword().equals(vipCardDB.getPassword())){
+			response.setFail("VIP密码不正确,无法过帐");
+		}
+		return response;
+	}
 
 }

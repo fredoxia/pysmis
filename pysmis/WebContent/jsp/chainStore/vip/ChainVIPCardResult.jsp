@@ -152,6 +152,38 @@ function updateVipScoreBk(data){
 	} else 
 		alert(response.message);
 }
+function showUpdatePasswordDialog(){
+	if (validateSubmit()){
+		var param = "formBean.vipCard.id="  + $("input:radio[name='formBean.selectedCardId']:checked").val() ;
+		
+		$.modalDialog({
+			title : '修改VIP密码',
+			width : 350,
+			height : 220,
+			modal : false,
+			href : '<%=request.getContextPath()%>/actionChain/chainVIPJSPAction!preUpdateVIPPassword?' + param,
+			buttons : [ {
+				text : '修改密码',
+				handler : function() {
+					validateVIPPassword(); 
+				}
+			} ]
+			});
+	}
+}
+
+function postValidateVIPProcess(data){
+
+	var returnCode = data.returnCode;
+
+	if (returnCode == SUCCESS){
+
+		var dialogA = $.modalDialog.handler;
+		dialogA.dialog('close');
+		$.messager.alert('消息', "成功更新密码", 'info');
+	} else 
+		$.messager.alert('失败警告', data.message, 'error');
+}
 </script>
 </head>
 <body>
@@ -245,6 +277,7 @@ function updateVipScoreBk(data){
 		      <td width="20%"><s:if test="#session.LOGIN_CHAIN_USER.containFunction('chainVIPJSPAction!startVIPCard')"><input type="button" value="启用" onClick="startVIP();"/>&nbsp;</s:if>
 		      				  <s:if test="#session.LOGIN_CHAIN_USER.containFunction('chainVIPJSPAction!stopVIPCard')"><input type="button" value="停用" onclick="stopVIP();"/>&nbsp;</s:if>
 		                      <s:if test="#session.LOGIN_CHAIN_USER.containFunction('chainVIPJSPAction!lostVIPCard')"><input type="button" value="挂失" onclick="lostVIP();"/></s:if>
+		      				  <input type="button" value="重设密码" onclick="showUpdatePasswordDialog();"/>
 		      </td>
 		      <td width="45%"><input type="button" value="VIP积分调整" onclick="updateVIPScoreDialog();"/>
 		                      <s:if test="#session.LOGIN_CHAIN_USER.containFunction('chainVIPJSPAction!preUpgradeVIP')"><input type="button" value="VIP升级" onclick="upgradeVIPDialog();"/></s:if>

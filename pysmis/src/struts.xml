@@ -283,6 +283,7 @@
             <result name="listChainPriceIncre">/jsp/headQ/chain/ListChainPriceIncrement.jsp</result>
             <result name="editChainPriceIncre">/jsp/headQ/chain/EditChainPriceIncrement.jsp</result>
             <result name="listParentSotres">/jsp/headQ/chain/ListParentStores.jsp</result> 
+            
                         
         </action>    
         
@@ -556,7 +557,9 @@
             <result name="upgradeVIP">/jsp/chainStore/vip/ChainVIPUpgrade.jsp</result>
             <result name="updateVIPScore">/jsp/chainStore/vip/ChainVIPScoreUpdate.jsp</result>
             <result name="depositVIPPrepaid">/jsp/chainStore/vip/ChainVIPPrepaidDeposit.jsp</result> 
-            <result name="searchVIPPrepaid">/jsp/chainStore/vip/SearchVIPPrepaidFlows.jsp</result>    
+            <result name="searchVIPPrepaid">/jsp/chainStore/vip/SearchVIPPrepaidFlows.jsp</result>  
+            <result name="updatePassword">/jsp/chainStore/vip/ChainVIPUpdatePassword.jsp</result>    
+            <result name="enterPasswordPage">/jsp/chainStore/vip/ChainVIPEnterPassword.jsp</result>     
         </action>  
                 <!-- the finance action -->
         <action name="financeChainJSP" class="com.onlineMIS.action.chainS.finance.FinanceChainJSPAction">
@@ -575,7 +578,7 @@
             <result name="searchChainSalesPrice">/jsp/chainStore/chainMgmt/ChainSearchSalesPrice.jsp</result>
             <result name="editChainSalesPrice">/jsp/chainStore/chainMgmt/ChainEditSalesPrice.jsp</result>     
             <result name="preCreateConf">/jsp/chainStore/chainMgmt/EditQxbabyConf.jsp</result>  
-               
+             
         </action>   
          <action name="productJSPAction" class="com.onlineMIS.action.headQ.barCodeGentor.ProductJSPAction">
               <result name="BrandList">/jsp/headQ/barcodeGentor/BrandList.jsp</result>

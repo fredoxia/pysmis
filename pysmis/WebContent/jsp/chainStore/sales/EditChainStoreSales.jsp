@@ -73,44 +73,51 @@ function draftOrderBKProcess(data){
         alert(returnMsg);
     }
 }
-function postSalesOrder2(){
-	postSalesOrder2();
-	postSalesOrder2();
-}
+
 function postSalesOrder(){
-	$("#submitBt").attr("disabled", true);
 
 	var isValidDraf = validateDraftSalesForm();
 	var isValidSalesOrder = validateSalesOrder(SALES_ORDER);
 	if (isValidDraf && isValidSalesOrder){
-		  $.messager.progress({
-			title : '提示',
-			text : '单据过账中，打印小票....'
-		   });
-		   formSubmit = true;
-		   var params = $("#chainStoreSalesOrderForm").serialize(); 
-		   $.ajax({        
-	    		type: "POST",               
-	    		url: "<%=request.getContextPath()%>/actionChain/chainSalesJSONAction!postSalesOrder",        
-	    		data: params,         
-	    		timeout: 30000, 
-	            dataType: 'json',        
-	            error: function(XMLHttpRequest, textStatus, errorThrown){ 
-	            	alert("提交单据发生异常 : ");
-	            	$.messager.progress('close'); 
-	            	$("#submitBt").removeAttr("disabled");
-	            }, 
-	            success: function(result) { 
-	            	//alert(result);
-	            	postOrderBKProcess(result);
-	            }
+		if ($("#chainPrepaidAmt").val() != 0 && $("#prepaidPasswordRequired").val() == 1){
+			var vipId = $("#vipCardIdHidden").val();
+			var params = "formBean.vipCard.id=" + vipId
+			$.modalDialog({
+				title : '请输入VIP密码',
+				width : 350,
+				height : 220,
+				modal : true,
+				href : '<%=request.getContextPath()%>/actionChain/chainVIPJSPAction!showVIPEnterPasswordPage?' + params,
+				buttons : [ {
+					text : '提交信息',
+					handler : function() {
+
+						validateVIPPassword(); 
+						
+					}
+				} ]
 				});
-		   //$.post("<%=request.getContextPath()%>/actionChain/chainPostSalesJSONAction!postSalesOrder",params, postOrderBKProcess,"json");
+
+		} else {
+			submitOrder()
+		}
+
+		//$.post("<%=request.getContextPath()%>/actionChain/chainPostSalesJSONAction!postSalesOrder",params, postOrderBKProcess,"json");
 	} else {
 		$("#submitBt").removeAttr("disabled");
 	}
 }
 
+function postValidateVIPProcess(data){
+
+	if (data.returnCode == SUCCESS){
+		var dialogA = $.modalDialog.handler;
+		dialogA.dialog('close');
+        submitOrder();
+	} else {
+		$.messager.alert('失败警告', data.message, 'error');
+	}
+}
 function postOrderBKProcess(data){
 	var response = data.response;
 
@@ -136,7 +143,32 @@ function postOrderBKProcess(data){
         $("#submitBt").removeAttr("disabled");
     }
 }
+function submitOrder(){
+	 $("#submitBt").attr("disabled", true);
 
+	  $.messager.progress({
+			title : '提示',
+			text : '单据过账中，打印小票....'
+		   });
+		   formSubmit = true;
+		   var params = $("#chainStoreSalesOrderForm").serialize(); 
+		   $.ajax({        
+	    		type: "POST",               
+	    		url: "<%=request.getContextPath()%>/actionChain/chainSalesJSONAction!postSalesOrder",        
+	    		data: params,         
+	    		timeout: 30000, 
+	            dataType: 'json',        
+	            error: function(XMLHttpRequest, textStatus, errorThrown){ 
+	            	$.messager.alert('失败警告', "提交单据发生异常 。 ", 'error');
+	            	$.messager.progress('close'); 
+	            	$("#submitBt").removeAttr("disabled");
+	            }, 
+	            success: function(result) { 
+	            	//alert(result);
+	            	postOrderBKProcess(result);
+	            }
+				});
+}
 function testPrint(){
 
 	try {
@@ -165,6 +197,7 @@ function updateTabWithSaler(){
     <s:hidden name="uiBean.chainStoreConf.address" id="address"/>
     <s:hidden name="uiBean.chainStore.printHeader" id="printHeader"/>
     <s:hidden name="uiBean.chainStoreConf.hideDiscountPrint" id="hideDiscountPrint"/>
+    <s:hidden name="uiBean.chainStoreConf.prepaidPasswordRequired" id="prepaidPasswordRequired"/>
 	<s:hidden name="formBean.token"/>
     <div data-options="region:'north',split:false,border:false,noheader:true" style="height:65px;overflow:hidden;">
     

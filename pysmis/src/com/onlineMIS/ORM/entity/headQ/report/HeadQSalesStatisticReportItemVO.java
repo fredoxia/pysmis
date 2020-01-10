@@ -135,26 +135,38 @@ public class HeadQSalesStatisticReportItemVO extends HeadQReportItemVO{
 		this.netProfit = netProfit;
 	}
 	
-	public void putValue(int quantity, int type, double sales, double cost, double discount){
+	public void putValue(int quantity, int type, double sales, double cost){
 		switch (type) {
 		case InventoryOrder.TYPE_SALES_ORDER_W:
 			this.setSalesPrice(sales);
 			this.setSalesCost(cost);
 			this.setSalesQ(quantity);
 //			this.setSalesDiscount(discount + this.getSalesDiscount());
-			this.setSalesDiscount(this.getSalesDiscount() + discount);
+//			this.setSalesDiscount(this.getSalesDiscount() + discount);
 			break;
 		case InventoryOrder.TYPE_SALES_RETURN_ORDER_W:
 			this.setReturnPrice(sales);
 			this.setReturnCost(cost);
 			this.setReturnQ(quantity);
+//			this.setSalesDiscount(this.getSalesDiscount() - discount);
+			break;
+		default:
+			break;
+		}
+	}
+	public void putDiscount(int type, double discount){
+		switch (type) {
+		case InventoryOrder.TYPE_SALES_ORDER_W:
+
+			this.setSalesDiscount(this.getSalesDiscount() + discount);
+			break;
+		case InventoryOrder.TYPE_SALES_RETURN_ORDER_W:
 			this.setSalesDiscount(this.getSalesDiscount() - discount);
 			break;
 		default:
 			break;
 		}
 	}
-
 	
 	public void reCalculate(){
 		netQ = salesQ - returnQ;

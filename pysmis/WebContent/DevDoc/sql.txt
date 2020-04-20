@@ -1,0 +1,2 @@
+alter table chain_vip_cards add password varchar(6) null;
+alter table chain_store_conf add prepaid_use_require_password tinyint(4) default '0';

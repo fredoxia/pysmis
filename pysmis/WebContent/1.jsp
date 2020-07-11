@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="jsp/common/Style.jsp"%>
-<title>朴与素管理信息系统</title>
+<title>朴与素管理信息系统 </title>
 <!-- 总部登录页面 -->
 <script>
 $(document).ready(function(){

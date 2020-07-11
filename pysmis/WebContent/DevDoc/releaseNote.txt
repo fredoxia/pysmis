@@ -16,3 +16,6 @@ Release Summary: 1。add gender, size_range, size_min, size_max to the product
 Release Date
 Release Summary : ALTER TABLE chain_vip_prepaid_flow
                      ADD amt_2 double NOT NULL;	
+
+Release Date
+Release Summary : update the access for the updatescore

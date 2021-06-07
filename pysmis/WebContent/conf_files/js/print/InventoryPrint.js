@@ -15,34 +15,45 @@ function pageSetup(){
 
 function printContent(io, wholeSalePrice){
 	pageSetup();
-	var space = "&nbsp;&nbsp;&nbsp;";
+	var space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 	var s = "<font size='5pt'>成都朴与素</font><br/>";
-		s += "单据种类 : " + io.orderType + "<br/>";
-		s += "单据号 : " + io.id + space + "<br/>客户: " + io.clientName  + "<br/>地区: " + io.clientArea + "<br/>"; 
-        s += "单据日期  : " + io.orderTime + "<br/>";
+		s += "单据种类 : " + io.orderType + " "; 
+		s += "单据号 :" + io.id + space + "客户:" + io.clientName  + " 地区:" + io.clientArea + " "; 
+        s += "单据日期  :" + io.orderTime + "<br/>";
     	
     	if (wholeSalePrice == true)
     	    s += "上欠 : " + io.preAcctAmt + space + "下欠  : " + io.postAcctAmt + "<br/>";
     	else
     		s += "下欠  : " + io.postAcctAmt + "<br/>";
-		s += "-----------------单据明细 ---------------<br/>";
+		s += "-------------------------------------------------------------------------------------------<br/>";
 	var products = io.products;
 
 	var j =1;
 	var k = 1; //每页多少行了
+	s += "<table style='width:100%'>"
+ 	s += "<tr>"
+ 	
+ 	if (wholeSalePrice == true)
+ 		  	    s += "<td style='width:5%'></td><td style='width:25%'>货品信息 </td><td style='width:25%'>货号</td><td style='width:15%'>种类 </td><td style='width:7%'>数量 </td><td style='width:8%'>单价 </td><td style='width:15%'>总价<td>";
+ 	else 
+ 		  		s += "<td style='width:5%'></td><td style='width:25%'>货品信息 </td><td style='width:25%'>货号 </td><td style='width:15%'>种类 </td><td style='width:7%'>数量</td>";
+ 	s += "</tr>"
+ 		
  	for (var i = 1; i <= products.length; i++){
+ 		s += "<tr>"
 	  	var product = products[i-1];
 	  	if (wholeSalePrice == true)
-	  	    s += i + space + product.productCode + product.color + space +product.quantity + space + product.wholeSales + space + product.totalWholeSales + "<br/>";
+	  	    s += "<td>" + i + "</td><td>" + product.brand + "</td><td>" + product.productCode + product.color + "</td><td>" + product.category + "</td><td>" + product.quantity + "</td><td>" + product.wholeSales + "</td><td>" + product.totalWholeSales + "<td>";
 	  	else 
-	  		 s += i + space + product.productCode + product.color + space +product.quantity + "<br/>";
-
+	  		s += "<td>" + i + "</td><td>" + product.brand + "</td><td>" + product.productCode + product.color + "</td><td>" + product.category + "</td><td>" + product.quantity + "</td>";
+	  	s += "</tr>"
   	}
- 	
-		if (wholeSalePrice == true)
-  		    s += "<b>总数 : " + io.totalQ + space +  "总金额 : " + io.totalWholeSales + "</b><br/>";
-	  		else 
-	  			s += "<b>总数 : " + io.totalQ + "</b><br/>";
+	if (wholeSalePrice == true)
+		    s += "<tr><td></td><td>汇总 </td><td></td><td></td><td>" + io.totalQ + "</td><td></td><td>" + io.totalWholeSales + "</td></tr>";
+  	else 
+  		    s += "<tr><td></td><td>汇总 </td><td></td><td></td><td>" + io.totalQ + "</td></tr>";
+	s += "</table>"
+
 	  		
   		if (io.cash != 0)
   		  s += "现金 :" + io.cash;
@@ -52,12 +63,16 @@ function printContent(io, wholeSalePrice){
 		  s += "支付宝 :" + io.alipay;
 	  	if (io.wechat != 0)
 		  s += " 微信 :" + io.wechat;
-	  	s +=  "<br/><br/>展厅电话 : 028-65775588"+ "<br/>"; 
-	  	s +=  "加盟热线 : 13880949886/18981987974"+ "<br/>";
+
+	  	s +=  "<br/><br/>展厅电话 : 028-65775588" + space; 
+	  	s +=  "加盟热线 : 18030617949/13568884488"+ space;
 	  	s +=  "展厅地址  : 大成市场2期3楼52号";
 
   		printOut(s);
 }
+
+
+
 function printOrderBackProcess(data){
     var response = data;
 	var returnCode = response.returnCode;

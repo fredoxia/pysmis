@@ -16,6 +16,8 @@ public class InventoryOrderProdPrintVO {
 	private String wholeSales = "";
 	private String totalWholeSales = "";
 	private String brand = "";
+	private String category = "";
+	
 	
 	public InventoryOrderProdPrintVO(){
 		
@@ -31,8 +33,8 @@ public class InventoryOrderProdPrintVO {
 		if (pb.getColor() != null)
 		   this.setColor(pb.getColor().getName());
 		
-		this.setBrand(pb.getProduct().getBrand().getBrand_Name());
-		
+		this.setBrand(pb.getProduct().getYear().getYear() + pb.getProduct().getBrand().getBrand_Name());
+		this.setCategory(pb.getProduct().getCategory().getCategory_Name());
 		this.setQuantity(String.valueOf(product.getQuantity()));
 		this.setSelectPrice(Common_util.df2.format(product.getSalePriceSelected()));
 		this.setDiscountRate(Common_util.df.format(product.getDiscount()));
@@ -41,6 +43,14 @@ public class InventoryOrderProdPrintVO {
 		this.setTotalWholeSales(String.valueOf((int)totalWhole));
 	}
 	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public String getBrand() {
 		return brand;
 	}

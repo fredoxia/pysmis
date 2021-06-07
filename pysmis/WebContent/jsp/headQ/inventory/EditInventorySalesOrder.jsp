@@ -10,7 +10,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/inventory-order.js?v=5-27"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/conf_files/js/HtmlTable.js"></script>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
-<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-27></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-29></script>
 <script type="text/javascript">
 var baseurl = "<%=request.getContextPath()%>";
 

@@ -9,7 +9,7 @@
 <title><s:property value="formBean.order.order_type_ws"/></title>
 <%@ include file="../../common/Style.jsp"%>
 <script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/pazuclient.js></script>
-<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-42></script>
+<script type="text/javascript" src=<%=request.getContextPath()%>/conf_files/js/print/InventoryPrint.js?v=5-64></script>
 <script type="text/javascript">
 
 

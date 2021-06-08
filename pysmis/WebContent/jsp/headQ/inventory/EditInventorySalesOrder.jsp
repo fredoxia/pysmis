@@ -157,7 +157,7 @@ function saveOrderBackProcessQ(data){
        
         if (inventoryOrder != null && inventoryOrder != ""){
         	printContent(inventoryOrder, false);
-        	printContent(inventoryOrder, false);
+        	//printContent(inventoryOrder, false);
         }
         setTimeout(function(){ window.location.href = "<%=request.getContextPath()%>/action/inventoryOrder!create";}, 3000);
         
